@@ -26,9 +26,20 @@
 #define CAMERA_FLIP CMW_MIRRORFLIP_MIRROR
 
 /* Define display size */
+#ifdef STM32N6570_DK_REV
 #define LCD_BG_WIDTH 800
 #define LCD_BG_HEIGHT 480
 /* Delay display by DISPLAY_DELAY frame number */
 #define DISPLAY_DELAY 2
+#else
+#ifdef SCR_LIB_USE_SPI
+#define LCD_BG_WIDTH 320
+#define LCD_BG_HEIGHT 240
+#else
+#define LCD_BG_WIDTH 320
+#define LCD_BG_HEIGHT 200
+#endif
+#define DISPLAY_DELAY 0
+#endif
 
 #endif

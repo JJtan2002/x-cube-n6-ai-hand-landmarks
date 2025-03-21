@@ -1,11 +1,14 @@
 # x-cube-n6-ai-hand-landmarks Application
 
-Computer Vision application demonstrating the deployment of several object detection models execution in series on the STM32N6570-DK board. The chosen use case is single-hand landmark detection. It consists of two models that execute sequentially:
+Computer Vision application demonstrating the deployment of several object detection models execution in series on the STM32N6570-DK or NUCLEO-N657X0-Q board. The chosen use case is single-hand landmark detection. It consists of two models that execute sequentially:
 
 1. A palm detection (pd) model is executed in the first stage to detect the hand’s palm.
 2. A hand landmark (hl) detection model is executed in the second stage to identify the landmarks of the hand detected during the first stage. After the execution of the first model, a resize operation takes place to provide the expected input to the second model.
+   On STM32N6570-DK GPU2D is used to also perform a rotation to orient hand vertically.
 
 This top README gives an overview of the app. Additional documentation is available in the [Doc](./Doc/) folder.
+
+![Screenshot of application running](_htmresc/screenshot.png)
 
 ## Doc Folder Content
 
@@ -15,8 +18,9 @@ This top README gives an overview of the app. Additional documentation is availa
 
 ## Features Demonstrated in This Example
 
-- Multi-threaded application flow (Azure RTOS ThreadX)
+- Multi-threaded application flow (FreeRTOS)
 - NPU accelerated quantized AI model inference
+- GPU2D usage to perform resize + rotation transformation
 - Execute multiple models in series
 - Dual DCMIPP pipes
 - DCMIPP crop, decimation, downscale
@@ -27,33 +31,48 @@ This top README gives an overview of the app. Additional documentation is availa
 
 ## Hardware Support
 
-- MB1939 STM32N6570-DK REV C01
-  - The board should be connected to the onboard ST-LINK debug adapter CN6 with a __USB-C to USB-C cable to ensure sufficient power__.
-  - OTP fuses are set in this example for xSPI IOs to get the maximum speed (200MHz) on xSPI interfaces.
+### MB1939 STM32N6570-DK
 
-- 3 cameras are supported:
-  - MB1854B IMX335 (Default camera provided with the MB1939 STM32N6570-DK board)
-  - STEVAL-55G1MBI VD55G1 camera module
-  - STEVAL-66GYMAI VD66GY camera module
+  - The board should be connected to the onboard ST-LINK debug adapter CN6 with a __USB-C to USB-C cable to ensure sufficient power__
+  - OTP fuses are set in this example for xSPI IOs to get the maximum speed (200MHz) on xSPI interfaces.
 
 ![Board](_htmresc/ImageBoard.JPG)
 
 STM32N6570-DK board with MB1854B IMX335.
 
+### MB1940 NUCLEO-N657X0-Q
+
+  - The board should be connected to the onboard ST-LINK debug adapter CN10 with a __USB-C to USB-C cable to ensure sufficient power__
+  - An additional USB cable to connect USB (CN8) to the host computer for UVC flavor
+  - OTP fuses are set in this example for xSPI IOs to get the maximum speed (200MHz) on xSPI interfaces
+  - X-NUCLEO-GFX01M2 for SPI flavor
+
+- 3 Cameras are supported:
+  - MB1854B IMX335 (Default Camera provided with the MB1939 STM32N6570-DK board)
+  - STEVAL-55G1MBI VD55G1 Camera module (Use the CSI-2 cable provided with the camera module)
+  - STEVAL-66GYMAI VD66GY Camera module (Use the CSI-2 cable provided with the camera module)
+
 ## Tools Version
 
 - IAR Embedded Workbench for Arm (**EWARM 9.40.1**) + N6 patch ([**EWARMv9_STM32N6xx_V1.0.0**](STM32Cube_FW_N6/Utilities/PC_Software/EWARMv9_STM32N6xx_V1.0.0.zip))
-- STM32CubeIDE (**STM32CubeIDE 1.17.0**)
-- STM32CubeProgrammer (**v2.18.0**)
-- [STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) (**v2.0.0**)
+- [STM32CubeIDE](https://www.st.com/content/st_com/en/products/development-tools/software-development-tools/stm32-software-development-tools/stm32-ides/stm32cubeide.html) (**STM32CubeIDE 1.17.0**)
+- [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html) (**v2.18.0**)
+- [STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) (**v2.1.0**)
 
 ## Boot Modes
 
 The STM32N6 does not have any internal flash. To retain your firmware after a reboot, you must program it in the external flash. Alternatively, you can load your firmware directly from SRAM (dev mode). However, in dev mode, if you turn off the board, your program will be lost.
 
 __Boot modes:__
-- Dev mode: Load firmware from debug session in RAM (boot switch to the right).
-- Boot from flash: Program firmware in external flash (boot switch to the left).
+- Dev mode (BOOT0 and BOOT1 to the right): load firmware from debug session in RAM, program firmware in external flash
+- Boot from flash (BOOT0 and BOOT1 to the left)
+
+## Console parameters
+
+You can see application messages by attaching a console application to the ST-Link console output. Use the following console parameters:
+- Baud rate of 115200 bps.
+- No parity.
+- One stop bit.
 
 ## Quickstart Using Prebuilt Binaries
 
@@ -61,13 +80,14 @@ __Boot modes:__
 
 Three binaries must be programmed in the board's external flash using the following procedure:
 
-1. Switch the BOOT1 switch to the right position.
+1. Set both switches to the right side.
 2. Program `Binary/ai_fsbl.hex` (to be done once) (First stage boot loader).
 3. Program `Binary/palm_detector_data.hex` (parameters of the palm detector model).
 4. Program `Binary/hand_landmark_data.hex` (parameters of the hand landmarks model).
-5. Program `Binary/x-cube-n6-ai-hand-landmarks.hex` (firmware application).
-6. Switch the BOOT1 switch to the left position.
-7. Perform a power down/up sequence.
+5. Program `Binary/x-cube-n6-ai-hand-landmarks-dk.hex` (firmware application) for STM32N6570-DK. For MB1940 NUCLEO-N657X0-Q select either
+   `Binary/x-cube-n6-ai-hand-landmarks-nucleo-uvc.hex` or `Binary/x-cube-n6-ai-hand-landmarks-nucleo-spi.hex`
+6. Set both switches to the left side.
+7. Power cycle the board.
 
 ### How to Program Hex Files Using STM32CubeProgrammer UI
 
@@ -88,7 +108,7 @@ STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -el $DKEL -hardRst -w Binary/palm_
 STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -el $DKEL -hardRst -w Binary/hand_landmark_data.hex
 
 # Application Firmware
-STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -el $DKEL -hardRst -w Binary/x-cube-n6-ai-hand-landmarks.hex
+STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -el $DKEL -hardRst -w Binary/x-cube-n6-ai-hand-landmarks-dk.hex
 ```
 
 ## Quickstart Using Source Code
@@ -101,15 +121,16 @@ More information about boot modes is available in the [Boot Overview](Doc/Boot-O
 
 ### Application Build and Run - Dev Mode
 
-__Make sure to have the switch to the right side.__
+__Make sure to have both switches to the right side.__
+Intructions below are for STM32N6570-DK. For NUCLEO-N657X0-Q you have to select one of the two nucleo project according to your use case.
 
 #### STM32CubeIDE
 
-Double-click on `STM32CubeIDE/.project` to open the project in STM32CubeIDE. Build and run using the build and run buttons.
+Double-click on `STM32CubeIDE/STM32N6570-DK/.project` to open the project in STM32CubeIDE. Build and run using the build and run buttons.
 
 #### IAR EWARM
 
-Double-click on `EWARM/Project.eww` to open the project in the IAR IDE. Build and run using the build and run buttons.
+Double-click on `EWARM/STM32N6570-DK/x-cube-n6-ai-hand-landmarks-dk.eww` to open the project in the IAR IDE. Build and run using the build and run buttons.
 
 #### Makefile
 
@@ -139,15 +160,16 @@ $ arm-none-eabi-gdb build/Project.elf
 
 ### Application Build and Run - Boot from Flash
 
-__Make sure to have the switch to the right side.__
+__Make sure to have both switches to the right side.__
+Intructions below are for STM32N6570-DK. For NUCLEO-N657X0-Q you have to select one of the two nucleo project according to your use case.
 
 #### STM32CubeIDE
 
-Double-click on `STM32CubeIDE/.project` to open the project in STM32CubeIDE. Build with build button.
+Double-click on `STM32CubeIDE/STM32N6570-DK/.project` to open the project in STM32CubeIDE. Build with build button.
 
 #### IAR EWARM
 
-Double-click on `EWARM/Project.eww` to open the project in the IAR IDE. Build with build button.
+Double-click on `EWARM/STM32N6570-DK/x-cube-n6-ai-hand-landmarks-dk.eww` to open the project in the IAR IDE. Build with build button.
 
 #### Makefile
 
@@ -159,7 +181,7 @@ Before running the commands below, make sure to have the necessary commands in y
 make -j8
 ```
 
-Once your app is built with Makefile, STM32CubeIDE, or EWARM, you can add a signature to the bin file:
+Once your app is built with Makefile, STM32CubeIDE, or EWARM, you must add a signature to the bin file:
 ```bash
 STM32_SigningTool_CLI -bin build/Project.bin -nk -t ssbl -hv 2.3 -o build/Project_sign.bin
 ```
@@ -174,5 +196,9 @@ STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -el $DKEL -hardRst -w build/Projec
 ```
 
 Note: Only the App binary needs to be programmed if the FSBL and network_data.hex were previously programmed.
+
+__Set both switches to the left side.__
+
+Do a power cycle to boot from the external flash.
 
 ## Known Issues and Limitations

@@ -390,6 +390,7 @@
                     <state>$PROJ_DIR$\..\STM32Cube_FW_N6\Middlewares\ST\threadx\ports\cortex_m55\gnu\inc</state>
                     <state>$PROJ_DIR$\..\STM32Cube_FW_N6\Middlewares\ST\threadx\utility\execution_profile_kit</state>
                     <state>$PROJ_DIR$\..\Lib\ipl\Inc</state>
+                    <state>$PROJ_DIR$\..\Lib\NemaGFX\include</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -703,6 +704,7 @@
                     <state>$PROJ_DIR$\..\STM32Cube_FW_N6\Middlewares\ST\threadx\ports\cortex_m55\gnu\inc</state>
                     <state>$PROJ_DIR$\..\STM32Cube_FW_N6\Middlewares\ST\threadx\utility\execution_profile_kit</state>
                     <state>$PROJ_DIR$\..\Lib\ipl\Inc</state>
+                    <state>$PROJ_DIR$\..\Lib\NemaGFX\include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -898,6 +900,7 @@
                     <state>$PROJ_DIR$\..\Lib\AI_Runtime\Lib\ABI2.1\ARMCortexM55\NetworkRuntime1000_CM55_IAR.a</state>
                     <state>$PROJ_DIR$\..\Lib\Camera_Middleware\ISP_Library\evision\Lib\libn6-evision-awb_iar.a</state>
                     <state>$PROJ_DIR$\..\Lib\Camera_Middleware\ISP_Library\evision\Lib\libn6-evision-st-ae_iar.a</state>
+                    <state>$PROJ_DIR$\..\Lib\NemaGFX\lib\core\cortex_m55\IAR9.x\nemagfx_core_release.a</state>
                 </option>
                 <option>
                     <name>IlinkOverrideProgramEntryLabel</name>
@@ -1363,6 +1366,9 @@
             <name>$PROJ_DIR$\..\Src\main.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\Src\nema_hal_threadx.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\Src\stm32_lcd_ex.c</name>
         </file>
         <file>
@@ -1456,13 +1462,22 @@
                         <name>$PROJ_DIR$\..\STM32Cube_FW_N6\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_exti.c</name>
                     </file>
                     <file>
+                        <name>$PROJ_DIR$\..\STM32Cube_FW_N6\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_gfxmmu.c</name>
+                    </file>
+                    <file>
                         <name>$PROJ_DIR$\..\STM32Cube_FW_N6\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_gpio.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\STM32Cube_FW_N6\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_gpu2d.c</name>
                     </file>
                     <file>
                         <name>$PROJ_DIR$\..\STM32Cube_FW_N6\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_i2c.c</name>
                     </file>
                     <file>
                         <name>$PROJ_DIR$\..\STM32Cube_FW_N6\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_i2c_ex.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\STM32Cube_FW_N6\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_icache.c</name>
                     </file>
                     <file>
                         <name>$PROJ_DIR$\..\STM32Cube_FW_N6\Drivers\STM32N6xx_HAL_Driver\Src\stm32n6xx_hal_ltdc.c</name>

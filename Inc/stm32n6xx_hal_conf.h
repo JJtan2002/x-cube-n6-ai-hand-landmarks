@@ -45,14 +45,14 @@ extern "C" {
 // #define HAL_ETH_MODULE_ENABLED
 #define HAL_EXTI_MODULE_ENABLED
 // #define HAL_FDCAN_MODULE_ENABLED
-// #define HAL_GFXMMU_MODULE_ENABLED
+#define HAL_GFXMMU_MODULE_ENABLED
 // #define HAL_GFXTIM_MODULE_ENABLED
 #define HAL_GPIO_MODULE_ENABLED
 // #define HAL_HASH_MODULE_ENABLED
 // #define HAL_HCD_MODULE_ENABLED
 #define HAL_I2C_MODULE_ENABLED
 // #define HAL_I3C_MODULE_ENABLED
-// #define HAL_ICACHE_MODULE_ENABLED
+#define HAL_ICACHE_MODULE_ENABLED
 // #define HAL_IRDA_MODULE_ENABLED
 // #define HAL_IWDG_MODULE_ENABLED
 // #define HAL_JPEG_MODULE_ENABLED
@@ -63,7 +63,7 @@ extern "C" {
 // #define HAL_MMC_MODULE_ENABLED
 // #define HAL_NAND_MODULE_ENABLED
 // #define HAL_NOR_MODULE_ENABLED
-// #define HAL_PCD_MODULE_ENABLED
+#define HAL_PCD_MODULE_ENABLED
 // #define HAL_PKA_MODULE_ENABLED
 // #define HAL_PSSI_MODULE_ENABLED
 #define HAL_PWR_MODULE_ENABLED
@@ -79,13 +79,14 @@ extern "C" {
 // #define HAL_SMARTCARD_MODULE_ENABLED
 // #define HAL_SMBUS_MODULE_ENABLED
 // #define HAL_SPDIFRX_MODULE_ENABLED
-// #define HAL_SPI_MODULE_ENABLED
+#define HAL_SPI_MODULE_ENABLED
 // #define HAL_SRAM_MODULE_ENABLED
-// #define HAL_TIM_MODULE_ENABLED
+#define HAL_TIM_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
 // #define HAL_USART_MODULE_ENABLED
 // #define HAL_WWDG_MODULE_ENABLED
 #define HAL_XSPI_MODULE_ENABLED
+#define HAL_GPU2D_MODULE_ENABLED
 
 /* ########################## Oscillator Values adaptation ####################*/
 /**
@@ -451,6 +452,9 @@ extern "C" {
 #include "stm32n6xx_hal_cacheaxi.h"
 #endif /* HAL_XSPI_MODULE_ENABLED */
 
+#ifdef HAL_GPU2D_MODULE_ENABLED
+#include "stm32n6xx_hal_gpu2d.h"
+#endif /* HAL_GPU2D_MODULE_ENABLED */
 
 /* Exported macros -----------------------------------------------------------*/
 #ifdef  USE_FULL_ASSERT

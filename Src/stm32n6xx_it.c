@@ -21,6 +21,7 @@
 #include "stm32n6xx_it.h"
 
 #include "cmw_camera.h"
+extern GPU2D_HandleTypeDef hgpu2d;
 
 /**
   * @brief   This function handles NMI exception.
@@ -71,15 +72,6 @@ void SecureFault_Handler(void)
 }
 
 /**
-  * @brief  This function handles SVCall exception.
-  * @param  None
-  * @retval None
-  */
-void SVC_Handler(void)
-{
-}
-
-/**
   * @brief  This function handles Debug Monitor exception.
   * @param  None
   * @retval None
@@ -106,4 +98,14 @@ void CSI_IRQHandler(void)
 void DCMIPP_IRQHandler(void)
 {
   HAL_DCMIPP_IRQHandler(CMW_CAMERA_GetDCMIPPHandle());
+}
+
+void GPU2D_IRQHandler(void)
+{
+  HAL_GPU2D_IRQHandler(&hgpu2d);
+}
+
+void GPU2D_ER_IRQHandler(void)
+{
+  HAL_GPU2D_ER_IRQHandler(&hgpu2d);
 }

@@ -28,19 +28,31 @@
 #include "ld.h"
 #include "ll_aton_runtime.h"
 #include "cmw_camera.h"
-#include "stm32n6570_discovery_lcd.h"
+#include "scrl.h"
+#ifdef STM32N6570_DK_REV
 #include "stm32n6570_discovery.h"
+#else
+#include "stm32n6xx_nucleo.h"
+#endif
 #include "stm32_lcd.h"
 #include "stm32_lcd_ex.h"
 #include "stm32n6xx_hal.h"
-#include "tx_api.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "semphr.h"
 #include "utils.h"
+
+#define FREERTOS_PRIORITY(p) ((UBaseType_t)((int)tskIDLE_PRIORITY + configMAX_PRIORITIES / 2 + (p)))
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
 
-#define HAS_ROTATION_SUPPORT 0
+#if HAS_ROTATION_SUPPORT == 1
+#include "nema_core.h"
+#include "nema_error.h"
+void nema_enable_tiling(int);
+#endif
 
 #define LCD_FG_WIDTH LCD_BG_WIDTH
 #define LCD_FG_HEIGHT LCD_BG_HEIGHT
@@ -62,6 +74,10 @@
 /* palm detector */
 #define PD_MAX_HAND_NB 1
 
+#if HAS_ROTATION_SUPPORT == 1
+typedef float app_v3_t[3];
+#endif
+
 typedef struct {
   float cx;
   float cy;
@@ -69,6 +85,16 @@ typedef struct {
   float h;
   float rotation;
 } roi_t;
+
+#define UTIL_LCD_COLOR_TRANSPARENT 0
+
+#ifdef STM32N6570_DK_REV
+#define LCD_FONT Font20
+#define DISK_RADIUS 2
+#else
+#define LCD_FONT Font12
+#define DISK_RADIUS 1
+#endif
 
 typedef struct
 {
@@ -79,8 +105,10 @@ typedef struct
 } Rectangle_TypeDef;
 
 typedef struct {
-  TX_SEMAPHORE free;
-  TX_SEMAPHORE ready;
+  SemaphoreHandle_t free;
+  StaticSemaphore_t free_buffer;
+  SemaphoreHandle_t ready;
+  StaticSemaphore_t ready_buffer;
   int buffer_nb;
   uint8_t *buffers[BQUEUE_MAX_BUFFERS];
   int free_idx;
@@ -120,8 +148,10 @@ typedef struct {
 } display_info_t;
 
 typedef struct {
-  TX_SEMAPHORE update;
-  TX_MUTEX lock;
+  SemaphoreHandle_t update;
+  StaticSemaphore_t update_buffer;
+  SemaphoreHandle_t lock;
+  StaticSemaphore_t lock_buffer;
   display_info_t info;
 } display_t;
 
@@ -154,15 +184,15 @@ typedef struct {
 /* Globals */
 /* Lcd Background area */
 static Rectangle_TypeDef lcd_bg_area = {
-  .X0 = (LCD_DEFAULT_WIDTH - LCD_BG_WIDTH) / 2,
-  .Y0 = (LCD_DEFAULT_HEIGHT - LCD_BG_HEIGHT) / 2,
+  .X0 = 0,
+  .Y0 = 0,
   .XSize = LCD_BG_WIDTH,
   .YSize = LCD_BG_HEIGHT,
 };
 /* Lcd Foreground area */
 static Rectangle_TypeDef lcd_fg_area = {
-  .X0 = (LCD_DEFAULT_WIDTH - LCD_FG_WIDTH) / 2,
-  .Y0 = (LCD_DEFAULT_HEIGHT - LCD_FG_HEIGHT) / 2,
+  .X0 = 0,
+  .Y0 = 0,
   .XSize = LCD_FG_WIDTH,
   .YSize = LCD_FG_HEIGHT,
 };
@@ -178,6 +208,8 @@ static display_t disp = {
   .info.is_pd_displayed = 0,
 };
 static cpuload_info_t cpu_load;
+/* screen buffer */
+static uint8_t screen_buffer[LCD_BG_WIDTH * LCD_BG_HEIGHT * 2] ALIGN_32 IN_PSRAM;
 
 /* model */
  /* palm detector */
@@ -193,17 +225,20 @@ static volatile uint32_t frame_event_nb_for_resize;
 static uint8_t nn_input_buffers[2][NN_WIDTH * NN_HEIGHT * NN_BPP] ALIGN_32 IN_PSRAM;
 static bqueue_t nn_input_queue;
 
- /* threads */
-  /* nn thread */
-static TX_THREAD nn_thread;
-static uint8_t nn_tread_stack[4096];
-  /* display thread */
-static TX_THREAD dp_thread;
-static uint8_t dp_tread_stack[4096];
-  /* isp thread */
-static TX_THREAD isp_thread;
-static uint8_t isp_tread_stack[4096];
-static TX_SEMAPHORE isp_sem;
+ /* rtos */
+static StaticTask_t nn_thread;
+static StackType_t nn_thread_stack[2 * configMINIMAL_STACK_SIZE];
+static StaticTask_t dp_thread;
+static StackType_t dp_thread_stack[2 *configMINIMAL_STACK_SIZE];
+static StaticTask_t isp_thread;
+static StackType_t isp_thread_stack[2 *configMINIMAL_STACK_SIZE];
+static SemaphoreHandle_t isp_sem;
+static StaticSemaphore_t isp_sem_buffer;
+
+#if HAS_ROTATION_SUPPORT == 1
+static GFXMMU_HandleTypeDef hgfxmmu;
+static nema_cmdlist_t cl;
+#endif
 
 static int is_cache_enable()
 {
@@ -358,19 +393,11 @@ static void cpuload_init(cpuload_info_t *cpu_load)
 
 static void cpuload_update(cpuload_info_t *cpu_load)
 {
-  EXECUTION_TIME thread_total;
-  EXECUTION_TIME isr;
-  EXECUTION_TIME idle;
   int i;
 
   cpu_load->history[1] = cpu_load->history[0];
-
-  _tx_execution_thread_total_time_get(&thread_total);
-  _tx_execution_isr_time_get(&isr);
-  _tx_execution_idle_time_get(&idle);
-
-  cpu_load->history[0].total = thread_total + isr + idle;
-  cpu_load->history[0].thread = thread_total;
+  cpu_load->history[0].total = portGET_RUN_TIME_COUNTER_VALUE();
+  cpu_load->history[0].thread = cpu_load->history[0].total - ulTaskGetIdleRunTimeCounter();
   cpu_load->history[0].tick = HAL_GetTick();
 
   if (cpu_load->history[1].tick - cpu_load->history[2].tick < 1000)
@@ -396,17 +423,16 @@ static void cpuload_get_info(cpuload_info_t *cpu_load, float *cpu_load_last, flo
 
 static int bqueue_init(bqueue_t *bq, int buffer_nb, uint8_t **buffers)
 {
-  int ret;
   int i;
 
   if (buffer_nb > BQUEUE_MAX_BUFFERS)
     return -1;
 
-  ret = tx_semaphore_create(&bq->free, NULL, buffer_nb);
-  if (ret)
+  bq->free = xSemaphoreCreateCountingStatic(buffer_nb, buffer_nb, &bq->free_buffer);
+  if (!bq->free)
     goto free_sem_error;
-  ret = tx_semaphore_create(&bq->ready, NULL, 0);
-  if (ret)
+  bq->ready = xSemaphoreCreateCountingStatic(buffer_nb, 0, &bq->ready_buffer);
+  if (!bq->ready)
     goto ready_sem_error;
 
   bq->buffer_nb = buffer_nb;
@@ -420,7 +446,7 @@ static int bqueue_init(bqueue_t *bq, int buffer_nb, uint8_t **buffers)
   return 0;
 
 ready_sem_error:
-  tx_semaphore_delete(&bq->free);
+  vSemaphoreDelete(bq->free);
 free_sem_error:
   return -1;
 }
@@ -430,10 +456,9 @@ static uint8_t *bqueue_get_free(bqueue_t *bq, int is_blocking)
   uint8_t *res;
   int ret;
 
-  ret = tx_semaphore_get(&bq->free, is_blocking ? TX_WAIT_FOREVER : TX_NO_WAIT);
-  if (ret == TX_NO_INSTANCE)
+  ret = xSemaphoreTake(bq->free, is_blocking ? portMAX_DELAY : 0);
+  if (ret == pdFALSE)
     return NULL;
-  assert(ret == 0);
 
   res = bq->buffers[bq->free_idx];
   bq->free_idx = (bq->free_idx + 1) % bq->buffer_nb;
@@ -445,8 +470,8 @@ static void bqueue_put_free(bqueue_t *bq)
 {
   int ret;
 
-  ret = tx_semaphore_put(&bq->free);
-  assert(ret == 0);
+  ret = xSemaphoreGive(bq->free);
+  assert(ret == pdTRUE);
 }
 
 static uint8_t *bqueue_get_ready(bqueue_t *bq)
@@ -454,8 +479,8 @@ static uint8_t *bqueue_get_ready(bqueue_t *bq)
   uint8_t *res;
   int ret;
 
-  ret = tx_semaphore_get(&bq->ready, TX_WAIT_FOREVER);
-  assert(ret == 0);
+  ret = xSemaphoreTake(bq->ready, portMAX_DELAY);
+  assert(ret == pdTRUE);
 
   res = bq->buffers[bq->ready_idx];
   bq->ready_idx = (bq->ready_idx + 1) % bq->buffer_nb;
@@ -465,9 +490,29 @@ static uint8_t *bqueue_get_ready(bqueue_t *bq)
 
 static void bqueue_put_ready(bqueue_t *bq)
 {
+  BaseType_t xHigherPriorityTaskWoken = pdFALSE;
   int ret;
 
-  ret = tx_semaphore_put(&bq->ready);
+  if (xPortIsInsideInterrupt()) {
+    ret = xSemaphoreGiveFromISR(bq->ready, &xHigherPriorityTaskWoken);
+    assert(ret == pdTRUE);
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+  } else {
+    ret = xSemaphoreGive(bq->ready);
+    assert(ret == pdTRUE);
+  }
+}
+
+static void reload_bg_layer(int next_disp_idx)
+{
+  int ret;
+
+  ret = SCRL_SetAddress_NoReload(lcd_bg_buffer[next_disp_idx], SCRL_LAYER_0);
+  assert(ret == 0);
+  ret = SCRL_ReloadLayer(SCRL_LAYER_0);
+  assert(ret == 0);
+
+  ret = SRCL_Update();
   assert(ret == 0);
 }
 
@@ -481,10 +526,7 @@ static void app_main_pipe_frame_event()
                                          DCMIPP_MEMORY_ADDRESS_0, (uint32_t) lcd_bg_buffer[next_capt_idx]);
   assert(ret == HAL_OK);
 
-  ret = HAL_LTDC_SetAddress_NoReload(&hlcd_ltdc, (uint32_t) lcd_bg_buffer[next_disp_idx], LTDC_LAYER_1);
-  assert(ret == HAL_OK);
-  ret = HAL_LTDC_ReloadLayer(&hlcd_ltdc, LTDC_RELOAD_VERTICAL_BLANKING, LTDC_LAYER_1);
-  assert(ret == HAL_OK);
+  reload_bg_layer(next_disp_idx);
   lcd_bg_buffer_disp_idx = next_disp_idx;
   lcd_bg_buffer_capt_idx = next_capt_idx;
 
@@ -510,95 +552,12 @@ static void app_ancillary_pipe_frame_event()
 
 static void app_main_pipe_vsync_event()
 {
+  BaseType_t xHigherPriorityTaskWoken = pdFALSE;
   int ret;
 
-  ret = tx_semaphore_put(&isp_sem);
-  assert(ret == 0);
-}
-
-static void LCD_init()
-{
-  BSP_LCD_LayerConfig_t LayerConfig = {0};
-
-  BSP_LCD_Init(0, LCD_ORIENTATION_LANDSCAPE);
-
-  /* Preview layer Init */
-  LayerConfig.X0          = lcd_bg_area.X0;
-  LayerConfig.Y0          = lcd_bg_area.Y0;
-  LayerConfig.X1          = lcd_bg_area.X0 + lcd_bg_area.XSize;
-  LayerConfig.Y1          = lcd_bg_area.Y0 + lcd_bg_area.YSize;
-  LayerConfig.PixelFormat = LCD_PIXEL_FORMAT_RGB888;
-  LayerConfig.Address     = (uint32_t) lcd_bg_buffer[lcd_bg_buffer_disp_idx];
-
-  BSP_LCD_ConfigLayer(0, LTDC_LAYER_1, &LayerConfig);
-
-  LayerConfig.X0 = lcd_fg_area.X0;
-  LayerConfig.Y0 = lcd_fg_area.Y0;
-  LayerConfig.X1 = lcd_fg_area.X0 + lcd_fg_area.XSize;
-  LayerConfig.Y1 = lcd_fg_area.Y0 + lcd_fg_area.YSize;
-  LayerConfig.PixelFormat = LCD_PIXEL_FORMAT_ARGB4444;
-  LayerConfig.Address = (uint32_t) lcd_fg_buffer[1]; /* External XSPI1 PSRAM */
-
-  BSP_LCD_ConfigLayer(0, LTDC_LAYER_2, &LayerConfig);
-  UTIL_LCD_SetFuncDriver(&LCD_Driver);
-  UTIL_LCD_SetLayer(LTDC_LAYER_2);
-  UTIL_LCD_Clear(0x00000000);
-  UTIL_LCD_SetFont(&Font20);
-  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
-}
-
-static HAL_StatusTypeDef MX_LTDC_ConfigLayer_Layer1(LTDC_HandleTypeDef *hltdc, MX_LTDC_LayerConfig_t *Config)
-{
-  LTDC_LayerFlexARGBTypeDef pLayerCfg = {0};
-
-  pLayerCfg.Layer.WindowX0 = Config->X0;
-  pLayerCfg.Layer.WindowX1 = Config->X1;
-  pLayerCfg.Layer.WindowY0 = Config->Y0;
-  pLayerCfg.Layer.WindowY1 = Config->Y1;
-  pLayerCfg.Layer.Alpha = LTDC_LxCACR_CONSTA;
-  pLayerCfg.Layer.Alpha0 = 0;
-  pLayerCfg.Layer.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
-  pLayerCfg.Layer.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
-  pLayerCfg.Layer.ImageWidth = (Config->X1 - Config->X0);
-  pLayerCfg.Layer.ImageHeight = (Config->Y1 - Config->Y0);
-
-  /* See ticket 188827 */
-  pLayerCfg.FlexARGB.PixelSize = 3;/*LTDC_ARGB_PIXEL_SIZE_3_BYTES;*/
-  pLayerCfg.FlexARGB.AlphaPos = 0;
-  pLayerCfg.FlexARGB.RedPos = 0;
-  pLayerCfg.FlexARGB.GreenPos = 8;
-  pLayerCfg.FlexARGB.BluePos = 16;
-  pLayerCfg.FlexARGB.AlphaWidth = 0;
-  pLayerCfg.FlexARGB.RedWidth = 8;
-  pLayerCfg.FlexARGB.GreenWidth = 8;
-  pLayerCfg.FlexARGB.BlueWidth = 8;
-
-  pLayerCfg.ARGBAddress = Config->Address;
-
-  return HAL_LTDC_ConfigLayerFlexARGB(hltdc, &pLayerCfg, LTDC_LAYER_1);
-}
-
-static HAL_StatusTypeDef MX_LTDC_ConfigLayer_Layer2(LTDC_HandleTypeDef *hltdc, MX_LTDC_LayerConfig_t *Config)
-{
-  LTDC_LayerCfgTypeDef pLayerCfg ={0};
-
-  pLayerCfg.WindowX0 = Config->X0;
-  pLayerCfg.WindowX1 = Config->X1;
-  pLayerCfg.WindowY0 = Config->Y0;
-  pLayerCfg.WindowY1 = Config->Y1;
-  pLayerCfg.PixelFormat = Config->PixelFormat;
-  pLayerCfg.Alpha = LTDC_LxCACR_CONSTA;
-  pLayerCfg.Alpha0 = 0;
-  pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
-  pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
-  pLayerCfg.FBStartAdress = Config->Address;
-  pLayerCfg.ImageWidth = (Config->X1 - Config->X0);
-  pLayerCfg.ImageHeight = (Config->Y1 - Config->Y0);
-  pLayerCfg.Backcolor.Blue = 0;
-  pLayerCfg.Backcolor.Green = 0;
-  pLayerCfg.Backcolor.Red = 0;
-
-  return HAL_LTDC_ConfigLayer(hltdc, &pLayerCfg, LTDC_LAYER_2);
+  ret = xSemaphoreGiveFromISR(isp_sem, &xHigherPriorityTaskWoken);
+  if (ret == pdTRUE)
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
 static int clamp_point(int *x, int *y)
@@ -745,7 +704,7 @@ static void decode_ld_landmark(roi_t *roi, ld_point_t *lm, ld_point_t *decoded)
 
 static void display_ld_hand(hand_info_t *hand)
 {
-  const int disk_radius = 2;
+  const int disk_radius = DISK_RADIUS;
   roi_t *roi = &hand->roi;
   int x[LD_LANDMARK_NB];
   int y[LD_LANDMARK_NB];
@@ -968,7 +927,63 @@ static int hand_landmark_prepare_input(uint8_t *buffer, roi_t *roi, hl_model_inf
   return 0;
 }
 #else
-#error "implement hand_landmark_prepare_input with ROTATION support"
+static void app_transform(nema_matrix3x3_t t, app_v3_t v)
+{
+  app_v3_t r;
+  int i;
+
+  for (i = 0; i < 3; i++)
+    r[i] = t[i][0] * v[0] + t[i][1] * v[1] + t[i][2] * v[2];
+
+  for (i = 0; i < 3; i++)
+    v[i] = r[i];
+}
+
+static int hand_landmark_prepare_input(uint8_t *buffer, roi_t *roi, hl_model_info_t *info)
+{
+  app_v3_t vertex[] = {
+    {           0,             0, 1},
+    {LCD_BG_WIDTH,             0, 1},
+    {LCD_BG_WIDTH, LCD_BG_HEIGHT, 1},
+    {           0, LCD_BG_HEIGHT, 1},
+  };
+  GFXMMU_BuffersTypeDef buffers = { 0 };
+  nema_matrix3x3_t t;
+  int ret;
+  int i;
+
+  buffers.Buf0Address = (uint32_t) info->nn_in;
+  ret = HAL_GFXMMU_ModifyBuffers(&hgfxmmu, &buffers);
+  assert(ret == HAL_OK);
+
+  /* bind destination texture */
+  nema_bind_dst_tex(GFXMMU_VIRTUAL_BUFFER0_BASE, LD_WIDTH, LD_HEIGHT, NEMA_RGBA8888, -1);
+  nema_set_clip(0, 0, LD_WIDTH, LD_HEIGHT);
+  nema_clear(0);
+  /* bind source texture */
+  nema_bind_src_tex((uintptr_t) buffer, LCD_BG_WIDTH, LCD_BG_HEIGHT, NEMA_RGBA8888, -1, NEMA_FILTER_BL);
+  nema_enable_tiling(1);
+  nema_set_blend_blit(NEMA_BL_SRC);
+
+  /* let's go */
+  nema_mat3x3_load_identity(t);
+  nema_mat3x3_translate(t, -roi->cx, -roi->cy);
+  nema_mat3x3_rotate(t, nema_rad_to_deg(-roi->rotation));
+  nema_mat3x3_scale(t, LD_WIDTH / roi->w, LD_HEIGHT / roi->h);
+  nema_mat3x3_translate(t, LD_WIDTH / 2, LD_HEIGHT / 2);
+  for (i = 0 ; i < 4; i++)
+    app_transform(t, vertex[i]);
+  nema_blit_quad_fit(vertex[0][0], vertex[0][1], vertex[1][0], vertex[1][1],
+                     vertex[2][0], vertex[2][1], vertex[3][0], vertex[3][1]);
+
+  nema_cl_submit(&cl);
+  nema_cl_wait(&cl);
+  HAL_ICACHE_Invalidate();
+
+  assert(!nema_get_error());
+
+  return 0;
+}
 #endif
 
 static int hand_landmark_run(uint8_t *buffer, hl_model_info_t *info, roi_t *roi,
@@ -992,6 +1007,38 @@ static int hand_landmark_run(uint8_t *buffer, hl_model_info_t *info, roi_t *roi,
 
   return is_valid;
 }
+
+#if HAS_ROTATION_SUPPORT == 1
+static void app_rot_init(hl_model_info_t *info)
+{
+  GFXMMU_PackingTypeDef packing = { 0 };
+  int ret;
+
+  printf("init nema\n");
+  nema_init();
+  assert(!nema_get_error());
+  nema_ext_hold_enable(2);
+  nema_ext_hold_irq_enable(2);
+  nema_ext_hold_enable(3);
+  nema_ext_hold_irq_enable(3);
+  printf("init nema DONE %s\n", nema_get_sw_device_name());
+
+  hgfxmmu.Instance = GFXMMU;
+  hgfxmmu.Init.BlockSize = GFXMMU_12BYTE_BLOCKS;
+  hgfxmmu.Init.AddressTranslation = DISABLE;
+  ret = HAL_GFXMMU_Init(&hgfxmmu);
+  assert(ret == HAL_OK);
+
+  packing.Buffer0Activation = ENABLE;
+  packing.Buffer0Mode       = GFXMMU_PACKING_MSB_REMOVE;
+  packing.DefaultAlpha      = 0xff;
+  ret = HAL_GFXMMU_ConfigPacking(&hgfxmmu, &packing);
+  assert(ret == HAL_OK);
+
+  cl = nema_cl_create_sized(8192);
+  nema_cl_bind_circular(&cl);
+}
+#endif
 
 static float ld_compute_rotation(ld_point_t lm[LD_LANDMARK_NB])
 {
@@ -1065,7 +1112,7 @@ static void compute_next_roi(roi_t *src, ld_point_t lm_in[LD_LANDMARK_NB], roi_t
   *next = roi;
 }
 
-static void nn_thread_fct(ULONG arg)
+static void nn_thread_fct(void *arg)
 {
   float nn_period_filtered_ms = 0;
   float pd_filtered_ms = 0;
@@ -1081,6 +1128,7 @@ static void nn_thread_fct(ULONG arg)
   roi_t roi_next;
   uint32_t pd_ms;
   uint32_t hl_ms;
+  int ret;
   int j;
 
   /* Current tracking algo only support single hand */
@@ -1090,6 +1138,10 @@ static void nn_thread_fct(ULONG arg)
   palm_detector_init(&pd_info);
   box_next.pKps = box_next_keypoints;
   hand_landmark_init(&hl_info);
+
+#if HAS_ROTATION_SUPPORT == 1
+  app_rot_init(&hl_info);
+#endif
 
   /*** App Loop ***************************************************************/
   nn_period[1] = HAL_GetTick();
@@ -1136,7 +1188,8 @@ static void nn_thread_fct(ULONG arg)
     ld_filtered_ms = USE_FILTERED_TS ? (7 * ld_filtered_ms + hl_ms) / 8 : hl_ms;
 
     /* update display stats */
-    tx_mutex_get(&disp.lock, TX_WAIT_FOREVER);
+    ret = xSemaphoreTake(disp.lock, portMAX_DELAY);
+    assert(ret == pdTRUE);
     disp.info.pd_ms = is_tracking ? 0 : (int)pd_filtered_ms;
     disp.info.hl_ms = is_tracking ? (int)ld_filtered_ms : 0;
     disp.info.nn_period_ms = nn_period_filtered_ms;
@@ -1147,9 +1200,11 @@ static void nn_thread_fct(ULONG arg)
     disp.info.hands[0].roi = rois[0];
     for (j = 0; j < LD_LANDMARK_NB; j++)
       disp.info.hands[0].ld_landmarks[j] = ld_landmarks[0][j];
-    tx_mutex_put(&disp.lock);
+    ret = xSemaphoreGive(disp.lock);
+    assert(ret == pdTRUE);
 
-    tx_semaphore_ceiling_put(&disp.update, 1);
+    /* It's possible xqueue is empty if display is slow. So don't check error code that may by pdFALSE in that case */
+    xSemaphoreGive(disp.update);
   }
 }
 
@@ -1158,7 +1213,7 @@ static void dp_update_drawing_area()
   int ret;
 
   __disable_irq();
-  ret = HAL_LTDC_SetAddress_NoReload(&hlcd_ltdc, (uint32_t) lcd_fg_buffer[lcd_fg_buffer_rd_idx], LTDC_LAYER_2);
+  ret = SCRL_SetAddress_NoReload(lcd_fg_buffer[lcd_fg_buffer_rd_idx], SCRL_LAYER_1);
   assert(ret == HAL_OK);
   __enable_irq();
 }
@@ -1168,7 +1223,7 @@ static void dp_commit_drawing_area()
   int ret;
 
   __disable_irq();
-  ret = HAL_LTDC_ReloadLayer(&hlcd_ltdc, LTDC_RELOAD_VERTICAL_BLANKING, LTDC_LAYER_2);
+  ret = SCRL_ReloadLayer(SCRL_LAYER_1);
   assert(ret == HAL_OK);
   __enable_irq();
   lcd_fg_buffer_rd_idx = 1 - lcd_fg_buffer_rd_idx;
@@ -1177,22 +1232,28 @@ static void dp_commit_drawing_area()
 static void on_ld_toggle_button_click(void *args)
 {
   display_t *disp = (display_t *) args;
+  int ret;
 
-  tx_mutex_get(&disp->lock, TX_WAIT_FOREVER);
+  ret = xSemaphoreTake(disp->lock, portMAX_DELAY);
+  assert(ret == pdTRUE);
   disp->info.is_ld_displayed = !disp->info.is_ld_displayed;
-  tx_mutex_put(&disp->lock);
+  ret = xSemaphoreGive(disp->lock);
+  assert(ret == pdTRUE);
 }
 
 static void on_pd_toggle_button_click(void *args)
 {
   display_t *disp = (display_t *) args;
+  int ret;
 
-  tx_mutex_get(&disp->lock, TX_WAIT_FOREVER);
+  ret = xSemaphoreTake(disp->lock, portMAX_DELAY);
+  assert(ret == pdTRUE);
   disp->info.is_pd_displayed = !disp->info.is_pd_displayed;
-  tx_mutex_put(&disp->lock);
+  ret = xSemaphoreGive(disp->lock);
+  assert(ret == pdTRUE);
 }
 
-static void dp_thread_fct(ULONG arg)
+static void dp_thread_fct(void *arg)
 {
   button_t ld_toggle_button;
   button_t hd_toggle_button;
@@ -1201,19 +1262,26 @@ static void dp_thread_fct(ULONG arg)
   uint32_t ts;
   int ret;
 
+#ifdef STM32N6570_DK_REV
   button_init(&ld_toggle_button, BUTTON_USER1, on_ld_toggle_button_click, &disp);
   button_init(&hd_toggle_button, BUTTON_TAMP, on_pd_toggle_button_click, &disp);
+#else
+  button_init(&ld_toggle_button, BUTTON_USER, on_ld_toggle_button_click, &disp);
+  button_init(&hd_toggle_button, BUTTON_USER, on_pd_toggle_button_click, &disp);
+#endif
   while (1)
   {
-    ret = tx_semaphore_get(&disp.update, TX_WAIT_FOREVER);
-    assert(ret == 0);
+    ret = xSemaphoreTake(disp.update, portMAX_DELAY);
+    assert(ret == pdTRUE);
 
     button_process(&ld_toggle_button);
     button_process(&hd_toggle_button);
 
-    tx_mutex_get(&disp.lock, TX_WAIT_FOREVER);
+    ret = xSemaphoreTake(disp.lock, portMAX_DELAY);
+    assert(ret == pdTRUE);
     info = disp.info;
-    tx_mutex_put(&disp.lock);
+    ret = xSemaphoreGive(disp.lock);
+    assert(ret == pdTRUE);
     info.disp_ms = disp_ms;
 
     ts = HAL_GetTick();
@@ -1225,24 +1293,65 @@ static void dp_thread_fct(ULONG arg)
   }
 }
 
-static void isp_thread_fct(ULONG arg)
+static void isp_thread_fct(void *arg)
 {
   int ret;
 
   while (1) {
-    ret = tx_semaphore_get(&isp_sem, TX_WAIT_FOREVER);
-    assert(ret == 0);
+    ret = xSemaphoreTake(isp_sem, portMAX_DELAY);
+    assert(ret == pdTRUE);
 
     CAM_IspUpdate();
   }
 }
 
+static void Display_init()
+{
+  SCRL_LayerConfig layers_config[2] = {
+    {
+      .origin = {lcd_bg_area.X0, lcd_bg_area.Y0},
+      .size = {lcd_bg_area.XSize, lcd_bg_area.YSize},
+#if HAS_ROTATION_SUPPORT == 0
+      .format = SCRL_RGB888,
+#else
+      .format = SCRL_ARGB8888,
+#endif
+      .address = lcd_bg_buffer[lcd_bg_buffer_disp_idx],
+    },
+    {
+      .origin = {lcd_fg_area.X0, lcd_fg_area.Y0},
+      .size = {lcd_fg_area.XSize, lcd_fg_area.YSize},
+      .format = SCRL_ARGB4444,
+      .address = lcd_fg_buffer[1],
+    },
+  };
+  SCRL_ScreenConfig screen_config = {
+    .size = {lcd_bg_area.XSize, lcd_bg_area.YSize},
+#ifdef SCR_LIB_USE_SPI
+    .format = SCRL_RGB565,
+#else
+     .format = SCRL_YUV422, /* Use SCRL_RGB565 if host support this format to reduce cpu load */
+#endif
+    .address = screen_buffer,
+    .fps = CAMERA_FPS,
+  };
+  int ret;
+
+  ret = SCRL_Init((SCRL_LayerConfig *[2]){&layers_config[0], &layers_config[1]}, &screen_config);
+  assert(ret == 0);
+
+  UTIL_LCD_SetLayer(SCRL_LAYER_1);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_TRANSPARENT);
+  UTIL_LCD_SetFont(&LCD_FONT);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+}
+
 void app_run()
 {
-  const UINT isp_priority = TX_MAX_PRIORITIES / 2 - 2;
-  const UINT dp_priority = TX_MAX_PRIORITIES / 2 + 2;
-  const UINT nn_priority = TX_MAX_PRIORITIES / 2 - 1;
-  const ULONG time_slice = 10;
+  UBaseType_t isp_priority = FREERTOS_PRIORITY(2);
+  UBaseType_t dp_priority = FREERTOS_PRIORITY(-2);
+  UBaseType_t nn_priority = FREERTOS_PRIORITY(1);
+  TaskHandle_t hdl;
   int ret;
 
   printf("Init application\n");
@@ -1254,7 +1363,7 @@ void app_run()
   CACHE_OP(SCB_CleanInvalidateDCache_by_Addr(lcd_bg_buffer, sizeof(lcd_bg_buffer)));
   memset(lcd_fg_buffer, 0, sizeof(lcd_fg_buffer));
   CACHE_OP(SCB_CleanInvalidateDCache_by_Addr(lcd_fg_buffer, sizeof(lcd_fg_buffer)));
-  LCD_init();
+  Display_init();
 
   /* create buffer queues */
   ret = bqueue_init(&nn_input_queue, 2, (uint8_t *[2]){nn_input_buffers[0], nn_input_buffers[1]});
@@ -1266,26 +1375,26 @@ void app_run()
   CAM_Init();
 
   /* sems + mutex init */
-  ret = tx_semaphore_create(&isp_sem, NULL, 0);
-  assert(ret == 0);
-  ret = tx_semaphore_create(&disp.update, NULL, 0);
-  assert(ret == 0);
-  ret= tx_mutex_create(&disp.lock, NULL, TX_INHERIT);
-  assert(ret == 0);
+  isp_sem = xSemaphoreCreateCountingStatic(1, 0, &isp_sem_buffer);
+  assert(isp_sem);
+  disp.update = xSemaphoreCreateCountingStatic(1, 0, &disp.update_buffer);
+  assert(disp.update);
+  disp.lock = xSemaphoreCreateMutexStatic(&disp.lock_buffer);
+  assert(disp.lock);
 
   /* Start LCD Display camera pipe stream */
   CAM_DisplayPipe_Start(lcd_bg_buffer[0], CMW_MODE_CONTINUOUS);
 
   /* threads init */
-  ret = tx_thread_create(&nn_thread, "nn", nn_thread_fct, 0, nn_tread_stack,
-                         sizeof(nn_tread_stack), nn_priority, nn_priority, time_slice, TX_AUTO_START);
-  assert(ret == TX_SUCCESS);
-  ret = tx_thread_create(&dp_thread, "dp", dp_thread_fct, 0, dp_tread_stack,
-                         sizeof(dp_tread_stack), dp_priority, dp_priority, time_slice, TX_AUTO_START);
-  assert(ret == TX_SUCCESS);
-  ret = tx_thread_create(&isp_thread, "isp", isp_thread_fct, 0, isp_tread_stack,
-                         sizeof(isp_tread_stack), isp_priority, isp_priority, time_slice, TX_AUTO_START);
-  assert(ret == TX_SUCCESS);
+  hdl = xTaskCreateStatic(nn_thread_fct, "nn", configMINIMAL_STACK_SIZE * 2, NULL, nn_priority, nn_thread_stack,
+                          &nn_thread);
+  assert(hdl != NULL);
+  hdl = xTaskCreateStatic(dp_thread_fct, "dp", configMINIMAL_STACK_SIZE * 2, NULL, dp_priority, dp_thread_stack,
+                          &dp_thread);
+  assert(hdl != NULL);
+  hdl = xTaskCreateStatic(isp_thread_fct, "isp", configMINIMAL_STACK_SIZE * 2, NULL, isp_priority, isp_thread_stack,
+                          &isp_thread);
+  assert(hdl != NULL);
 }
 
 int CMW_CAMERA_PIPE_FrameEventCallback(uint32_t pipe)
@@ -1304,18 +1413,4 @@ int CMW_CAMERA_PIPE_VsyncEventCallback(uint32_t pipe)
     app_main_pipe_vsync_event();
 
   return HAL_OK;
-}
-
-/* Override to allow usage of flexible ARGB for layer 1 */
-HAL_StatusTypeDef MX_LTDC_ConfigLayer(LTDC_HandleTypeDef *hltdc, uint32_t LayerIndex, MX_LTDC_LayerConfig_t *Config)
-{
-  if (LayerIndex == LTDC_LAYER_1)
-    return MX_LTDC_ConfigLayer_Layer1(hltdc, Config);
-
-  if (LayerIndex == LTDC_LAYER_2)
-    return MX_LTDC_ConfigLayer_Layer2(hltdc, Config);
-
-  assert(0);
-
-  return HAL_ERROR;
 }
