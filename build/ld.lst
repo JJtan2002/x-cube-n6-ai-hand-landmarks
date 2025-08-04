@@ -1,0 +1,236 @@
+ARM GAS  /tmp/cc821R7F.s 			page 1
+
+
+   1              		.arch armv8.1-m.main
+   2              		.fpu fpv5-d16
+   3              		.arch_extension dsp
+   4              		.arch_extension fp
+   5              		.arch_extension fp.dp
+   6              		.arch_extension mve
+   7              		.arch_extension mve.fp
+   8              		.eabi_attribute 5, "cortex-m55"
+   9              		.eabi_attribute 28, 1
+  10              		.eabi_attribute 20, 1
+  11              		.eabi_attribute 21, 1
+  12              		.eabi_attribute 23, 3
+  13              		.eabi_attribute 24, 1
+  14              		.eabi_attribute 25, 1
+  15              		.eabi_attribute 26, 1
+  16              		.eabi_attribute 30, 4
+  17              		.eabi_attribute 34, 1
+  18              		.eabi_attribute 38, 1
+  19              		.eabi_attribute 18, 4
+  20              		.file	"ld.c"
+  21              		.text
+  22              	.Ltext0:
+  23              		.cfi_sections	.debug_frame
+  24              		.file 1 "Src/ld.c"
+  25              		.section	.text.ld_post_process,"ax",%progbits
+  26              		.align	1
+  27              		.global	ld_post_process
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  32              	ld_post_process:
+  33              	.LVL0:
+  34              	.LFB3:
+   1:Src/ld.c      **** /**
+   2:Src/ld.c      ****   ******************************************************************************
+   3:Src/ld.c      ****   * @file    ld.c
+   4:Src/ld.c      ****   * @author  MDG Application Team
+   5:Src/ld.c      ****   ******************************************************************************
+   6:Src/ld.c      ****   * @attention
+   7:Src/ld.c      ****   *
+   8:Src/ld.c      ****   * Copyright (c) 2024 STMicroelectronics.
+   9:Src/ld.c      ****   * All rights reserved.
+  10:Src/ld.c      ****   *
+  11:Src/ld.c      ****   * This software is licensed under terms that can be found in the LICENSE file
+  12:Src/ld.c      ****   * in the root directory of this software component.
+  13:Src/ld.c      ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  14:Src/ld.c      ****   *
+  15:Src/ld.c      ****   ******************************************************************************
+  16:Src/ld.c      ****   */
+  17:Src/ld.c      **** 
+  18:Src/ld.c      **** #include "ld.h"
+  19:Src/ld.c      **** 
+  20:Src/ld.c      **** #include <stdio.h>
+  21:Src/ld.c      **** 
+  22:Src/ld.c      **** const int ld_bindings_idx[LD_BINDING_NB][2] = {
+  23:Src/ld.c      ****   {0,1}, {1,2}, {2,3}, {3,4}, {0,5}, {5,6}, {6,7}, {7,8},
+  24:Src/ld.c      ****   {5,9}, {9,10}, {10,11}, {11,12}, {9,13}, {13,14}, {14,15}, {15,16},
+ARM GAS  /tmp/cc821R7F.s 			page 2
+
+
+  25:Src/ld.c      ****   {13,17}, {17,18}, {18,19}, {19,20}, {0,17},
+  26:Src/ld.c      **** };
+  27:Src/ld.c      **** 
+  28:Src/ld.c      **** int ld_post_process(float *probs, float *raw_landmarks, ld_point_t landmarks[LD_LANDMARK_NB])
+  29:Src/ld.c      **** {
+  35              		.loc 1 29 1 view -0
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 0
+  38              		@ frame_needed = 0, uses_anonymous_args = 0
+  30:Src/ld.c      ****   int i;
+  39              		.loc 1 30 3 view .LVU1
+  31:Src/ld.c      **** 
+  32:Src/ld.c      ****   if (*probs < LD_PROB_THRESHOLD)
+  40              		.loc 1 32 3 view .LVU2
+  41              		.loc 1 32 6 is_stmt 0 view .LVU3
+  42 0000 90ED007A 		vldr.32	s14, [r0]
+  43 0004 F5EE007A 		vmov.f32	s15, #2.5e-1
+  44 0008 B4EEE77A 		vcmpe.f32	s14, s15
+  45 000c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  29:Src/ld.c      ****   int i;
+  46              		.loc 1 29 1 view .LVU4
+  47 0010 00B5     		push	{lr}
+  48              		.cfi_def_cfa_offset 4
+  49              		.cfi_offset 14, -4
+  50              		.loc 1 32 6 view .LVU5
+  51 0012 18D4     		bmi	.L4
+  33:Src/ld.c      ****     return 0;
+  34:Src/ld.c      **** 
+  35:Src/ld.c      ****   for (i = 0; i < LD_LANDMARK_NB; i++) {
+  36:Src/ld.c      ****     landmarks[i].x = raw_landmarks[i * 3 + 0] / LD_WIDTH;
+  52              		.loc 1 36 47 view .LVU6
+  53 0014 4FF0150E 		mov	lr, #21
+  54 0018 DFED0C7A 		vldr.32	s15, .L6
+  55 001c 4EF001E0 		dls	lr, lr
+  56              	.LVL1:
+  57              	.L3:
+  58              		.loc 1 36 5 is_stmt 1 view .LVU7
+  59              		.loc 1 36 47 is_stmt 0 view .LVU8
+  60 0020 D1ED006A 		vldr.32	s13, [r1]
+  61 0024 86EEA77A 		vdiv.f32	s14, s13, s15
+  62              		.loc 1 36 20 view .LVU9
+  63 0028 82ED007A 		vstr.32	s14, [r2]
+  37:Src/ld.c      ****     landmarks[i].y = raw_landmarks[i * 3 + 1] / LD_WIDTH;
+  64              		.loc 1 37 5 is_stmt 1 view .LVU10
+  65              		.loc 1 37 47 is_stmt 0 view .LVU11
+  66 002c D1ED016A 		vldr.32	s13, [r1, #4]
+  67 0030 86EEA77A 		vdiv.f32	s14, s13, s15
+  35:Src/ld.c      ****     landmarks[i].x = raw_landmarks[i * 3 + 0] / LD_WIDTH;
+  68              		.loc 1 35 17 discriminator 1 view .LVU12
+  69 0034 0C31     		adds	r1, r1, #12
+  70              		.loc 1 37 20 view .LVU13
+  71 0036 82ED017A 		vstr.32	s14, [r2, #4]
+  35:Src/ld.c      ****     landmarks[i].x = raw_landmarks[i * 3 + 0] / LD_WIDTH;
+  72              		.loc 1 35 36 is_stmt 1 discriminator 3 view .LVU14
+  35:Src/ld.c      ****     landmarks[i].x = raw_landmarks[i * 3 + 0] / LD_WIDTH;
+  73              		.loc 1 35 17 discriminator 1 view .LVU15
+  74 003a 0832     		adds	r2, r2, #8
+ARM GAS  /tmp/cc821R7F.s 			page 3
+
+
+  75 003c 0FF011C0 		le	lr, .L3
+  38:Src/ld.c      ****   }
+  39:Src/ld.c      **** 
+  40:Src/ld.c      ****   return 1;
+  76              		.loc 1 40 10 is_stmt 0 view .LVU16
+  77 0040 0120     		movs	r0, #1
+  78              	.LVL2:
+  79              	.L1:
+  41:Src/ld.c      **** }
+  80              		.loc 1 41 1 view .LVU17
+  81 0042 5DF804FB 		ldr	pc, [sp], #4
+  82              	.LVL3:
+  83              	.L4:
+  33:Src/ld.c      **** 
+  84              		.loc 1 33 12 view .LVU18
+  85 0046 0020     		movs	r0, #0
+  86              	.LVL4:
+  33:Src/ld.c      **** 
+  87              		.loc 1 33 12 view .LVU19
+  88 0048 FBE7     		b	.L1
+  89              	.L7:
+  90 004a 00BF     		.align	2
+  91              	.L6:
+  92 004c 00006043 		.word	1130364928
+  93              		.cfi_endproc
+  94              	.LFE3:
+  96              		.global	ld_bindings_idx
+  97              		.section	.rodata.ld_bindings_idx,"a"
+  98              		.align	2
+ 101              	ld_bindings_idx:
+ 102 0000 00000000 		.word	0
+ 103 0004 01000000 		.word	1
+ 104 0008 01000000 		.word	1
+ 105 000c 02000000 		.word	2
+ 106 0010 02000000 		.word	2
+ 107 0014 03000000 		.word	3
+ 108 0018 03000000 		.word	3
+ 109 001c 04000000 		.word	4
+ 110 0020 00000000 		.word	0
+ 111 0024 05000000 		.word	5
+ 112 0028 05000000 		.word	5
+ 113 002c 06000000 		.word	6
+ 114 0030 06000000 		.word	6
+ 115 0034 07000000 		.word	7
+ 116 0038 07000000 		.word	7
+ 117 003c 08000000 		.word	8
+ 118 0040 05000000 		.word	5
+ 119 0044 09000000 		.word	9
+ 120 0048 09000000 		.word	9
+ 121 004c 0A000000 		.word	10
+ 122 0050 0A000000 		.word	10
+ 123 0054 0B000000 		.word	11
+ 124 0058 0B000000 		.word	11
+ 125 005c 0C000000 		.word	12
+ 126 0060 09000000 		.word	9
+ 127 0064 0D000000 		.word	13
+ 128 0068 0D000000 		.word	13
+ARM GAS  /tmp/cc821R7F.s 			page 4
+
+
+ 129 006c 0E000000 		.word	14
+ 130 0070 0E000000 		.word	14
+ 131 0074 0F000000 		.word	15
+ 132 0078 0F000000 		.word	15
+ 133 007c 10000000 		.word	16
+ 134 0080 0D000000 		.word	13
+ 135 0084 11000000 		.word	17
+ 136 0088 11000000 		.word	17
+ 137 008c 12000000 		.word	18
+ 138 0090 12000000 		.word	18
+ 139 0094 13000000 		.word	19
+ 140 0098 13000000 		.word	19
+ 141 009c 14000000 		.word	20
+ 142 00a0 00000000 		.word	0
+ 143 00a4 11000000 		.word	17
+ 144              		.text
+ 145              	.Letext0:
+ 146              		.file 2 "Inc/ld.h"
+ARM GAS  /tmp/cc821R7F.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ld.c
+     /tmp/cc821R7F.s:26     .text.ld_post_process:00000000 $t
+     /tmp/cc821R7F.s:32     .text.ld_post_process:00000000 ld_post_process
+     /tmp/cc821R7F.s:92     .text.ld_post_process:0000004c $d
+     /tmp/cc821R7F.s:101    .rodata.ld_bindings_idx:00000000 ld_bindings_idx
+     /tmp/cc821R7F.s:98     .rodata.ld_bindings_idx:00000000 $d
+                           .group:00000000 wm4.0.c552ae9005b0f2cca11872fae5d4b7f2
+                           .group:00000000 wm4.ld.h.19.4ce791deb5cad1787551e620ef002c56
+                           .group:00000000 wm4._newlib_version.h.4.411db44ea2338a62eca2f0777f81481b
+                           .group:00000000 wm4.newlib.h.27.4b972ceed5d01f491020c20f1e546cab
+                           .group:00000000 wm4.ieeefp.h.77.bd5feb87d9990dd328793ced294f6a87
+                           .group:00000000 wm4.features.h.22.9dfb1293666eb4caf24cccb81c86a551
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.70fc7af612f78ddcace70fdd90b5623b
+                           .group:00000000 wm4.stddef.h.39.6817658cc6bc4c7c8354d2009e4a5777
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.6f8e08a347b1cff664332fa350bfceb3
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.18.25503cdc8b7e55dd0d6ea7b3e5af7a03
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.78.6b87466b04591b1f1cb88c14fdf2ba9e
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+
+NO UNDEFINED SYMBOLS

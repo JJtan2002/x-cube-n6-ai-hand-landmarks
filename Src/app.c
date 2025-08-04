@@ -73,11 +73,17 @@ void nema_enable_tiling(int);
 
 /* palm detector */
 #define PD_MAX_HAND_NB 1
+#define YOLO_MAX_NB 20
 
 #if HAS_ROTATION_SUPPORT == 1
 typedef float app_v3_t[3];
 #endif
 
+/**
+ * @brief Defines a Region Of Interest (ROI).
+ * @details This is a key structure used to pass the location of a detected object
+ * (like a hand or face) to the next stage of the pipeline.
+ */
 typedef struct {
   float cx;
   float cy;
@@ -96,6 +102,9 @@ typedef struct {
 #define DISK_RADIUS 1
 #endif
 
+/**
+ * @brief A simple rectangle definition using top-left corner and size.
+ */
 typedef struct
 {
   uint32_t X0;
@@ -104,16 +113,24 @@ typedef struct
   uint32_t YSize;
 } Rectangle_TypeDef;
 
+/**
+ * @brief A thread-safe buffer queue for passing data between tasks (e.g., camera and NN).
+ * @details Implements a classic producer-consumer model using semaphores.
+ */
 typedef struct {
-  SemaphoreHandle_t free;
+  SemaphoreHandle_t free;         /* Signals that a buffer is free for writing. */
   StaticSemaphore_t free_buffer;
-  SemaphoreHandle_t ready;
-  StaticSemaphore_t ready_buffer;
-  int buffer_nb;
+  SemaphoreHandle_t ready;        /* Signals that a buffer is ready for reading. */
+  StaticSemaphore_t ready_buffer; 
+  int buffer_nb;                  /* Total number of buffers in the queue. */
   uint8_t *buffers[BQUEUE_MAX_BUFFERS];
-  int free_idx;
-  int ready_idx;
+  int free_idx;          /* Index of the next free buffer. */ 
+  int ready_idx;        /* Index of the next ready buffer. */
 } bqueue_t;
+
+/**
+ * @brief Holds data for calculating CPU load.
+ */
 
 typedef struct {
   uint64_t current_total;
@@ -127,53 +144,106 @@ typedef struct {
   } history[CPU_LOAD_HISTORY_DEPTH];
 } cpuload_info_t;
 
+/**
+ * @brief Holds all information for a single detected hand/face instance.
+ * @details This is the main data structure linking the output of the first model
+ * to the input of the second, and finally to the display.
+ */
 typedef struct {
-  int is_valid;
-  pd_pp_box_t pd_hands;
-  roi_t roi;
-  ld_point_t ld_landmarks[LD_LANDMARK_NB];
+  int is_valid;             /* Flag to check if the detection in this struct is current. */
+  pd_pp_box_t pd_hands;     /* Palm Detector raw output. */
+  roi_t roi;            /* Region of Interest for the detected hand. */
+  ld_point_t ld_landmarks[LD_LANDMARK_NB];        /* Final outpu from the landmark model */
 } hand_info_t;
 
+/**
+ * @brief Aggregates all information needed by the display thread to render one frame.
+ */
 typedef struct {
   float nn_period_ms;
   uint32_t pd_ms;
   uint32_t hl_ms;
   uint32_t pp_ms;
   uint32_t disp_ms;
-  int is_ld_displayed;
-  int is_pd_displayed;
-  int pd_hand_nb;
-  float pd_max_prob;
-  hand_info_t hands[PD_MAX_HAND_NB];
+  int is_ld_displayed;    /* Toggle for showing landmarks. */
+  int is_pd_displayed;    /* Toggle for showing palm detector boxes. */
+  int pd_hand_nb;       /* Number of valid hands detected by the palm detector. */
+  float pd_max_prob;      /* Maximum confidence score of the detected hands. */
+  hand_info_t hands[PD_MAX_HAND_NB];  /* Array of detected hands. */
 } display_info_t;
 
+/**
+ * @brief A wrapper for the display_info_t struct to make it thread-safe.
+ */
 typedef struct {
-  SemaphoreHandle_t update;
-  StaticSemaphore_t update_buffer;
-  SemaphoreHandle_t lock;
+  SemaphoreHandle_t update;         /* Semaphore to signal that new info is ready. */
+  StaticSemaphore_t update_buffer;  
+  SemaphoreHandle_t lock;           /* Mutex to protect access to the 'info' struct. */
   StaticSemaphore_t lock_buffer;
   display_info_t info;
 } display_t;
 
+/**
+ * @brief Encapsulates all data related to the Palm Detector (PD) model.
+ * @details This will be adapted for our Face Detector (FD) model.
+ */
 typedef struct {
-  uint32_t nn_in_len;
-  float *prob_out;
+  uint32_t nn_in_len;       /* Size of the model's input tensor. */
+  float *prob_out;          /* Output probabilities for each detected hand. */
   uint32_t prob_out_len;
-  float *boxes_out;
+  float *boxes_out;         /* Pointer to the bounding box output tensor. */
   uint32_t boxes_out_len;
-  pd_model_pp_static_param_t static_param;
-  pd_postprocess_out_t pd_out;
+  pd_model_pp_static_param_t static_param;    /* Parameters for post-processing. */
+  pd_postprocess_out_t pd_out;    /* Struct to hold post-processing results. */
 } pd_model_info_t;
 
+/**
+ * @brief Encapsulates all data related to the YOLO Detector model.
+ * @details This struct holds pointers to the model's raw output and contains the
+ * necessary parameters and buffers for the YOLOv8 post-processing library.
+ */
 typedef struct {
-  uint8_t *nn_in;
+  /* Model I/O Info */
+  uint32_t nn_in_len;               /* Size of the model's input tensor. */
+  void *raw_output_tensor;          /* Pointer to the single raw output tensor from YOLOv8. */
+  uint32_t raw_output_len;          /* Size of the raw output tensor. */
+
+  /* Post-Processing Parameters & Buffers */
+  yolov8_pp_static_param_t pp_params; /* Static configuration for the YOLOv8 post-processing library. */
+  od_pp_out_t pp_output;              /* Struct to hold the final, processed detection results. */
+  od_pp_outBuffer_t final_boxes[YOLO_MAX_NB]; /* The actual buffer to store the final bounding boxes. */
+
+} yolo_detector_info_t;
+
+/**
+ * @brief Encapsulates all data related to the Hand Landmark (HL) model.
+ * @details This will be adapted for our Face Landmark model.
+ */
+typedef struct {
+  uint8_t *nn_in;       /* Pointer to the model's input tensor. */
   uint32_t nn_in_len;
-  float *prob_out;
+  float *prob_out;      /* Pointer to the landmark presence probability output. */
   uint32_t prob_out_len;
-  float *landmarks_out;
+  float *landmarks_out; /* Pointer to the landmark coordinates output tensor. */
   uint32_t landmarks_out_len;
 } hl_model_info_t;
 
+/**
+ * @brief Encapsulates all data related to the Face Landmark model.
+ */
+typedef struct {
+  uint8_t *nn_in;       /* Pointer to the model's input tensor. */
+  uint32_t nn_in_len;
+  float *prob_out;      /* Pointer to the landmark presence probability output. */
+  uint32_t prob_out_len;
+  float *landmarks_out; /* Pointer to the landmark coordinates output tensor. */
+  uint32_t landmarks_out_len;
+} fl_model_info_t;
+
+
+/**
+ * @brief A simple structure to manage a UI button's state and callback.
+ */
 typedef struct {
   Button_TypeDef button_id;
   int prev_state;
@@ -182,20 +252,25 @@ typedef struct {
 } button_t;
 
 /* Globals */
-/* Lcd Background area */
+
+/* Rectangle definitions for the full background and foreground layers. */
 static Rectangle_TypeDef lcd_bg_area = {
   .X0 = 0,
   .Y0 = 0,
   .XSize = LCD_BG_WIDTH,
   .YSize = LCD_BG_HEIGHT,
 };
-/* Lcd Foreground area */
+
 static Rectangle_TypeDef lcd_fg_area = {
   .X0 = 0,
   .Y0 = 0,
   .XSize = LCD_FG_WIDTH,
   .YSize = LCD_FG_HEIGHT,
 };
+
+/* The main display buffers. This is a set of 3+ full-frame buffers for smooth video.
+   ALIGN_32 ensures 32-byte alignment for performance (DMA/cache).
+   IN_PSRAM places this large buffer in external PSRAM. */
 /* Lcd Background Buffer */
 static uint8_t lcd_bg_buffer[DISPLAY_BUFFER_NB][LCD_BG_WIDTH * LCD_BG_HEIGHT * DISPLAY_BPP] ALIGN_32 IN_PSRAM;
 static int lcd_bg_buffer_disp_idx = 1;
@@ -212,12 +287,18 @@ static cpuload_info_t cpu_load;
 static uint8_t screen_buffer[LCD_BG_WIDTH * LCD_BG_HEIGHT * 2] ALIGN_32 IN_PSRAM;
 
 /* model */
+ /* Declare the necessary runtime instances and global buffers to hold outputs */
  /* palm detector */
 LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(palm_detector);
 static roi_t rois[PD_MAX_HAND_NB];
  /* hand landmark */
 LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(hand_landmark);
 static ld_point_t ld_landmarks[PD_MAX_HAND_NB][LD_LANDMARK_NB];
+//LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(yolo_detector);
+//static roi_t rois[YOLO_MAX_NB];
+//LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(face_landmark);
+//static ld_point_t fl_landmarks[1[FL_LANDMARK_NB]; // Use new constants
+/* Counters for frame synchronization. */
 static uint32_t frame_event_nb;
 static volatile uint32_t frame_event_nb_for_resize;
 
@@ -225,8 +306,8 @@ static volatile uint32_t frame_event_nb_for_resize;
 static uint8_t nn_input_buffers[2][NN_WIDTH * NN_HEIGHT * NN_BPP] ALIGN_32 IN_PSRAM;
 static bqueue_t nn_input_queue;
 
- /* rtos */
-static StaticTask_t nn_thread;
+/* --- RTOS Task (Thread) Declarations --- */
+/* Statically allocates the memory for the three main application tasks and their stacks. */static StaticTask_t nn_thread;
 static StackType_t nn_thread_stack[2 * configMINIMAL_STACK_SIZE];
 static StaticTask_t dp_thread;
 static StackType_t dp_thread_stack[2 *configMINIMAL_STACK_SIZE];
@@ -249,6 +330,11 @@ static int is_cache_enable()
 #endif
 }
 
+/** HELPER FUNCTIONS
+ * @brief Normalizes an angle to the range [-PI, PI].
+ * @param angle The input angle in radians.
+ * @return The equivalent angle within the range [-PI, PI].
+ */
 static float pd_normalize_angle(float angle)
 {
   return angle - 2 * M_PI * floorf((angle - (-M_PI)) / (2 * M_PI));
@@ -293,6 +379,12 @@ static float pd_compute_rotation(pd_pp_box_t *box)
   return pd_cook_rotation(pd_normalize_angle(rotation));
 }
 
+/**
+ * @brief Converts normalized AI model coordinates (0.0 to 1.0) to screen pixel coordinates.
+ * @details The AI model outputs coordinates relative to its square input buffer. This
+ * function scales them to match the final display resolution.
+ * @param box Pointer to the detection box with normalized coordinates.
+ */
 static void cvt_pd_coord_to_screen_coord(pd_pp_box_t *box)
 {
   int i;
@@ -311,6 +403,12 @@ static void cvt_pd_coord_to_screen_coord(pd_pp_box_t *box)
   }
 }
 
+/**
+ * @brief Adjusts a Region of Interest (ROI) by shifting its center and scaling its size.
+ * @details This is used to create the final input for the second model. It takes the
+ * initial detection, shifts it, and scales it up to ensure the full object (e.g.,
+ * the whole hand, not just the palm) is included. It also makes the ROI a square.
+ */
 static void roi_shift_and_scale(roi_t *roi, float shift_x, float shift_y, float scale_x, float scale_y)
 {
   float long_side;
@@ -330,6 +428,14 @@ static void roi_shift_and_scale(roi_t *roi, float shift_x, float shift_y, float 
   roi->h *= scale_y;
 }
 
+/**
+ * @brief Converts the output of the first model (detector) into an ROI for the second model.
+ * @details This is the core "glue" function between the two AI models. It takes the raw
+ * palm/face detection and transforms it into a properly scaled, rotated, and positioned
+ * ROI that the second (landmark) model can use.
+ * @param box The raw output from the palm/face detector.
+ * @param roi The ROI structure to be filled for the landmark model.
+ */
 static void pd_box_to_roi(pd_pp_box_t *box,  roi_t *roi)
 {
   const float shift_x = 0;
@@ -350,6 +456,9 @@ static void pd_box_to_roi(pd_pp_box_t *box,  roi_t *roi)
 #endif
 }
 
+/**
+ * @brief A utility function to copy data from one detection box struct to another.
+ */
 static void copy_pd_box(pd_pp_box_t *dst, pd_pp_box_t *src)
 {
   int i;
@@ -363,6 +472,10 @@ static void copy_pd_box(pd_pp_box_t *dst, pd_pp_box_t *src)
     dst->pKps[i] = src->pKps[i];
 }
 
+/**
+ * @brief Initializes a hardware button using the Board Support Package (BSP).
+ * @param on_click_handler Function pointer to call when the button is pressed.
+ */
 static void button_init(button_t *b, Button_TypeDef id, void (*on_click_handler)(void *), void *cb_args)
 {
   int ret;
@@ -376,6 +489,10 @@ static void button_init(button_t *b, Button_TypeDef id, void (*on_click_handler)
   b->cb_args = cb_args;
 }
 
+/**
+ * @brief Polls a button's state and triggers its callback on a press event.
+ * @details This should be called periodically in a UI or main task.
+ */
 static void button_process(button_t *b)
 {
   int state = BSP_PB_GetState(b->button_id);
@@ -386,11 +503,18 @@ static void button_process(button_t *b)
   b->prev_state = state;
 }
 
+/**
+ * @brief Initializes the CPU load tracking structure.
+ */
 static void cpuload_init(cpuload_info_t *cpu_load)
 {
   memset(cpu_load, 0, sizeof(cpuload_info_t));
 }
 
+/**
+ * @brief Updates the CPU load history with a new data point.
+ * @details Uses FreeRTOS's runtime counters to get total time and idle time.
+ */
 static void cpuload_update(cpuload_info_t *cpu_load)
 {
   int i;
@@ -407,6 +531,9 @@ static void cpuload_update(cpuload_info_t *cpu_load)
     cpu_load->history[CPU_LOAD_HISTORY_DEPTH - 1 - i] = cpu_load->history[CPU_LOAD_HISTORY_DEPTH - 1 - i - 1];
 }
 
+/**
+ * @brief Calculates CPU load percentages over different time windows.
+ */
 static void cpuload_get_info(cpuload_info_t *cpu_load, float *cpu_load_last, float *cpu_load_last_second,
                              float *cpu_load_last_five_seconds)
 {
@@ -421,6 +548,11 @@ static void cpuload_get_info(cpuload_info_t *cpu_load, float *cpu_load_last, flo
                      (cpu_load->history[2].total - cpu_load->history[7].total);
 }
 
+/**
+ * @brief Initializes a thread-safe buffer queue (bqueue).
+ * @details Creates the FreeRTOS semaphores needed for producer-consumer synchronization.
+ * @return 0 on success, -1 on failure.
+ */
 static int bqueue_init(bqueue_t *bq, int buffer_nb, uint8_t **buffers)
 {
   int i;
@@ -451,6 +583,11 @@ free_sem_error:
   return -1;
 }
 
+/**
+ * @brief Gets a free buffer from the queue for a producer to write to.
+ * @param is_blocking If true, will wait indefinitely for a free buffer.
+ * @return Pointer to a free buffer, or NULL if non-blocking and none are available.
+ */
 static uint8_t *bqueue_get_free(bqueue_t *bq, int is_blocking)
 {
   uint8_t *res;
@@ -466,6 +603,9 @@ static uint8_t *bqueue_get_free(bqueue_t *bq, int is_blocking)
   return res;
 }
 
+/**
+ * @brief Returns a buffer to the free pool (used by a consumer).
+ */
 static void bqueue_put_free(bqueue_t *bq)
 {
   int ret;
@@ -474,6 +614,11 @@ static void bqueue_put_free(bqueue_t *bq)
   assert(ret == pdTRUE);
 }
 
+/**
+ * @brief Gets a ready buffer from the queue for a consumer to read from.
+ * @details This function will block until a buffer is ready.
+ * @return Pointer to a ready buffer.
+ */
 static uint8_t *bqueue_get_ready(bqueue_t *bq)
 {
   uint8_t *res;
@@ -488,6 +633,10 @@ static uint8_t *bqueue_get_ready(bqueue_t *bq)
   return res;
 }
 
+/**
+ * @brief Puts a buffer into the ready pool (used by a producer).
+ * @details Handles being called from an Interrupt Service Routine (ISR).
+ */
 static void bqueue_put_ready(bqueue_t *bq)
 {
   BaseType_t xHigherPriorityTaskWoken = pdFALSE;
@@ -503,6 +652,12 @@ static void bqueue_put_ready(bqueue_t *bq)
   }
 }
 
+/**
+ * @brief Updates the display controller to show a new background buffer.
+ * @details This function directly interacts with the screen layer driver to perform
+ * a "flip," making the newly rendered frame visible.
+ * @param next_disp_idx The index of the buffer in lcd_bg_buffer to display.
+ */
 static void reload_bg_layer(int next_disp_idx)
 {
   int ret;
@@ -516,16 +671,25 @@ static void reload_bg_layer(int next_disp_idx)
   assert(ret == 0);
 }
 
+/**
+ * @brief Frame event callback for the main display pipe (Pipe 1).
+ * @details This function is triggered by a hardware interrupt every time the DCMIPP
+ * has finished writing a new video frame for the display. It implements
+ * a triple-buffering scheme for smooth, tear-free video.
+ */
 static void app_main_pipe_frame_event()
 {
+  /* Calculate the indices for the next display buffer and next capture buffer in a circular manner. */
   int next_disp_idx = (lcd_bg_buffer_disp_idx + 1) % DISPLAY_BUFFER_NB;
   int next_capt_idx = (lcd_bg_buffer_capt_idx + 1) % DISPLAY_BUFFER_NB;
   int ret;
 
+  /* Tell the DCMIPP hardware where to write the *next* frame it captures. */
   ret = HAL_DCMIPP_PIPE_SetMemoryAddress(CMW_CAMERA_GetDCMIPPHandle(), DCMIPP_PIPE1,
                                          DCMIPP_MEMORY_ADDRESS_0, (uint32_t) lcd_bg_buffer[next_capt_idx]);
   assert(ret == HAL_OK);
 
+  /* Update the global indices to track the buffers. */
   reload_bg_layer(next_disp_idx);
   lcd_bg_buffer_disp_idx = next_disp_idx;
   lcd_bg_buffer_capt_idx = next_capt_idx;
@@ -533,7 +697,11 @@ static void app_main_pipe_frame_event()
   frame_event_nb++;
 }
 
-
+/**
+ * @brief Frame event callback for the ancillary NN pipe (Pipe 2).
+ * @details This function is triggered by a hardware interrupt every time the DCMIPP
+ * has finished writing a new, smaller frame for the AI model.
+ */
 static void app_ancillary_pipe_frame_event()
 {
   uint8_t *next_buffer;
@@ -546,10 +714,16 @@ static void app_ancillary_pipe_frame_event()
     assert(ret == HAL_OK);
     /* minus 1 since app_main_pipe_frame_event occur before app_ancillary_pipe_frame_event() */
     frame_event_nb_for_resize = frame_event_nb - 1;
-    bqueue_put_ready(&nn_input_queue);
+    bqueue_put_ready(&nn_input_queue);     /* Put the buffer into the 'ready' queue so the NN task can process it. */
   }
 }
 
+/**
+ * @brief VSYNC event callback for the display.
+ * @details This is triggered by a hardware interrupt at the start of each vertical
+ * blanking interval of the display. It's used to synchronize the camera's
+ * Image Signal Processing (ISP) task with the display refresh rate.
+ */
 static void app_main_pipe_vsync_event()
 {
   BaseType_t xHigherPriorityTaskWoken = pdFALSE;
@@ -560,6 +734,10 @@ static void app_main_pipe_vsync_event()
     portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
+/**
+ * @brief Clamps a 2D point to ensure it's within the screen boundaries.
+ * @return 1 if the point was moved, 0 otherwise.
+ */
 static int clamp_point(int *x, int *y)
 {
   int xi = *x;
@@ -577,6 +755,10 @@ static int clamp_point(int *x, int *y)
   return (xi != *x) || (yi != *y);
 }
 
+/**
+ * @brief Clamps a 2D point, keeping a minimum margin from the screen edges.
+ * @return 1 if the point was moved, 0 otherwise.
+ */
 static int clamp_point_with_margin(int *x, int *y, int margin)
 {
   int xi = *x;
@@ -594,6 +776,10 @@ static int clamp_point_with_margin(int *x, int *y, int margin)
   return (xi != *x) || (yi != *y);
 }
 
+/**
+ * @brief Draws the output of the first model (palm/face detector).
+ * @param hand Pointer to the raw detection box data.
+ */
 static void display_pd_hand(pd_pp_box_t *hand)
 {
   int xc, yc;
@@ -626,6 +812,9 @@ static void display_pd_hand(pd_pp_box_t *hand)
   }
 }
 
+/**
+ * @brief Rotates a 2D point around the origin.
+ */
 static void rotate_point(float pt[2], float rotation)
 {
   float x = pt[0];
@@ -635,6 +824,9 @@ static void rotate_point(float pt[2], float rotation)
   pt[1] = sin(rotation) * x + cos(rotation) * y;
 }
 
+/**
+ * @brief Calculates the four corner coordinates of a rotated ROI rectangle.
+ */
 static void roi_to_corners(roi_t *roi, float corners[4][2])
 {
   const float corners_init[4][2] = {
@@ -657,6 +849,9 @@ static void roi_to_corners(roi_t *roi, float corners[4][2])
   }
 }
 
+/**
+ * @brief Clamps all four corners of a rectangle to the screen boundaries.
+ */
 static int clamp_corners(float corners_in[4][2], int corners_out[4][2])
 {
   int is_clamp = 0;
@@ -671,6 +866,10 @@ static int clamp_corners(float corners_in[4][2], int corners_out[4][2])
   return is_clamp;
 }
 
+/**
+ * @brief Draws the rotated red ROI box for debugging purposes.
+ * @details This shows the exact region that was cropped and sent to the second model.
+ */
 static void display_roi(roi_t *roi)
 {
   float corners_f[4][2];
@@ -692,6 +891,15 @@ static void display_roi(roi_t *roi)
                       UTIL_LCD_COLOR_RED);
 }
 
+/**
+ * @brief Decodes a landmark's relative coordinates into absolute screen coordinates.
+ * @details The landmark model outputs coordinates relative to the ROI (0.0 to 1.0).
+ * This function transforms them back into the main screen's coordinate space by
+ * applying the ROI's translation, scaling, and rotation.
+ * @param roi The Region of Interest that was used as input for the landmark model.
+ * @param lm The landmark point with relative coordinates.
+ * @param decoded The landmark point with absolute screen coordinates (output).
+ */
 static void decode_ld_landmark(roi_t *roi, ld_point_t *lm, ld_point_t *decoded)
 {
   float rotation = roi->rotation;
@@ -702,6 +910,9 @@ static void decode_ld_landmark(roi_t *roi, ld_point_t *lm, ld_point_t *decoded)
   decoded->y = roi->cy + (lm->x - 0.5) * w * sin(rotation) + (lm->y - 0.5) * h * cos(rotation);
 }
 
+/**
+ * @brief Draws the output of the second model (hand/face landmarks).
+ */
 static void display_ld_hand(hand_info_t *hand)
 {
   const int disk_radius = DISK_RADIUS;
@@ -734,6 +945,10 @@ static void display_ld_hand(hand_info_t *hand)
   }
 }
 
+/**
+ * @brief Main drawing wrapper to display all info for a single detected hand/face.
+ * @details Checks UI toggles to decide whether to draw the bounding box and/or the landmarks.
+ */
 void display_hand(display_info_t *info, hand_info_t *hand)
 {
   if (info->is_pd_displayed) {
@@ -744,6 +959,12 @@ void display_hand(display_info_t *info, hand_info_t *hand)
     display_ld_hand(hand);
 }
 
+/**
+ * @brief Renders the entire UI overlay for one frame.
+ * @details This is the main function called by the display task. It clears the
+ * overlay, draws performance stats, and then draws the AI model results.
+ * @param info The main display structure containing all data to be rendered.
+ */
 static void Display_NetworkOutput(display_info_t *info)
 {
   float cpu_load_one_second;
@@ -789,13 +1010,21 @@ static void Display_NetworkOutput(display_info_t *info)
     UTIL_LCDEx_PrintfAt(0, LINE(line_nb),  RIGHT_MODE, "pd : %5.1f %%", info->pd_max_prob * 100);
 }
 
+/**
+ * @brief Initializes the Palm Detector model and its post-processor.
+ * @details This function gets memory addresses for the model's output tensors
+ * (where the NPU writes its results) and prepares the software-based
+ * post-processing library. This is for the FIRST model in the sequence.
+ * @param info Pointer to the palm detector model info structure to be filled.
+ */
 static void palm_detector_init(pd_model_info_t *info)
 {
+  /* Get pointers to the model's output and input buffer information from the AI library. */
   const LL_Buffer_InfoTypeDef *nn_out_info = LL_ATON_Output_Buffers_Info_palm_detector();
   const LL_Buffer_InfoTypeDef *nn_in_info = LL_ATON_Input_Buffers_Info_palm_detector();
   int ret;
 
-  /* model info */
+  /* Store pointers and sizes for the model's input and output tensors. */
   info->nn_in_len = LL_Buffer_len(&nn_in_info[0]);
   info->prob_out = (float *) LL_Buffer_addr_start(&nn_out_info[0]);
   info->prob_out_len = LL_Buffer_len(&nn_out_info[0]);
@@ -804,11 +1033,18 @@ static void palm_detector_init(pd_model_info_t *info)
   info->boxes_out_len = LL_Buffer_len(&nn_out_info[1]);
   assert(info->boxes_out_len == AI_PD_MODEL_PP_TOTAL_DETECTIONS * sizeof(float) * 18);
 
-  /* post processor info */
+  /* Initialize the post-processing library with model-specific parameters (e.g., anchor boxes). */
   ret = app_postprocess_init(&info->static_param);
   assert(ret == AI_PD_POSTPROCESS_ERROR_NO);
 }
 
+/**
+ * @brief Runs one inference of the Palm Detector model.
+ * @param buffer Pointer to the input image from the camera.
+ * @param info Pointer to the initialized model info structure.
+ * @param pd_exec_time Pointer to store the execution time of this stage.
+ * @return The number of hands/faces detected.
+ */
 static int palm_detector_run(uint8_t *buffer, pd_model_info_t *info, uint32_t *pd_exec_time)
 {
   uint32_t start_ts;
@@ -817,16 +1053,20 @@ static int palm_detector_run(uint8_t *buffer, pd_model_info_t *info, uint32_t *p
   int i;
 
   start_ts = HAL_GetTick();
+  /* Set the input buffer for the NPU. */
   /* Note that we don't need to clean/invalidate those input buffers since they are only access in hardware */
   ret = LL_ATON_Set_User_Input_Buffer_palm_detector(0, buffer, info->nn_in_len);
   assert(ret == LL_ATON_User_IO_NOERROR);
 
+  /* Trigger the NPU to run the inference. This is a blocking call. */
   LL_ATON_RT_Main(&NN_Instance_palm_detector);
 
+  /* Run software post-processing to decode the raw NPU output into human-readable boxes and scores. */
   ret = app_postprocess_run((void * []){info->prob_out, info->boxes_out}, 2, &info->pd_out, &info->static_param);
   assert(ret == AI_PD_POSTPROCESS_ERROR_NO);
   hand_nb = MIN(info->pd_out.box_nb, PD_MAX_HAND_NB);
 
+  /* For each detected hand/face, convert its coordinates and generate an ROI for the next model. */
   for (i = 0; i < hand_nb; i++) {
     cvt_pd_coord_to_screen_coord(&info->pd_out.pOutData[i]);
     pd_box_to_roi(&info->pd_out.pOutData[i], &rois[i]);
@@ -841,6 +1081,12 @@ static int palm_detector_run(uint8_t *buffer, pd_model_info_t *info, uint32_t *p
   return hand_nb;
 }
 
+/**
+ * @brief Initializes the Hand Landmark model.
+ * @details This function gets memory addresses for the SECOND model's input and output
+ * tensors, allowing the application to prepare the input and read the results.
+ * @param info Pointer to the hand landmark model info structure to be filled.
+ */
 static void hand_landmark_init(hl_model_info_t *info)
 {
   const LL_Buffer_InfoTypeDef *nn_out_info = LL_ATON_Output_Buffers_Info_hand_landmark();
@@ -857,6 +1103,14 @@ static void hand_landmark_init(hl_model_info_t *info)
 }
 
 #if HAS_ROTATION_SUPPORT == 0
+
+/**
+ * @brief Prepares the landmark model's input using the CPU.
+ * @details This function performs a crop and bilinear resize in software. It handles
+ * cases where the ROI is partially outside the screen by clearing the destination
+ * buffer and only resizing the valid, on-screen portion of the image.
+ * @return 0 on success.
+ */
 static int hand_landmark_prepare_input(uint8_t *buffer, roi_t *roi, hl_model_info_t *info)
 {
   float corners_f[4][2];
@@ -938,7 +1192,13 @@ static void app_transform(nema_matrix3x3_t t, app_v3_t v)
   for (i = 0; i < 3; i++)
     v[i] = r[i];
 }
-
+/**
+ * @brief Prepares the landmark model's input using the NEMA GPU.
+ * @details This function offloads the entire crop, rotate, and resize operation to
+ * the hardware accelerator. It builds a transformation matrix and submits it
+ * to the GPU, which is much faster than the CPU-based version.
+ * @return 0 on success.
+ */
 static int hand_landmark_prepare_input(uint8_t *buffer, roi_t *roi, hl_model_info_t *info)
 {
   app_v3_t vertex[] = {
@@ -986,6 +1246,14 @@ static int hand_landmark_prepare_input(uint8_t *buffer, roi_t *roi, hl_model_inf
 }
 #endif
 
+/**
+ * @brief Runs one inference of the Hand Landmark model.
+ * @param buffer Pointer to the source display buffer (for cropping).
+ * @param info Pointer to the initialized landmark model info.
+ * @param roi The Region of Interest to process.
+ * @param ld_landmarks Output array to store the final landmark coordinates.
+ * @return 1 if a hand was found and landmarks are valid, 0 otherwise.
+ */
 static int hand_landmark_run(uint8_t *buffer, hl_model_info_t *info, roi_t *roi,
                              ld_point_t ld_landmarks[LD_LANDMARK_NB])
 {
@@ -1009,6 +1277,10 @@ static int hand_landmark_run(uint8_t *buffer, hl_model_info_t *info, roi_t *roi,
 }
 
 #if HAS_ROTATION_SUPPORT == 1
+
+/**
+ * @brief Initializes the NEMA GPU and its associated drivers.
+ */
 static void app_rot_init(hl_model_info_t *info)
 {
   GFXMMU_PackingTypeDef packing = { 0 };
@@ -1040,6 +1312,11 @@ static void app_rot_init(hl_model_info_t *info)
 }
 #endif
 
+/**
+ * @brief Computes the rotation based on the final landmark points.
+ * @details Uses landmark points 0 and 9 (e.g., wrist and middle finger base)
+ * for a potentially more stable rotation estimate than the first model.
+ */
 static float ld_compute_rotation(ld_point_t lm[LD_LANDMARK_NB])
 {
   float x0, y0, x1, y1;
@@ -1055,6 +1332,10 @@ static float ld_compute_rotation(ld_point_t lm[LD_LANDMARK_NB])
   return pd_cook_rotation(pd_normalize_angle(rotation));
 }
 
+/**
+ * @brief Creates a new, tighter ROI based on the detected landmarks.
+ * @details This is used to update the ROI for tracking in the next frame.
+ */
 static void ld_to_roi(ld_point_t lm[LD_LANDMARK_NB], roi_t *roi, pd_pp_box_t *next_pd)
 {
   const int pd_to_ld_idx[AI_PD_MODEL_PP_NB_KEYPOINTS] = {0, 5, 9, 13, 17, 1, 2};
@@ -1089,6 +1370,13 @@ static void ld_to_roi(ld_point_t lm[LD_LANDMARK_NB], roi_t *roi, pd_pp_box_t *ne
   }
 }
 
+/**
+ * @brief Computes the predicted ROI for the next frame to enable tracking.
+ * @details This is the core of the tracking logic. Instead of running the slow
+ * detector on every frame, we use the landmarks from the current frame to predict
+ * where the hand/face will be in the next frame. We then only need to run the
+ * fast landmark model on that small predicted ROI.
+ */
 static void compute_next_roi(roi_t *src, ld_point_t lm_in[LD_LANDMARK_NB], roi_t *next, pd_pp_box_t *next_pd)
 {
   const float shift_x = 0;
@@ -1112,16 +1400,28 @@ static void compute_next_roi(roi_t *src, ld_point_t lm_in[LD_LANDMARK_NB], roi_t
   *next = roi;
 }
 
+/**
+ * @brief The main function for the Neural Network processing thread.
+ * @details This is the entry point for the FreeRTOS task that handles all AI inference.
+ * It will contain a `while(1)` loop to process frames as they become available.
+ */
 static void nn_thread_fct(void *arg)
 {
+  /* Variables for filtering/smoothing performance metrics. */
   float nn_period_filtered_ms = 0;
   float pd_filtered_ms = 0;
   float ld_filtered_ms = 0;
+
+  /* Model-specific info structures. */
   hl_model_info_t hl_info;
   pd_model_info_t pd_info;
+
+  /* Timing variables. */
   uint32_t nn_period_ms;
   uint32_t nn_period[2];
   uint8_t *nn_pipe_dst;
+
+  /* Structs for holding tracking information between frames. */
   pd_pp_point_t box_next_keypoints[AI_PD_MODEL_PP_NB_KEYPOINTS];
   pd_pp_box_t box_next;
   int is_tracking = 0;
@@ -1143,8 +1443,10 @@ static void nn_thread_fct(void *arg)
   app_rot_init(&hl_info);
 #endif
 
-  /*** App Loop ***************************************************************/
+  /*** Application Main Loop ***************************************************************/
   nn_period[1] = HAL_GetTick();
+
+  /* Get an initial free buffer and start the camera's NN pipe. */
   nn_pipe_dst = bqueue_get_free(&nn_input_queue, 0);
   assert(nn_pipe_dst);
   CAM_NNPipe_Start(nn_pipe_dst, CMW_MODE_CONTINUOUS);
@@ -1152,17 +1454,19 @@ static void nn_thread_fct(void *arg)
   {
     uint8_t *capture_buffer;
     int idx_for_resize;
-
+    /* Measure and filter the time between loop iterations. */
     nn_period[0] = nn_period[1];
     nn_period[1] = HAL_GetTick();
     nn_period_ms = nn_period[1] - nn_period[0];
     nn_period_filtered_ms = USE_FILTERED_TS ? (15 * nn_period_filtered_ms + nn_period_ms) / 16 : nn_period_ms;
-
+    
+    /* Block and wait for a new NN frame to be ready from the camera. */
     capture_buffer = bqueue_get_ready(&nn_input_queue);
     assert(capture_buffer);
     idx_for_resize = frame_event_nb_for_resize % DISPLAY_BUFFER_NB;
 
-    /* Only start palm detector when not tracking hand */
+    /* --- Core Tracking Logic --- */
+    /* If we are NOT currently tracking an object, run the full-frame detector. */
     if (!is_tracking) {
       is_tracking = palm_detector_run(capture_buffer, &pd_info, &pd_ms);
       box_next.prob = pd_info.pd_out.pOutData[0].prob;
@@ -1177,12 +1481,17 @@ static void nn_thread_fct(void *arg)
     /* then run hand landmark detector if needed */
     if (is_tracking) {
       hl_ms = HAL_GetTick();
+      /* Run the landmark model. Note it uses the main display buffer for cropping. */
       is_tracking = hand_landmark_run(lcd_bg_buffer[idx_for_resize], &hl_info, &rois[0], ld_landmarks[0]);
+      /* Invalidate this buffer region as the CPU/GPU may have read from it. */
       CACHE_OP(SCB_InvalidateDCache_by_Addr(lcd_bg_buffer[idx_for_resize], sizeof(lcd_bg_buffer[idx_for_resize])));
+
+      /* If landmarks were successfully found, predict the ROI for the NEXT frame. */
       if (is_tracking)
         compute_next_roi(&rois[0], ld_landmarks[0], &roi_next, &box_next);
       hl_ms = HAL_GetTick() - hl_ms;
     } else {
+      /* If no object is being tracked, skip landmarking. */
       hl_ms = 0;
     }
     ld_filtered_ms = USE_FILTERED_TS ? (7 * ld_filtered_ms + hl_ms) / 8 : hl_ms;
@@ -1208,6 +1517,11 @@ static void nn_thread_fct(void *arg)
   }
 }
 
+/**
+ * @brief Sets the memory address for the foreground layer for the next draw operation.
+ * @details Part of a double-buffering scheme for the UI overlay. This function prepares
+ * the off-screen buffer for drawing.
+ */
 static void dp_update_drawing_area()
 {
   int ret;
@@ -1218,6 +1532,10 @@ static void dp_update_drawing_area()
   __enable_irq();
 }
 
+/**
+ * @brief Commits the newly drawn foreground buffer to the display.
+ * @details This "flips" the foreground buffers, making the newly drawn UI visible.
+ */
 static void dp_commit_drawing_area()
 {
   int ret;
@@ -1229,6 +1547,9 @@ static void dp_commit_drawing_area()
   lcd_fg_buffer_rd_idx = 1 - lcd_fg_buffer_rd_idx;
 }
 
+/**
+ * @brief Callback function to toggle the landmark display.
+ */
 static void on_ld_toggle_button_click(void *args)
 {
   display_t *disp = (display_t *) args;
@@ -1241,6 +1562,9 @@ static void on_ld_toggle_button_click(void *args)
   assert(ret == pdTRUE);
 }
 
+/**
+ * @brief Callback function to toggle the bounding box display.
+ */
 static void on_pd_toggle_button_click(void *args)
 {
   display_t *disp = (display_t *) args;
@@ -1253,6 +1577,11 @@ static void on_pd_toggle_button_click(void *args)
   assert(ret == pdTRUE);
 }
 
+/**
+ * @brief The main function for the Display Processor (DP) thread.
+ * @details This task waits for a signal from the NN thread, then wakes up to
+ * draw the entire UI overlay for one frame.
+ */
 static void dp_thread_fct(void *arg)
 {
   button_t ld_toggle_button;
@@ -1293,6 +1622,11 @@ static void dp_thread_fct(void *arg)
   }
 }
 
+/**
+ * @brief The main function for the Image Signal Processor (ISP) thread.
+ * @details This task waits for the VSYNC signal and then runs the camera's
+ * periodic processing functions (e.g., auto-exposure, auto-white-balance).
+ */
 static void isp_thread_fct(void *arg)
 {
   int ret;
@@ -1305,6 +1639,11 @@ static void isp_thread_fct(void *arg)
   }
 }
 
+/**
+ * @brief Initializes the display controller (SCRL) and graphics library (UTIL_LCD).
+ * @details Configures the two screen layers: Layer 0 for the background video and
+ * Layer 1 for the transparent UI overlay.
+ */
 static void Display_init()
 {
   SCRL_LayerConfig layers_config[2] = {
@@ -1346,6 +1685,11 @@ static void Display_init()
   UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
 }
 
+/**
+ * @brief Main application entry point.
+ * @details Initializes all hardware, software modules, and RTOS components,
+ * then creates the three main application threads.
+ */
 void app_run()
 {
   UBaseType_t isp_priority = FREERTOS_PRIORITY(2);
@@ -1397,6 +1741,11 @@ void app_run()
   assert(hdl != NULL);
 }
 
+/**
+ * @brief System-level callback registered with the camera driver for frame events.
+ * @details This function is called from an Interrupt Service Routine (ISR) and
+ * routes the event to the appropriate application-level handler.
+ */
 int CMW_CAMERA_PIPE_FrameEventCallback(uint32_t pipe)
 {
   if (pipe == DCMIPP_PIPE1)
@@ -1407,6 +1756,9 @@ int CMW_CAMERA_PIPE_FrameEventCallback(uint32_t pipe)
   return HAL_OK;
 }
 
+/**
+ * @brief System-level callback for VSYNC events.
+ */
 int CMW_CAMERA_PIPE_VsyncEventCallback(uint32_t pipe)
 {
   if (pipe == DCMIPP_PIPE1)
