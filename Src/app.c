@@ -15,6 +15,15 @@
   ******************************************************************************
   */
 
+/*TODO: DECLARE MODELS 
+//LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(yolo_detector);
+//static roi_t rois[YOLO_MAX_NB];
+//LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(face_landmark);
+//static ld_point_t fl_landmarks[1[FL_LANDMARK_NB]; // Use new constants
+*/
+/*TODO: REMOVE ROTATION LOGICS AS DMS WILL NOT USE IT
+ * NOTE THAT ROTATION LOGIC IS USED FOR N6 BOARD 
+*/
 #include "app.h"
 
 #include <stdint.h>
@@ -153,7 +162,7 @@ typedef struct {
   int is_valid;             /* Flag to check if the detection in this struct is current. */
   pd_pp_box_t pd_hands;     /* Palm Detector raw output. */
   roi_t roi;            /* Region of Interest for the detected hand. */
-  ld_point_t ld_landmarks[LD_LANDMARK_NB];        /* Final outpu from the landmark model */
+  ld_point_t ld_landmarks[LD_LANDMARK_NB];        /* Final output from the landmark model */
 } hand_info_t;
 
 /**
@@ -302,6 +311,9 @@ static ld_point_t ld_landmarks[PD_MAX_HAND_NB][LD_LANDMARK_NB];
 static uint32_t frame_event_nb;
 static volatile uint32_t frame_event_nb_for_resize;
 
+/*TODO: UPDATE THE DEFINED MACROS UNDER app.h
+* OR postprocess_conf.h which defines the postprocessing type, we should be able to define it to YOLOV8
+*/
  /* nn input buffers */
 static uint8_t nn_input_buffers[2][NN_WIDTH * NN_HEIGHT * NN_BPP] ALIGN_32 IN_PSRAM;
 static bqueue_t nn_input_queue;
@@ -329,6 +341,8 @@ static int is_cache_enable()
   return 0;
 #endif
 }
+
+/* THESE FUNCTIONS ARE TO BE DEPRECIATED*/
 
 /** HELPER FUNCTIONS
  * @brief Normalizes an angle to the range [-PI, PI].
@@ -378,6 +392,9 @@ static float pd_compute_rotation(pd_pp_box_t *box)
 
   return pd_cook_rotation(pd_normalize_angle(rotation));
 }
+/* END OF DEPRECIATED FUNCTIONS */
+
+/* TO WRITE EQUIVALENT FOR YOLO FACE DETECTOR*/
 
 /**
  * @brief Converts normalized AI model coordinates (0.0 to 1.0) to screen pixel coordinates.
@@ -428,6 +445,10 @@ static void roi_shift_and_scale(roi_t *roi, float shift_x, float shift_y, float 
   roi->h *= scale_y;
 }
 
+/* TO WRITE EQUIVALENT FUNCTION FOR YOLO FACE DETECTOR
+ * WHICH HANDLES THE MULTI-CLASS OUTPUT OF THE YOLO DETECTOR
+ * AND CONVERTS IT INTO A PROPER FACE ROI FOR THE LANDMARK MODEL.
+*/
 /**
  * @brief Converts the output of the first model (detector) into an ROI for the second model.
  * @details This is the core "glue" function between the two AI models. It takes the raw
@@ -458,6 +479,7 @@ static void pd_box_to_roi(pd_pp_box_t *box,  roi_t *roi)
 
 /**
  * @brief A utility function to copy data from one detection box struct to another.
+ * TODO: ADAPT INTO COPYING FD BOXES
  */
 static void copy_pd_box(pd_pp_box_t *dst, pd_pp_box_t *src)
 {

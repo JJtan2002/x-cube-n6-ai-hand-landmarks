@@ -6,15 +6,12 @@ Computer Vision application demonstrating the deployment of several object detec
 2. A hand landmark (hl) detection model is executed in the second stage to identify the landmarks of the hand detected during the first stage. After the execution of the first model, a resize operation takes place to provide the expected input to the second model.
    On STM32N6570-DK GPU2D is used to also perform a rotation to orient hand vertically.
 
-This top README gives an overview of the app. Additional documentation is available in the [Doc](./Doc/) folder.
+This top README gives an overview of the app. Additional documentation is available in the [Doc](./Doc/) folder. 
+
+This application is to be adapted to run a face detection moddel and a face landmarking model. The original application architecture will be extended to run an iris landmarking model as well.
 
 ![Screenshot of application running](_htmresc/screenshot.png)
 
-## Doc Folder Content
-
-- [Application Overview](Doc/Application-Overview.md)
-- [Boot Overview](Doc/Boot-Overview.md)
-- [Camera Build Options](Doc/Build-Options.md)
 
 ## Features Demonstrated in This Example
 
@@ -39,18 +36,6 @@ This top README gives an overview of the app. Additional documentation is availa
 ![Board](_htmresc/ImageBoard.JPG)
 
 STM32N6570-DK board with MB1854B IMX335.
-
-### MB1940 NUCLEO-N657X0-Q
-
-  - The board should be connected to the onboard ST-LINK debug adapter CN10 with a __USB-C to USB-C cable to ensure sufficient power__
-  - An additional USB cable to connect USB (CN8) to the host computer for UVC flavor
-  - OTP fuses are set in this example for xSPI IOs to get the maximum speed (200MHz) on xSPI interfaces
-  - X-NUCLEO-GFX01M2 for SPI flavor
-
-- 3 Cameras are supported:
-  - MB1854B IMX335 (Default Camera provided with the MB1939 STM32N6570-DK board)
-  - STEVAL-55G1MBI VD55G1 Camera module (Use the CSI-2 cable provided with the camera module)
-  - STEVAL-66GYMAI VD66GY Camera module (Use the CSI-2 cable provided with the camera module)
 
 ## Tools Version
 
@@ -89,10 +74,6 @@ Three binaries must be programmed in the board's external flash using the follow
 6. Set both switches to the left side.
 7. Power cycle the board.
 
-### How to Program Hex Files Using STM32CubeProgrammer UI
-
-See [How to Program Hex Files STM32CubeProgrammer](Doc/Program-Hex-Files-STM32CubeProgrammer.md).
-
 ### How to Program Hex Files Using Command Line
 
 Make sure to have the STM32CubeProgrammer bin folder added to your path.
@@ -118,6 +99,40 @@ Before building and running the application, you have to program `palm_detector_
 This step only has to be done once unless you change the AI model. See [Quickstart Using Prebuilt Binaries](#quickstart-using-prebuilt-binaries) for details.
 
 More information about boot modes is available in the [Boot Overview](Doc/Boot-Overview.md).
+
+
+
+### Application Build and Run - Boot from Flash
+
+__Make sure to have both switches to the right side.__
+
+Before running the commands below, make sure to have the necessary commands in your PATH.
+
+1. Build the project using the provided `Makefile`:
+
+```bash
+make -j8
+```
+
+Once your app is built with Makefile, STM32CubeIDE, or EWARM, you must add a signature to the bin file:
+```bash
+STM32_SigningTool_CLI -bin build/Project.bin -nk -t ssbl -hv 2.3 -o build/Project_sign.bin
+```
+
+You can program the signed bin file at the address `0x70100000`.
+
+```bash
+export DKEL="<STM32CubeProgrammer_N6 Install Folder>/bin/ExternalLoader/MX66UW1G45G_STM32N6570-DK.stldr"
+
+# Adapt build path to your IDE
+STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -el $DKEL -hardRst -w build/Project_sign.bin 0x70100000
+```
+
+Note: Only the App binary needs to be programmed if the FSBL and network_data.hex were previously programmed.
+
+__Set both switches to the left side.__
+
+Do a power cycle to boot from the external flash.
 
 ### Application Build and Run - Dev Mode
 
@@ -157,48 +172,3 @@ $ arm-none-eabi-gdb build/Project.elf
 (gdb) load
 (gdb) continue
 ```
-
-### Application Build and Run - Boot from Flash
-
-__Make sure to have both switches to the right side.__
-Intructions below are for STM32N6570-DK. For NUCLEO-N657X0-Q you have to select one of the two nucleo project according to your use case.
-
-#### STM32CubeIDE
-
-Double-click on `STM32CubeIDE/STM32N6570-DK/.project` to open the project in STM32CubeIDE. Build with build button.
-
-#### IAR EWARM
-
-Double-click on `EWARM/STM32N6570-DK/x-cube-n6-ai-hand-landmarks-dk.eww` to open the project in the IAR IDE. Build with build button.
-
-#### Makefile
-
-Before running the commands below, make sure to have the necessary commands in your PATH.
-
-1. Build the project using the provided `Makefile`:
-
-```bash
-make -j8
-```
-
-Once your app is built with Makefile, STM32CubeIDE, or EWARM, you must add a signature to the bin file:
-```bash
-STM32_SigningTool_CLI -bin build/Project.bin -nk -t ssbl -hv 2.3 -o build/Project_sign.bin
-```
-
-You can program the signed bin file at the address `0x70100000`.
-
-```bash
-export DKEL="<STM32CubeProgrammer_N6 Install Folder>/bin/ExternalLoader/MX66UW1G45G_STM32N6570-DK.stldr"
-
-# Adapt build path to your IDE
-STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -el $DKEL -hardRst -w build/Project_sign.bin 0x70100000
-```
-
-Note: Only the App binary needs to be programmed if the FSBL and network_data.hex were previously programmed.
-
-__Set both switches to the left side.__
-
-Do a power cycle to boot from the external flash.
-
-## Known Issues and Limitations

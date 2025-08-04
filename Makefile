@@ -57,8 +57,10 @@ C_SOURCES += Src/ld.c
 C_SOURCES += Src/app_fuseprogramming.c
 C_SOURCES += Src/stm32_lcd_ex.c
 C_SOURCES += Src/stm32n6xx_it.c
+C_SOURCES += Model/yolo_detector.c
 C_SOURCES += Model/palm_detector.c
 C_SOURCES += Model/hand_landmark.c
+C_SOURCES += Model/face_landmark.c
 C_SOURCES += Src/app_cam.c
 C_SOURCES += Src/freertos_bsp.c
 
