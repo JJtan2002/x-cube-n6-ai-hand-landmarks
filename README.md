@@ -160,7 +160,7 @@ make -j8
 2. Open a GDB server connected to the STM32 target:
 
 ```bash
-ST-LINK_gdbserver -p 61234 -l 1 -d -s -cp <path-to-stm32cubeprogramer-bin-dir> -m 1 -g
+ST-LINK_gdbserver -p 61234 -l 1 -d -s -cp /home/tanjiajun2002/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin -m 1 -g
 ```
 
 3. In a separate terminal session, launch a GDB session to load the firmware image into the device memory:
