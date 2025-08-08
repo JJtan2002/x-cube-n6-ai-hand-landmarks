@@ -1,5 +1,5 @@
 ST Edge AI Core v2.1.0-20194 329b0e98d
-Created date          : 2025-07-30 15:23:35
+Created date          : 2025-08-08 11:15:12
 Parameters            : generate --no-inputs-allocation --no-outputs-allocation --name yolo_detector --model yolov8_face_call_smk_full_integer_quant.tflite --target stm32n6 --st-neural-art yolo_detector@user_neuralart.json
 
 Model name - yolov8_face_call_smk_full_integer_quant

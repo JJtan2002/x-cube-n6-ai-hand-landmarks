@@ -27,13 +27,8 @@
 #define NN_BPP 3
 
 /* Display config */
-#if HAS_ROTATION_SUPPORT == 1
 #define DISPLAY_FORMAT DCMIPP_PIXEL_PACKER_FORMAT_ARGB8888
 #define DISPLAY_BPP 4
-#else
-#define DISPLAY_FORMAT DCMIPP_PIXEL_PACKER_FORMAT_RGB888_YUV444_1
-#define DISPLAY_BPP 3
-#endif
 
 void app_run(void);
 

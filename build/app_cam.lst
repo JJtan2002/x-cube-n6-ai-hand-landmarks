@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc1VCE5j.s 			page 1
+ARM GAS  /tmp/cceyb8Te.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc1VCE5j.s 			page 1
    9:Src/app_cam.c ****  * Copyright (c) 2023 STMicroelectronics.
   10:Src/app_cam.c ****  * All rights reserved.
   11:Src/app_cam.c ****  *
-ARM GAS  /tmp/cc1VCE5j.s 			page 2
+ARM GAS  /tmp/cceyb8Te.s 			page 2
 
 
   12:Src/app_cam.c ****  * This software is licensed under terms that can be found in the LICENSE file
@@ -74,175 +74,184 @@ ARM GAS  /tmp/cc1VCE5j.s 			page 1
   22:Src/app_cam.c **** #include "app_config.h"
   23:Src/app_cam.c **** #include "utils.h"
   24:Src/app_cam.c **** 
-  25:Src/app_cam.c **** /* Keep display output aspect ratio using crop area */
-  26:Src/app_cam.c **** static void CAM_InitCropConfig(CMW_Manual_roi_area_t *roi, int sensor_width, int sensor_height)
-  27:Src/app_cam.c **** {
-  41              		.loc 1 27 1 view -0
+  25:Src/app_cam.c **** /**
+  26:Src/app_cam.c ****  * @brief Calculates the correct crop window to maintain aspect ratio.
+  27:Src/app_cam.c ****  * @details This function takes the raw sensor dimensions and the target output dimensions.
+  28:Src/app_cam.c ****  * It calculates a centered crop region on the sensor that matches the
+  29:Src/app_cam.c ****  * target's aspect ratio. This prevents the final image from looking
+  30:Src/app_cam.c ****  * stretched or squashed.
+  31:Src/app_cam.c ****  * @param roi Pointer to the region-of-interest structure to be filled.
+  32:Src/app_cam.c ****  * @param sensor_width The full width of the camera sensor.
+  33:Src/app_cam.c ****  * @param sensor_height The full height of the camera sensor.
+  34:Src/app_cam.c ****  */
+  35:Src/app_cam.c **** static void CAM_InitCropConfig(CMW_Manual_roi_area_t *roi, int sensor_width, int sensor_height)
+  36:Src/app_cam.c **** {
+  41              		.loc 1 36 1 view -0
   42              		.cfi_startproc
   43              		@ args = 0, pretend = 0, frame = 0
   44              		@ frame_needed = 0, uses_anonymous_args = 0
-  28:Src/app_cam.c ****   const float ratiox = (float)sensor_width / LCD_BG_WIDTH;
-  45              		.loc 1 28 3 view .LVU1
-  46              		.loc 1 28 24 is_stmt 0 view .LVU2
+  37:Src/app_cam.c ****   const float ratiox = (float)sensor_width / LCD_BG_WIDTH;
+  45              		.loc 1 37 3 view .LVU1
+  46              		.loc 1 37 24 is_stmt 0 view .LVU2
   47 0000 07EE901A 		vmov	s15, r1	@ int
   48 0004 F8EEE76A 		vcvt.f32.s32	s13, s15
-  29:Src/app_cam.c ****   const float ratioy = (float)sensor_height / LCD_BG_HEIGHT;
-  49              		.loc 1 29 24 view .LVU3
+  38:Src/app_cam.c ****   const float ratioy = (float)sensor_height / LCD_BG_HEIGHT;
+  49              		.loc 1 38 24 view .LVU3
   50 0008 07EE902A 		vmov	s15, r2	@ int
-  28:Src/app_cam.c ****   const float ratiox = (float)sensor_width / LCD_BG_WIDTH;
-  51              		.loc 1 28 15 view .LVU4
+  37:Src/app_cam.c ****   const float ratiox = (float)sensor_width / LCD_BG_WIDTH;
+  51              		.loc 1 37 15 view .LVU4
   52 000c 9FED286A 		vldr.32	s12, .L18
-  53              		.loc 1 29 24 view .LVU5
+  53              		.loc 1 38 24 view .LVU5
   54 0010 B8EEE77A 		vcvt.f32.s32	s14, s15
-  55              		.loc 1 29 15 view .LVU6
+  55              		.loc 1 38 15 view .LVU6
   56 0014 DFED275A 		vldr.32	s11, .L18+4
-  28:Src/app_cam.c ****   const float ratiox = (float)sensor_width / LCD_BG_WIDTH;
-  57              		.loc 1 28 15 view .LVU7
+  37:Src/app_cam.c ****   const float ratiox = (float)sensor_width / LCD_BG_WIDTH;
+  57              		.loc 1 37 15 view .LVU7
   58 0018 86EE865A 		vdiv.f32	s10, s13, s12
   59              	.LVL1:
-  60              		.loc 1 29 3 is_stmt 1 view .LVU8
-  61              		.loc 1 29 15 is_stmt 0 view .LVU9
+  60              		.loc 1 38 3 is_stmt 1 view .LVU8
+  61              		.loc 1 38 15 is_stmt 0 view .LVU9
   62 001c C7EE257A 		vdiv.f32	s15, s14, s11
   63              	.LVL2:
-  30:Src/app_cam.c ****   const float ratio = MIN(ratiox, ratioy);
-  64              		.loc 1 30 3 is_stmt 1 view .LVU10
-  65              		.loc 1 30 23 is_stmt 0 discriminator 1 view .LVU11
+  39:Src/app_cam.c ****   const float ratio = MIN(ratiox, ratioy);
+  64              		.loc 1 39 3 is_stmt 1 view .LVU10
+  65              		.loc 1 39 23 is_stmt 0 discriminator 1 view .LVU11
   66 0020 B4EE675A 		vcmp.f32	s10, s15
   67 0024 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ARM GAS  /tmp/cceyb8Te.s 			page 3
+
+
   68 0028 48BF     		it	mi
   69 002a F0EE457A 		vmovmi.f32	s15, s10
   70              	.LVL3:
-  31:Src/app_cam.c **** 
-  32:Src/app_cam.c ****   assert(ratio >= 1);
-  71              		.loc 1 32 3 is_stmt 1 view .LVU12
+  40:Src/app_cam.c **** 
+  41:Src/app_cam.c ****   assert(ratio >= 1);
+  71              		.loc 1 41 3 is_stmt 1 view .LVU12
   72 002e B7EE005A 		vmov.f32	s10, #1.0e+0
   73              	.LVL4:
-  74              		.loc 1 32 3 is_stmt 0 view .LVU13
-ARM GAS  /tmp/cc1VCE5j.s 			page 3
-
-
+  74              		.loc 1 41 3 is_stmt 0 view .LVU13
   75 0032 F4EEC57A 		vcmpe.f32	s15, s10
   76 0036 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
-  27:Src/app_cam.c ****   const float ratiox = (float)sensor_width / LCD_BG_WIDTH;
-  77              		.loc 1 27 1 view .LVU14
+  36:Src/app_cam.c ****   const float ratiox = (float)sensor_width / LCD_BG_WIDTH;
+  77              		.loc 1 36 1 view .LVU14
   78 003a 08B5     		push	{r3, lr}
   79              		.cfi_def_cfa_offset 8
   80              		.cfi_offset 3, -8
   81              		.cfi_offset 14, -4
-  82              		.loc 1 32 3 view .LVU15
+  82              		.loc 1 41 3 view .LVU15
   83 003c 05DA     		bge	.L4
-  84              		.loc 1 32 3 discriminator 1 view .LVU16
-  85 003e 2021     		movs	r1, #32
+  84              		.loc 1 41 3 discriminator 1 view .LVU16
+  85 003e 2921     		movs	r1, #41
   86              	.LVL5:
-  87              		.loc 1 32 3 discriminator 1 view .LVU17
+  87              		.loc 1 41 3 discriminator 1 view .LVU17
   88 0040 1D4B     		ldr	r3, .L18+8
   89 0042 1E4A     		ldr	r2, .L18+12
   90              	.LVL6:
   91              	.L17:
-  33:Src/app_cam.c ****   assert(ratio < 64);
-  92              		.loc 1 33 3 discriminator 1 view .LVU18
+  42:Src/app_cam.c ****   assert(ratio < 64);
+  92              		.loc 1 42 3 discriminator 1 view .LVU18
   93 0044 1E48     		ldr	r0, .L18+16
   94              	.LVL7:
-  95              		.loc 1 33 3 discriminator 1 view .LVU19
+  95              		.loc 1 42 3 discriminator 1 view .LVU19
   96 0046 FFF7FEFF 		bl	__assert_func
   97              	.LVL8:
   98              	.L4:
-  99              		.loc 1 33 3 is_stmt 1 view .LVU20
+  99              		.loc 1 42 3 is_stmt 1 view .LVU20
  100 004a 9FED1E5A 		vldr.32	s10, .L18+20
  101 004e F4EEC57A 		vcmpe.f32	s15, s10
  102 0052 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  103 0056 03D4     		bmi	.L5
- 104              		.loc 1 33 3 is_stmt 0 discriminator 1 view .LVU21
- 105 0058 2121     		movs	r1, #33
+ 104              		.loc 1 42 3 is_stmt 0 discriminator 1 view .LVU21
+ 105 0058 2A21     		movs	r1, #42
  106              	.LVL9:
- 107              		.loc 1 33 3 discriminator 1 view .LVU22
+ 107              		.loc 1 42 3 discriminator 1 view .LVU22
  108 005a 1B4B     		ldr	r3, .L18+24
  109 005c 174A     		ldr	r2, .L18+12
  110              	.LVL10:
- 111              		.loc 1 33 3 discriminator 1 view .LVU23
+ 111              		.loc 1 42 3 discriminator 1 view .LVU23
  112 005e F1E7     		b	.L17
  113              	.LVL11:
  114              	.L5:
-  34:Src/app_cam.c **** 
-  35:Src/app_cam.c ****   roi->width = (uint32_t) MIN(LCD_BG_WIDTH * ratio, sensor_width);
- 115              		.loc 1 35 3 is_stmt 1 view .LVU24
- 116              		.loc 1 35 27 is_stmt 0 view .LVU25
+  43:Src/app_cam.c **** 
+  44:Src/app_cam.c ****   roi->width = (uint32_t) MIN(LCD_BG_WIDTH * ratio, sensor_width);
+ 115              		.loc 1 44 3 is_stmt 1 view .LVU24
+ 116              		.loc 1 44 27 is_stmt 0 view .LVU25
  117 0060 27EE866A 		vmul.f32	s12, s15, s12
  118              	.LVL12:
-  36:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
- 119              		.loc 1 36 28 view .LVU26
+ARM GAS  /tmp/cceyb8Te.s 			page 4
+
+
+  45:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
+ 119              		.loc 1 45 28 view .LVU26
  120 0064 67EEA57A 		vmul.f32	s15, s15, s11
  121              	.LVL13:
-  35:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
- 122              		.loc 1 35 16 view .LVU27
+  44:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
+ 122              		.loc 1 44 16 view .LVU27
  123 0068 F4EEC66A 		vcmpe.f32	s13, s12
  124 006c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 125              		.loc 1 36 17 view .LVU28
-ARM GAS  /tmp/cc1VCE5j.s 			page 4
-
-
+ 125              		.loc 1 45 17 view .LVU28
  126 0070 B4EEE77A 		vcmpe.f32	s14, s15
-  35:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
- 127              		.loc 1 35 16 discriminator 1 view .LVU29
+  44:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
+ 127              		.loc 1 44 16 discriminator 1 view .LVU29
  128 0074 CCBF     		ite	gt
  129 0076 FCEEC66A 		vcvtgt.u32.f32	s13, s12
  130              	.LVL14:
-  35:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
- 131              		.loc 1 35 16 discriminator 2 view .LVU30
+  44:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
+ 131              		.loc 1 44 16 discriminator 2 view .LVU30
  132 007a FCEEE66A 		vcvtle.u32.f32	s13, s13
- 133              		.loc 1 36 17 view .LVU31
+ 133              		.loc 1 45 17 view .LVU31
  134 007e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
-  37:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
- 135              		.loc 1 37 46 view .LVU32
+  46:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
+ 135              		.loc 1 46 46 view .LVU32
  136 0082 16EE903A 		vmov	r3, s13	@ int
-  36:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
- 137              		.loc 1 36 17 discriminator 1 view .LVU33
+  45:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
+ 137              		.loc 1 45 17 discriminator 1 view .LVU33
  138 0086 CCBF     		ite	gt
  139 0088 BCEEE77A 		vcvtgt.u32.f32	s14, s15
  140              	.LVL15:
-  36:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
- 141              		.loc 1 36 17 discriminator 2 view .LVU34
+  45:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
+ 141              		.loc 1 45 17 discriminator 2 view .LVU34
  142 008c BCEEC77A 		vcvtle.u32.f32	s14, s14
- 143              		.loc 1 37 46 view .LVU35
+ 143              		.loc 1 46 46 view .LVU35
  144 0090 0131     		adds	r1, r1, #1
  145              	.LVL16:
- 146              		.loc 1 37 46 view .LVU36
+ 146              		.loc 1 46 46 view .LVU36
  147 0092 C91A     		subs	r1, r1, r3
  148              	.LVL17:
-  38:Src/app_cam.c ****   roi->offset_y = (sensor_height - roi->height + 1) / 2;
- 149              		.loc 1 38 48 view .LVU37
+  47:Src/app_cam.c ****   roi->offset_y = (sensor_height - roi->height + 1) / 2;
+ 149              		.loc 1 47 48 view .LVU37
  150 0094 17EE103A 		vmov	r3, s14	@ int
  151 0098 0132     		adds	r2, r2, #1
  152              	.LVL18:
- 153              		.loc 1 38 48 view .LVU38
+ 153              		.loc 1 47 48 view .LVU38
  154 009a D21A     		subs	r2, r2, r3
  155              	.LVL19:
-  37:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
- 156              		.loc 1 37 51 view .LVU39
+  46:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
+ 156              		.loc 1 46 51 view .LVU39
  157 009c 4908     		lsrs	r1, r1, #1
- 158              		.loc 1 38 53 view .LVU40
+ 158              		.loc 1 47 53 view .LVU40
  159 009e 5208     		lsrs	r2, r2, #1
-  35:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
- 160              		.loc 1 35 14 discriminator 4 view .LVU41
+  44:Src/app_cam.c ****   roi->height = (uint32_t) MIN(LCD_BG_HEIGHT * ratio, sensor_height);
+ 160              		.loc 1 44 14 discriminator 4 view .LVU41
  161 00a0 C0ED006A 		vstr.32	s13, [r0]	@ int
-  36:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
- 162              		.loc 1 36 3 is_stmt 1 view .LVU42
-  36:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
- 163              		.loc 1 36 15 is_stmt 0 discriminator 4 view .LVU43
+  45:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
+ 162              		.loc 1 45 3 is_stmt 1 view .LVU42
+  45:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
+ 163              		.loc 1 45 15 is_stmt 0 discriminator 4 view .LVU43
+ARM GAS  /tmp/cceyb8Te.s 			page 5
+
+
  164 00a4 80ED017A 		vstr.32	s14, [r0, #4]	@ int
-  37:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
- 165              		.loc 1 37 3 is_stmt 1 view .LVU44
-  37:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
- 166              		.loc 1 37 17 is_stmt 0 view .LVU45
+  46:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
+ 165              		.loc 1 46 3 is_stmt 1 view .LVU44
+  46:Src/app_cam.c ****   roi->offset_x = (sensor_width - roi->width + 1) / 2;
+ 166              		.loc 1 46 17 is_stmt 0 view .LVU45
  167 00a8 8160     		str	r1, [r0, #8]
- 168              		.loc 1 38 3 is_stmt 1 view .LVU46
- 169              		.loc 1 38 17 is_stmt 0 view .LVU47
+ 168              		.loc 1 47 3 is_stmt 1 view .LVU46
+ 169              		.loc 1 47 17 is_stmt 0 view .LVU47
  170 00aa C260     		str	r2, [r0, #12]
-ARM GAS  /tmp/cc1VCE5j.s 			page 5
-
-
-  39:Src/app_cam.c **** }
- 171              		.loc 1 39 1 view .LVU48
+  48:Src/app_cam.c **** }
+ 171              		.loc 1 48 1 view .LVU48
  172 00ac 08BD     		pop	{r3, pc}
  173              	.L19:
  174 00ae 00BF     		.align	2
@@ -285,342 +294,379 @@ ARM GAS  /tmp/cc1VCE5j.s 			page 1
  199              		.thumb_func
  201              	CAM_Init:
  202              	.LFB3345:
-  40:Src/app_cam.c **** 
-  41:Src/app_cam.c **** static void DCMIPP_PipeInitDisplay(int sensor_width, int sensor_height)
-  42:Src/app_cam.c **** {
-  43:Src/app_cam.c ****   CMW_DCMIPP_Conf_t dcmipp_conf;
-  44:Src/app_cam.c ****   uint32_t hw_pitch;
-  45:Src/app_cam.c ****   int ret;
-  46:Src/app_cam.c **** 
-  47:Src/app_cam.c ****   assert(LCD_BG_WIDTH >= LCD_BG_HEIGHT);
-  48:Src/app_cam.c **** 
-  49:Src/app_cam.c ****   dcmipp_conf.output_width = LCD_BG_WIDTH;
-  50:Src/app_cam.c ****   dcmipp_conf.output_height = LCD_BG_HEIGHT;
-  51:Src/app_cam.c ****   dcmipp_conf.output_format = DISPLAY_FORMAT;
-  52:Src/app_cam.c ****   dcmipp_conf.output_bpp = DISPLAY_BPP;
-ARM GAS  /tmp/cc1VCE5j.s 			page 6
+  49:Src/app_cam.c **** 
+  50:Src/app_cam.c **** /**
+  51:Src/app_cam.c ****  * @brief Configures the DCMIPP's main pipe for the display.
+  52:Src/app_cam.c ****  * @details This sets up the hardware pipeline (Pipe 1) that takes the camera
+ARM GAS  /tmp/cceyb8Te.s 			page 6
 
 
-  53:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
-  54:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
-  55:Src/app_cam.c ****   dcmipp_conf.enable_gamma_conversion = 0;
-  56:Src/app_cam.c ****   CAM_InitCropConfig(&dcmipp_conf.manual_conf, sensor_width, sensor_height);
-  57:Src/app_cam.c ****   ret = CMW_CAMERA_SetPipeConfig(DCMIPP_PIPE1, &dcmipp_conf, &hw_pitch);
-  58:Src/app_cam.c ****   assert(ret == HAL_OK);
-  59:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
-  60:Src/app_cam.c **** }
-  61:Src/app_cam.c **** 
-  62:Src/app_cam.c **** static void DCMIPP_PipeInitNn(int sensor_width, int sensor_height)
-  63:Src/app_cam.c **** {
-  64:Src/app_cam.c ****   CMW_DCMIPP_Conf_t dcmipp_conf;
-  65:Src/app_cam.c ****   uint32_t hw_pitch;
-  66:Src/app_cam.c ****   int ret;
-  67:Src/app_cam.c **** 
-  68:Src/app_cam.c ****   assert(LCD_BG_HEIGHT <= LCD_BG_WIDTH);
-  69:Src/app_cam.c ****   /* Keep screen aspect ratio. Consequence is that bottom of palm detector input will be black */
-  70:Src/app_cam.c ****   dcmipp_conf.output_width = NN_WIDTH;
-  71:Src/app_cam.c ****   dcmipp_conf.output_height = (int) (NN_HEIGHT * ((float)LCD_BG_HEIGHT / LCD_BG_WIDTH));
-  72:Src/app_cam.c ****   dcmipp_conf.output_format = NN_FORMAT;
-  73:Src/app_cam.c ****   dcmipp_conf.output_bpp = NN_BPP;
-  74:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
-  75:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
-  76:Src/app_cam.c ****   dcmipp_conf.enable_gamma_conversion = 0;
-  77:Src/app_cam.c ****   CAM_InitCropConfig(&dcmipp_conf.manual_conf, sensor_width, sensor_height);
-  78:Src/app_cam.c ****   ret = CMW_CAMERA_SetPipeConfig(DCMIPP_PIPE2, &dcmipp_conf, &hw_pitch);
+  53:Src/app_cam.c ****  * data, resizes it to match the LCD resolution (e.g., 800x480),
+  54:Src/app_cam.c ****  * and prepares it for display.
+  55:Src/app_cam.c ****  * @param sensor_width The full width of the camera sensor.
+  56:Src/app_cam.c ****  * @param sensor_height The full height of the camera sensor.
+  57:Src/app_cam.c ****  */
+  58:Src/app_cam.c **** static void DCMIPP_PipeInitDisplay(int sensor_width, int sensor_height)
+  59:Src/app_cam.c **** {
+  60:Src/app_cam.c ****   CMW_DCMIPP_Conf_t dcmipp_conf;
+  61:Src/app_cam.c ****   uint32_t hw_pitch;
+  62:Src/app_cam.c ****   int ret;
+  63:Src/app_cam.c **** 
+  64:Src/app_cam.c ****   assert(LCD_BG_WIDTH >= LCD_BG_HEIGHT);
+  65:Src/app_cam.c **** 
+  66:Src/app_cam.c ****   dcmipp_conf.output_width = LCD_BG_WIDTH;
+  67:Src/app_cam.c ****   dcmipp_conf.output_height = LCD_BG_HEIGHT;
+  68:Src/app_cam.c ****   dcmipp_conf.output_format = DISPLAY_FORMAT;
+  69:Src/app_cam.c ****   dcmipp_conf.output_bpp = DISPLAY_BPP;
+  70:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
+  71:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
+  72:Src/app_cam.c ****   dcmipp_conf.enable_gamma_conversion = 0;
+  73:Src/app_cam.c **** 
+  74:Src/app_cam.c ****   /* Calculate the sensor crop window to maintain the display's aspect ratio. */
+  75:Src/app_cam.c ****   CAM_InitCropConfig(&dcmipp_conf.manual_conf, sensor_width, sensor_height);
+  76:Src/app_cam.c ****   
+  77:Src/app_cam.c ****   /* Send the final configuration to the hardware driver for Pipe 1. */
+  78:Src/app_cam.c ****   ret = CMW_CAMERA_SetPipeConfig(DCMIPP_PIPE1, &dcmipp_conf, &hw_pitch);
   79:Src/app_cam.c ****   assert(ret == HAL_OK);
   80:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
   81:Src/app_cam.c **** }
   82:Src/app_cam.c **** 
-  83:Src/app_cam.c **** void CAM_Init(void)
-  84:Src/app_cam.c **** {
- 203              		.loc 1 84 1 is_stmt 1 view -0
+  83:Src/app_cam.c **** /**
+  84:Src/app_cam.c ****  * @brief Configures the DCMIPP's ancillary pipe for the Neural Network.
+  85:Src/app_cam.c ****  * @details This sets up the hardware pipeline (Pipe 2) that creates a smaller,
+  86:Src/app_cam.c ****  * dedicated video stream to be used as input for the first AI model.
+  87:Src/app_cam.c ****  * *** FUNCTION TO MODIFY FOR DMS ***
+  88:Src/app_cam.c ****  * @param sensor_width The full width of the camera sensor.
+  89:Src/app_cam.c ****  * @param sensor_height The full height of the camera sensor.
+  90:Src/app_cam.c ****  */
+  91:Src/app_cam.c **** static void DCMIPP_PipeInitNn(int sensor_width, int sensor_height)
+  92:Src/app_cam.c **** {
+  93:Src/app_cam.c ****   CMW_DCMIPP_Conf_t dcmipp_conf;
+  94:Src/app_cam.c ****   uint32_t hw_pitch;
+  95:Src/app_cam.c ****   int ret;
+  96:Src/app_cam.c **** 
+  97:Src/app_cam.c ****   assert(LCD_BG_HEIGHT <= LCD_BG_WIDTH);
+  98:Src/app_cam.c ****   /* Define the properties for the NN input image. Change NN_WIDTH, NN_HEIGHT, etc.,
+  99:Src/app_cam.c ****     in app_config.h to match your face detector's requirements (e.g., 224x224). */
+ 100:Src/app_cam.c ****   dcmipp_conf.output_width = NN_WIDTH;
+ 101:Src/app_cam.c **** 
+ 102:Src/app_cam.c ****   /* This line adjusts the height to match the screen's aspect ratio. This prevents
+ 103:Src/app_cam.c ****     distortion and ensures AI coordinates map correctly to the display. If your model
+ 104:Src/app_cam.c ****     needs a perfect square input, this may result in black bars (padding). */
+ 105:Src/app_cam.c ****   dcmipp_conf.output_height = (int) (NN_HEIGHT * ((float)LCD_BG_HEIGHT / LCD_BG_WIDTH));
+ 106:Src/app_cam.c ****   dcmipp_conf.output_format = NN_FORMAT;
+ 107:Src/app_cam.c ****   dcmipp_conf.output_bpp = NN_BPP;
+ 108:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
+ 109:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
+ARM GAS  /tmp/cceyb8Te.s 			page 7
+
+
+ 110:Src/app_cam.c ****   dcmipp_conf.enable_gamma_conversion = 0;
+ 111:Src/app_cam.c ****   
+ 112:Src/app_cam.c ****   /* Calculate the sensor crop window to maintain the NN input's aspect ratio. */
+ 113:Src/app_cam.c ****   CAM_InitCropConfig(&dcmipp_conf.manual_conf, sensor_width, sensor_height);
+ 114:Src/app_cam.c **** 
+ 115:Src/app_cam.c ****   /* Send the final configuration to the hardware driver for Pipe 2. */
+ 116:Src/app_cam.c ****   ret = CMW_CAMERA_SetPipeConfig(DCMIPP_PIPE2, &dcmipp_conf, &hw_pitch);
+ 117:Src/app_cam.c ****   assert(ret == HAL_OK);
+ 118:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
+ 119:Src/app_cam.c **** }
+ 120:Src/app_cam.c **** 
+ 121:Src/app_cam.c **** /**
+ 122:Src/app_cam.c ****  * @brief Initializes the entire camera system.
+ 123:Src/app_cam.c ****  * @details This is the main entry point. It powers up the camera sensor and then
+ 124:Src/app_cam.c ****  * configures both the display and NN hardware pipelines.
+ 125:Src/app_cam.c ****  */
+ 126:Src/app_cam.c **** void CAM_Init(void)
+ 127:Src/app_cam.c **** {
+ 203              		.loc 1 127 1 is_stmt 1 view -0
  204              		.cfi_startproc
  205              		@ args = 0, pretend = 0, frame = 72
  206              		@ frame_needed = 0, uses_anonymous_args = 0
-  85:Src/app_cam.c ****   CMW_CameraInit_t cam_conf;
- 207              		.loc 1 85 3 view .LVU50
-  86:Src/app_cam.c ****   int ret;
- 208              		.loc 1 86 3 view .LVU51
-  87:Src/app_cam.c **** 
-  88:Src/app_cam.c ****   /* Let sensor driver choose which width/height to use */
-  89:Src/app_cam.c ****   cam_conf.width = 0;
- 209              		.loc 1 89 3 view .LVU52
-  84:Src/app_cam.c ****   CMW_CameraInit_t cam_conf;
- 210              		.loc 1 84 1 is_stmt 0 view .LVU53
+ 128:Src/app_cam.c ****   CMW_CameraInit_t cam_conf;
+ 207              		.loc 1 128 3 view .LVU50
+ 129:Src/app_cam.c ****   int ret;
+ 208              		.loc 1 129 3 view .LVU51
+ 130:Src/app_cam.c **** 
+ 131:Src/app_cam.c ****   /* Let sensor driver choose which width/height to use */
+ 132:Src/app_cam.c ****   cam_conf.width = 0;
+ 209              		.loc 1 132 3 view .LVU52
+ 127:Src/app_cam.c ****   CMW_CameraInit_t cam_conf;
+ 210              		.loc 1 127 1 is_stmt 0 view .LVU53
  211 0000 70B5     		push	{r4, r5, r6, lr}
  212              		.cfi_def_cfa_offset 16
  213              		.cfi_offset 4, -16
  214              		.cfi_offset 5, -12
  215              		.cfi_offset 6, -8
  216              		.cfi_offset 14, -4
- 217              		.loc 1 89 18 view .LVU54
+ 217              		.loc 1 132 18 view .LVU54
  218 0002 0023     		movs	r3, #0
-  90:Src/app_cam.c ****   cam_conf.height = 0;
-  91:Src/app_cam.c ****   cam_conf.fps = CAMERA_FPS;
- 219              		.loc 1 91 16 view .LVU55
-ARM GAS  /tmp/cc1VCE5j.s 			page 7
-
-
+ 133:Src/app_cam.c ****   cam_conf.height = 0;
+ 134:Src/app_cam.c ****   cam_conf.fps = CAMERA_FPS;
+ 219              		.loc 1 134 16 view .LVU55
  220 0004 1E22     		movs	r2, #30
-  92:Src/app_cam.c ****   cam_conf.pixel_format = 0; /* Default; Not implemented yet */
-  93:Src/app_cam.c ****   cam_conf.anti_flicker = 0;
-  94:Src/app_cam.c ****   cam_conf.mirror_flip = CAMERA_FLIP;
- 221              		.loc 1 94 24 view .LVU56
+ 135:Src/app_cam.c ****   cam_conf.pixel_format = 0; /* Default; Not implemented yet */
+ 136:Src/app_cam.c ****   cam_conf.anti_flicker = 0;
+ 137:Src/app_cam.c ****   cam_conf.mirror_flip = CAMERA_FLIP;
+ 221              		.loc 1 137 24 view .LVU56
  222 0006 0224     		movs	r4, #2
-  84:Src/app_cam.c ****   CMW_CameraInit_t cam_conf;
- 223              		.loc 1 84 1 view .LVU57
+ 127:Src/app_cam.c ****   CMW_CameraInit_t cam_conf;
+ 223              		.loc 1 127 1 view .LVU57
  224 0008 92B0     		sub	sp, sp, #72
  225              		.cfi_def_cfa_offset 88
-  95:Src/app_cam.c ****   ret = CMW_CAMERA_Init(&cam_conf);
- 226              		.loc 1 95 9 view .LVU58
+ 138:Src/app_cam.c ****   ret = CMW_CAMERA_Init(&cam_conf);
+ 226              		.loc 1 138 9 view .LVU58
  227 000a 01A8     		add	r0, sp, #4
-  90:Src/app_cam.c ****   cam_conf.fps = CAMERA_FPS;
- 228              		.loc 1 90 19 view .LVU59
+ 133:Src/app_cam.c ****   cam_conf.fps = CAMERA_FPS;
+ARM GAS  /tmp/cceyb8Te.s 			page 8
+
+
+ 228              		.loc 1 133 19 view .LVU59
  229 000c CDE90133 		strd	r3, r3, [sp, #4]
-  91:Src/app_cam.c ****   cam_conf.pixel_format = 0; /* Default; Not implemented yet */
- 230              		.loc 1 91 3 is_stmt 1 view .LVU60
-  92:Src/app_cam.c ****   cam_conf.anti_flicker = 0;
- 231              		.loc 1 92 25 is_stmt 0 view .LVU61
+ 134:Src/app_cam.c ****   cam_conf.pixel_format = 0; /* Default; Not implemented yet */
+ 230              		.loc 1 134 3 is_stmt 1 view .LVU60
+ 135:Src/app_cam.c ****   cam_conf.anti_flicker = 0;
+ 231              		.loc 1 135 25 is_stmt 0 view .LVU61
  232 0010 CDE90323 		strd	r2, r3, [sp, #12]
-  93:Src/app_cam.c ****   cam_conf.mirror_flip = CAMERA_FLIP;
- 233              		.loc 1 93 3 is_stmt 1 view .LVU62
-  93:Src/app_cam.c ****   cam_conf.mirror_flip = CAMERA_FLIP;
- 234              		.loc 1 93 25 is_stmt 0 view .LVU63
+ 136:Src/app_cam.c ****   cam_conf.mirror_flip = CAMERA_FLIP;
+ 233              		.loc 1 136 3 is_stmt 1 view .LVU62
+ 136:Src/app_cam.c ****   cam_conf.mirror_flip = CAMERA_FLIP;
+ 234              		.loc 1 136 25 is_stmt 0 view .LVU63
  235 0014 0593     		str	r3, [sp, #20]
-  94:Src/app_cam.c ****   ret = CMW_CAMERA_Init(&cam_conf);
- 236              		.loc 1 94 3 is_stmt 1 view .LVU64
-  94:Src/app_cam.c ****   ret = CMW_CAMERA_Init(&cam_conf);
- 237              		.loc 1 94 24 is_stmt 0 view .LVU65
+ 137:Src/app_cam.c ****   ret = CMW_CAMERA_Init(&cam_conf);
+ 236              		.loc 1 137 3 is_stmt 1 view .LVU64
+ 137:Src/app_cam.c ****   ret = CMW_CAMERA_Init(&cam_conf);
+ 237              		.loc 1 137 24 is_stmt 0 view .LVU65
  238 0016 0694     		str	r4, [sp, #24]
- 239              		.loc 1 95 3 is_stmt 1 view .LVU66
- 240              		.loc 1 95 9 is_stmt 0 view .LVU67
+ 239              		.loc 1 138 3 is_stmt 1 view .LVU66
+ 240              		.loc 1 138 9 is_stmt 0 view .LVU67
  241 0018 FFF7FEFF 		bl	CMW_CAMERA_Init
  242              	.LVL20:
-  96:Src/app_cam.c ****   assert(ret == CMW_ERROR_NONE);
- 243              		.loc 1 96 3 is_stmt 1 view .LVU68
+ 139:Src/app_cam.c ****   assert(ret == CMW_ERROR_NONE);
+ 243              		.loc 1 139 3 is_stmt 1 view .LVU68
  244 001c 28B1     		cbz	r0, .L21
- 245              		.loc 1 96 3 is_stmt 0 discriminator 1 view .LVU69
- 246 001e 6021     		movs	r1, #96
+ 245              		.loc 1 139 3 is_stmt 0 discriminator 1 view .LVU69
+ 246 001e 8B21     		movs	r1, #139
  247 0020 274B     		ldr	r3, .L27
  248 0022 284A     		ldr	r2, .L27+4
  249              	.LVL21:
  250              	.L26:
  251              	.LBB6:
  252              	.LBB7:
-  58:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
- 253              		.loc 1 58 3 discriminator 1 view .LVU70
+  79:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
+ 253              		.loc 1 79 3 discriminator 1 view .LVU70
  254 0024 2848     		ldr	r0, .L27+8
  255 0026 FFF7FEFF 		bl	__assert_func
  256              	.LVL22:
  257              	.L21:
-  58:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
- 258              		.loc 1 58 3 discriminator 1 view .LVU71
+  79:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
+ 258              		.loc 1 79 3 discriminator 1 view .LVU71
  259              	.LBE7:
  260              	.LBE6:
-  97:Src/app_cam.c **** 
-ARM GAS  /tmp/cc1VCE5j.s 			page 8
-
-
-  98:Src/app_cam.c ****   /* cam_conf.width / cam_conf.height now contains choose resolution */
-  99:Src/app_cam.c ****   DCMIPP_PipeInitDisplay(cam_conf.width, cam_conf.height);
- 261              		.loc 1 99 3 is_stmt 1 view .LVU72
+ 140:Src/app_cam.c **** 
+ 141:Src/app_cam.c ****   /* Now that we have the actual sensor resolution, configure the two DCMIPP pipelines. */
+ 142:Src/app_cam.c ****   DCMIPP_PipeInitDisplay(cam_conf.width, cam_conf.height);
+ 261              		.loc 1 142 3 is_stmt 1 view .LVU72
  262              	.LBB9:
  263              	.LBI6:
-  41:Src/app_cam.c **** {
- 264              		.loc 1 41 13 view .LVU73
+  58:Src/app_cam.c **** {
+ 264              		.loc 1 58 13 view .LVU73
  265              	.LBB8:
-  43:Src/app_cam.c ****   uint32_t hw_pitch;
- 266              		.loc 1 43 3 view .LVU74
-  44:Src/app_cam.c ****   int ret;
- 267              		.loc 1 44 3 view .LVU75
-  45:Src/app_cam.c **** 
- 268              		.loc 1 45 3 view .LVU76
-  47:Src/app_cam.c **** 
- 269              		.loc 1 47 3 view .LVU77
-  49:Src/app_cam.c ****   dcmipp_conf.output_height = LCD_BG_HEIGHT;
- 270              		.loc 1 49 3 view .LVU78
-  50:Src/app_cam.c ****   dcmipp_conf.output_format = DISPLAY_FORMAT;
- 271              		.loc 1 50 29 is_stmt 0 view .LVU79
+  60:Src/app_cam.c ****   uint32_t hw_pitch;
+ 266              		.loc 1 60 3 view .LVU74
+  61:Src/app_cam.c ****   int ret;
+ 267              		.loc 1 61 3 view .LVU75
+  62:Src/app_cam.c **** 
+ 268              		.loc 1 62 3 view .LVU76
+ARM GAS  /tmp/cceyb8Te.s 			page 9
+
+
+  64:Src/app_cam.c **** 
+ 269              		.loc 1 64 3 view .LVU77
+  66:Src/app_cam.c ****   dcmipp_conf.output_height = LCD_BG_HEIGHT;
+ 270              		.loc 1 66 3 view .LVU78
+  67:Src/app_cam.c ****   dcmipp_conf.output_format = DISPLAY_FORMAT;
+ 271              		.loc 1 67 29 is_stmt 0 view .LVU79
  272 002a 4FF44871 		mov	r1, #800
  273 002e 4FF4F073 		mov	r3, #480
-  54:Src/app_cam.c ****   dcmipp_conf.enable_gamma_conversion = 0;
- 274              		.loc 1 54 27 view .LVU80
+  71:Src/app_cam.c ****   dcmipp_conf.enable_gamma_conversion = 0;
+ 274              		.loc 1 71 27 view .LVU80
  275 0032 0125     		movs	r5, #1
-  50:Src/app_cam.c ****   dcmipp_conf.output_format = DISPLAY_FORMAT;
- 276              		.loc 1 50 29 view .LVU81
+  67:Src/app_cam.c ****   dcmipp_conf.output_format = DISPLAY_FORMAT;
+ 276              		.loc 1 67 29 view .LVU81
  277 0034 CDE90713 		strd	r1, r3, [sp, #28]
-  51:Src/app_cam.c ****   dcmipp_conf.output_bpp = DISPLAY_BPP;
- 278              		.loc 1 51 3 is_stmt 1 view .LVU82
-  56:Src/app_cam.c ****   ret = CMW_CAMERA_SetPipeConfig(DCMIPP_PIPE1, &dcmipp_conf, &hw_pitch);
- 279              		.loc 1 56 3 is_stmt 0 view .LVU83
+  68:Src/app_cam.c ****   dcmipp_conf.output_bpp = DISPLAY_BPP;
+ 278              		.loc 1 68 3 is_stmt 1 view .LVU82
+  75:Src/app_cam.c ****   
+ 279              		.loc 1 75 3 is_stmt 0 view .LVU83
  280 0038 DDE90112 		ldrd	r1, r2, [sp, #4]
-  52:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
- 281              		.loc 1 52 26 view .LVU84
+  69:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
+ 281              		.loc 1 69 26 view .LVU84
  282 003c 0423     		movs	r3, #4
-  53:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
- 283              		.loc 1 53 20 view .LVU85
+  70:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
+ 283              		.loc 1 70 20 view .LVU85
  284 003e 0326     		movs	r6, #3
-  55:Src/app_cam.c ****   CAM_InitCropConfig(&dcmipp_conf.manual_conf, sensor_width, sensor_height);
- 285              		.loc 1 55 39 view .LVU86
+  72:Src/app_cam.c **** 
+ 285              		.loc 1 72 39 view .LVU86
  286 0040 CDE90B50 		strd	r5, r0, [sp, #44]
-  56:Src/app_cam.c ****   ret = CMW_CAMERA_SetPipeConfig(DCMIPP_PIPE1, &dcmipp_conf, &hw_pitch);
- 287              		.loc 1 56 3 view .LVU87
+  75:Src/app_cam.c ****   
+ 287              		.loc 1 75 3 view .LVU87
  288 0044 0EA8     		add	r0, sp, #56
  289              	.LVL23:
-  51:Src/app_cam.c ****   dcmipp_conf.output_bpp = DISPLAY_BPP;
- 290              		.loc 1 51 29 view .LVU88
+  68:Src/app_cam.c ****   dcmipp_conf.output_bpp = DISPLAY_BPP;
+ 290              		.loc 1 68 29 view .LVU88
  291 0046 0994     		str	r4, [sp, #36]
-  52:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
- 292              		.loc 1 52 3 is_stmt 1 view .LVU89
-  52:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
- 293              		.loc 1 52 26 is_stmt 0 view .LVU90
+  69:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
+ 292              		.loc 1 69 3 is_stmt 1 view .LVU89
+  69:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
+ 293              		.loc 1 69 26 is_stmt 0 view .LVU90
  294 0048 0A93     		str	r3, [sp, #40]
-  53:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
- 295              		.loc 1 53 3 is_stmt 1 view .LVU91
-  53:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
-ARM GAS  /tmp/cc1VCE5j.s 			page 9
-
-
- 296              		.loc 1 53 20 is_stmt 0 view .LVU92
+  70:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
+ 295              		.loc 1 70 3 is_stmt 1 view .LVU91
+  70:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
+ 296              		.loc 1 70 20 is_stmt 0 view .LVU92
  297 004a 0D96     		str	r6, [sp, #52]
-  54:Src/app_cam.c ****   dcmipp_conf.enable_gamma_conversion = 0;
- 298              		.loc 1 54 3 is_stmt 1 view .LVU93
-  56:Src/app_cam.c ****   ret = CMW_CAMERA_SetPipeConfig(DCMIPP_PIPE1, &dcmipp_conf, &hw_pitch);
- 299              		.loc 1 56 3 view .LVU94
+  71:Src/app_cam.c ****   dcmipp_conf.enable_gamma_conversion = 0;
+ 298              		.loc 1 71 3 is_stmt 1 view .LVU93
+  75:Src/app_cam.c ****   
+ 299              		.loc 1 75 3 view .LVU94
  300 004c FFF7FEFF 		bl	CAM_InitCropConfig
  301              	.LVL24:
-  57:Src/app_cam.c ****   assert(ret == HAL_OK);
- 302              		.loc 1 57 3 view .LVU95
-  57:Src/app_cam.c ****   assert(ret == HAL_OK);
- 303              		.loc 1 57 9 is_stmt 0 view .LVU96
+  78:Src/app_cam.c ****   assert(ret == HAL_OK);
+ 302              		.loc 1 78 3 view .LVU95
+  78:Src/app_cam.c ****   assert(ret == HAL_OK);
+ 303              		.loc 1 78 9 is_stmt 0 view .LVU96
  304 0050 6A46     		mov	r2, sp
  305 0052 2846     		mov	r0, r5
+ARM GAS  /tmp/cceyb8Te.s 			page 10
+
+
  306 0054 07A9     		add	r1, sp, #28
  307 0056 FFF7FEFF 		bl	CMW_CAMERA_SetPipeConfig
  308              	.LVL25:
-  58:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
- 309              		.loc 1 58 3 is_stmt 1 view .LVU97
+  79:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
+ 309              		.loc 1 79 3 is_stmt 1 view .LVU97
  310 005a 18B1     		cbz	r0, .L22
-  58:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
- 311              		.loc 1 58 3 is_stmt 0 discriminator 1 view .LVU98
- 312 005c 3A21     		movs	r1, #58
+  79:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
+ 311              		.loc 1 79 3 is_stmt 0 discriminator 1 view .LVU98
+ 312 005c 4F21     		movs	r1, #79
  313 005e 1B4B     		ldr	r3, .L27+12
  314 0060 1B4A     		ldr	r2, .L27+16
  315 0062 DFE7     		b	.L26
  316              	.L22:
-  59:Src/app_cam.c **** }
- 317              		.loc 1 59 3 is_stmt 1 view .LVU99
+  80:Src/app_cam.c **** }
+ 317              		.loc 1 80 3 is_stmt 1 view .LVU99
  318 0064 0A9A     		ldr	r2, [sp, #40]
  319 0066 079B     		ldr	r3, [sp, #28]
  320 0068 5343     		muls	r3, r2, r3
  321 006a 009A     		ldr	r2, [sp]
  322 006c 9342     		cmp	r3, r2
  323 006e 03D0     		beq	.L23
-  59:Src/app_cam.c **** }
- 324              		.loc 1 59 3 is_stmt 0 discriminator 1 view .LVU100
- 325 0070 3B21     		movs	r1, #59
+  80:Src/app_cam.c **** }
+ 324              		.loc 1 80 3 is_stmt 0 discriminator 1 view .LVU100
+ 325 0070 5021     		movs	r1, #80
  326 0072 184B     		ldr	r3, .L27+20
  327 0074 164A     		ldr	r2, .L27+16
  328 0076 D5E7     		b	.L26
  329              	.L23:
  330              	.LVL26:
-  59:Src/app_cam.c **** }
- 331              		.loc 1 59 3 discriminator 1 view .LVU101
+  80:Src/app_cam.c **** }
+ 331              		.loc 1 80 3 discriminator 1 view .LVU101
  332              	.LBE8:
  333              	.LBE9:
- 100:Src/app_cam.c ****   DCMIPP_PipeInitNn(cam_conf.width, cam_conf.height);
- 334              		.loc 1 100 3 is_stmt 1 view .LVU102
+ 143:Src/app_cam.c ****   DCMIPP_PipeInitNn(cam_conf.width, cam_conf.height);
+ 334              		.loc 1 143 3 is_stmt 1 view .LVU102
  335              	.LBB10:
  336              	.LBI10:
-  62:Src/app_cam.c **** {
- 337              		.loc 1 62 13 view .LVU103
+  91:Src/app_cam.c **** {
+ 337              		.loc 1 91 13 view .LVU103
  338              	.LBB11:
-  64:Src/app_cam.c ****   uint32_t hw_pitch;
- 339              		.loc 1 64 3 view .LVU104
-  65:Src/app_cam.c ****   int ret;
-ARM GAS  /tmp/cc1VCE5j.s 			page 10
-
-
- 340              		.loc 1 65 3 view .LVU105
-  66:Src/app_cam.c **** 
- 341              		.loc 1 66 3 view .LVU106
-  68:Src/app_cam.c ****   /* Keep screen aspect ratio. Consequence is that bottom of palm detector input will be black */
- 342              		.loc 1 68 3 view .LVU107
-  70:Src/app_cam.c ****   dcmipp_conf.output_height = (int) (NN_HEIGHT * ((float)LCD_BG_HEIGHT / LCD_BG_WIDTH));
- 343              		.loc 1 70 3 view .LVU108
-  71:Src/app_cam.c ****   dcmipp_conf.output_format = NN_FORMAT;
- 344              		.loc 1 71 29 is_stmt 0 view .LVU109
+  93:Src/app_cam.c ****   uint32_t hw_pitch;
+ 339              		.loc 1 93 3 view .LVU104
+  94:Src/app_cam.c ****   int ret;
+ 340              		.loc 1 94 3 view .LVU105
+  95:Src/app_cam.c **** 
+ 341              		.loc 1 95 3 view .LVU106
+  97:Src/app_cam.c ****   /* Define the properties for the NN input image. Change NN_WIDTH, NN_HEIGHT, etc.,
+ 342              		.loc 1 97 3 view .LVU107
+ 100:Src/app_cam.c **** 
+ 343              		.loc 1 100 3 view .LVU108
+ 105:Src/app_cam.c ****   dcmipp_conf.output_format = NN_FORMAT;
+ 344              		.loc 1 105 29 is_stmt 0 view .LVU109
  345 0078 C022     		movs	r2, #192
  346 007a 7323     		movs	r3, #115
-  73:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
- 347              		.loc 1 73 26 view .LVU110
+ 107:Src/app_cam.c ****   dcmipp_conf.mode = CMW_Aspect_ratio_manual_roi;
+ 347              		.loc 1 107 26 view .LVU110
  348 007c CDE90906 		strd	r0, r6, [sp, #36]
-  71:Src/app_cam.c ****   dcmipp_conf.output_format = NN_FORMAT;
- 349              		.loc 1 71 29 view .LVU111
+ARM GAS  /tmp/cceyb8Te.s 			page 11
+
+
+ 105:Src/app_cam.c ****   dcmipp_conf.output_format = NN_FORMAT;
+ 349              		.loc 1 105 29 view .LVU111
  350 0080 CDE90723 		strd	r2, r3, [sp, #28]
-  72:Src/app_cam.c ****   dcmipp_conf.output_bpp = NN_BPP;
- 351              		.loc 1 72 3 is_stmt 1 view .LVU112
-  74:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
- 352              		.loc 1 74 3 view .LVU113
-  77:Src/app_cam.c ****   ret = CMW_CAMERA_SetPipeConfig(DCMIPP_PIPE2, &dcmipp_conf, &hw_pitch);
- 353              		.loc 1 77 3 is_stmt 0 view .LVU114
+ 106:Src/app_cam.c ****   dcmipp_conf.output_bpp = NN_BPP;
+ 351              		.loc 1 106 3 is_stmt 1 view .LVU112
+ 108:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
+ 352              		.loc 1 108 3 view .LVU113
+ 113:Src/app_cam.c **** 
+ 353              		.loc 1 113 3 is_stmt 0 view .LVU114
  354 0084 DDE90112 		ldrd	r1, r2, [sp, #4]
-  76:Src/app_cam.c ****   CAM_InitCropConfig(&dcmipp_conf.manual_conf, sensor_width, sensor_height);
- 355              		.loc 1 76 39 view .LVU115
+ 110:Src/app_cam.c ****   
+ 355              		.loc 1 110 39 view .LVU115
  356 0088 CDE90B50 		strd	r5, r0, [sp, #44]
-  77:Src/app_cam.c ****   ret = CMW_CAMERA_SetPipeConfig(DCMIPP_PIPE2, &dcmipp_conf, &hw_pitch);
- 357              		.loc 1 77 3 view .LVU116
+ 113:Src/app_cam.c **** 
+ 357              		.loc 1 113 3 view .LVU116
  358 008c 0EA8     		add	r0, sp, #56
-  74:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
- 359              		.loc 1 74 20 view .LVU117
+ 108:Src/app_cam.c ****   dcmipp_conf.enable_swap = 1;
+ 359              		.loc 1 108 20 view .LVU117
  360 008e 0D96     		str	r6, [sp, #52]
-  75:Src/app_cam.c ****   dcmipp_conf.enable_gamma_conversion = 0;
- 361              		.loc 1 75 3 is_stmt 1 view .LVU118
-  77:Src/app_cam.c ****   ret = CMW_CAMERA_SetPipeConfig(DCMIPP_PIPE2, &dcmipp_conf, &hw_pitch);
- 362              		.loc 1 77 3 view .LVU119
+ 109:Src/app_cam.c ****   dcmipp_conf.enable_gamma_conversion = 0;
+ 361              		.loc 1 109 3 is_stmt 1 view .LVU118
+ 113:Src/app_cam.c **** 
+ 362              		.loc 1 113 3 view .LVU119
  363 0090 FFF7FEFF 		bl	CAM_InitCropConfig
  364              	.LVL27:
-  78:Src/app_cam.c ****   assert(ret == HAL_OK);
- 365              		.loc 1 78 3 view .LVU120
-  78:Src/app_cam.c ****   assert(ret == HAL_OK);
- 366              		.loc 1 78 9 is_stmt 0 view .LVU121
+ 116:Src/app_cam.c ****   assert(ret == HAL_OK);
+ 365              		.loc 1 116 3 view .LVU120
+ 116:Src/app_cam.c ****   assert(ret == HAL_OK);
+ 366              		.loc 1 116 9 is_stmt 0 view .LVU121
  367 0094 6A46     		mov	r2, sp
  368 0096 2046     		mov	r0, r4
  369 0098 07A9     		add	r1, sp, #28
  370 009a FFF7FEFF 		bl	CMW_CAMERA_SetPipeConfig
  371              	.LVL28:
-  79:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
- 372              		.loc 1 79 3 is_stmt 1 view .LVU122
+ 117:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
+ 372              		.loc 1 117 3 is_stmt 1 view .LVU122
  373 009e 18B1     		cbz	r0, .L24
-  79:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
- 374              		.loc 1 79 3 is_stmt 0 discriminator 1 view .LVU123
- 375 00a0 4F21     		movs	r1, #79
+ 117:Src/app_cam.c ****   assert(hw_pitch == dcmipp_conf.output_width * dcmipp_conf.output_bpp);
+ 374              		.loc 1 117 3 is_stmt 0 discriminator 1 view .LVU123
+ 375 00a0 7521     		movs	r1, #117
  376 00a2 0A4B     		ldr	r3, .L27+12
  377 00a4 0C4A     		ldr	r2, .L27+24
  378 00a6 BDE7     		b	.L26
-ARM GAS  /tmp/cc1VCE5j.s 			page 11
-
-
  379              	.L24:
-  80:Src/app_cam.c **** }
- 380              		.loc 1 80 3 is_stmt 1 view .LVU124
+ 118:Src/app_cam.c **** }
+ 380              		.loc 1 118 3 is_stmt 1 view .LVU124
  381 00a8 0A9A     		ldr	r2, [sp, #40]
  382 00aa 079B     		ldr	r3, [sp, #28]
  383 00ac 5343     		muls	r3, r2, r3
  384 00ae 009A     		ldr	r2, [sp]
  385 00b0 9342     		cmp	r3, r2
  386 00b2 03D0     		beq	.L20
-  80:Src/app_cam.c **** }
- 387              		.loc 1 80 3 is_stmt 0 discriminator 1 view .LVU125
- 388 00b4 5021     		movs	r1, #80
+ 118:Src/app_cam.c **** }
+ 387              		.loc 1 118 3 is_stmt 0 discriminator 1 view .LVU125
+ 388 00b4 7621     		movs	r1, #118
  389 00b6 074B     		ldr	r3, .L27+20
  390 00b8 074A     		ldr	r2, .L27+24
+ARM GAS  /tmp/cceyb8Te.s 			page 12
+
+
  391 00ba B3E7     		b	.L26
  392              	.L20:
  393              	.LBE11:
  394              	.LBE10:
- 101:Src/app_cam.c **** }
- 395              		.loc 1 101 1 view .LVU126
+ 144:Src/app_cam.c **** }
+ 395              		.loc 1 144 1 view .LVU126
  396 00bc 12B0     		add	sp, sp, #72
  397              		.cfi_def_cfa_offset 16
  398              		@ sp needed
@@ -646,52 +692,57 @@ ARM GAS  /tmp/cc1VCE5j.s 			page 1
  420              	CAM_DisplayPipe_Start:
  421              	.LVL29:
  422              	.LFB3346:
- 102:Src/app_cam.c **** 
- 103:Src/app_cam.c **** void CAM_DisplayPipe_Start(uint8_t *display_pipe_dst, uint32_t cam_mode)
- 104:Src/app_cam.c **** {
- 423              		.loc 1 104 1 is_stmt 1 view -0
+ 145:Src/app_cam.c **** 
+ 146:Src/app_cam.c **** /**
+ 147:Src/app_cam.c ****  * @brief Starts the video stream for the display pipe.
+ 148:Src/app_cam.c ****  * @param display_pipe_dst Pointer to the destination buffer for the display frames.
+ 149:Src/app_cam.c ****  * @param cam_mode The camera mode (e.g., continuous streaming).
+ 150:Src/app_cam.c ****  */
+ 151:Src/app_cam.c **** void CAM_DisplayPipe_Start(uint8_t *display_pipe_dst, uint32_t cam_mode)
+ 152:Src/app_cam.c **** {
+ 423              		.loc 1 152 1 is_stmt 1 view -0
  424              		.cfi_startproc
  425              		@ args = 0, pretend = 0, frame = 0
  426              		@ frame_needed = 0, uses_anonymous_args = 0
- 105:Src/app_cam.c ****   int ret;
- 427              		.loc 1 105 3 view .LVU128
- 106:Src/app_cam.c **** 
- 107:Src/app_cam.c ****   ret = CMW_CAMERA_Start(DCMIPP_PIPE1, display_pipe_dst, cam_mode);
- 428              		.loc 1 107 3 view .LVU129
-ARM GAS  /tmp/cc1VCE5j.s 			page 12
-
-
- 104:Src/app_cam.c ****   int ret;
- 429              		.loc 1 104 1 is_stmt 0 view .LVU130
+ 153:Src/app_cam.c ****   int ret;
+ 427              		.loc 1 153 3 view .LVU128
+ 154:Src/app_cam.c **** 
+ 155:Src/app_cam.c ****   ret = CMW_CAMERA_Start(DCMIPP_PIPE1, display_pipe_dst, cam_mode);
+ 428              		.loc 1 155 3 view .LVU129
+ 152:Src/app_cam.c ****   int ret;
+ 429              		.loc 1 152 1 is_stmt 0 view .LVU130
  430 0000 0A46     		mov	r2, r1
  431 0002 08B5     		push	{r3, lr}
  432              		.cfi_def_cfa_offset 8
  433              		.cfi_offset 3, -8
  434              		.cfi_offset 14, -4
- 435              		.loc 1 107 9 view .LVU131
+ 435              		.loc 1 155 9 view .LVU131
  436 0004 0146     		mov	r1, r0
+ARM GAS  /tmp/cceyb8Te.s 			page 13
+
+
  437              	.LVL30:
- 438              		.loc 1 107 9 view .LVU132
+ 438              		.loc 1 155 9 view .LVU132
  439 0006 0120     		movs	r0, #1
  440              	.LVL31:
- 441              		.loc 1 107 9 view .LVU133
+ 441              		.loc 1 155 9 view .LVU133
  442 0008 FFF7FEFF 		bl	CMW_CAMERA_Start
  443              	.LVL32:
- 108:Src/app_cam.c ****   assert(ret == CMW_ERROR_NONE);
- 444              		.loc 1 108 3 is_stmt 1 view .LVU134
+ 156:Src/app_cam.c ****   assert(ret == CMW_ERROR_NONE);
+ 444              		.loc 1 156 3 is_stmt 1 view .LVU134
  445 000c 28B1     		cbz	r0, .L29
- 446              		.loc 1 108 3 is_stmt 0 discriminator 1 view .LVU135
- 447 000e 6C21     		movs	r1, #108
+ 446              		.loc 1 156 3 is_stmt 0 discriminator 1 view .LVU135
+ 447 000e 9C21     		movs	r1, #156
  448 0010 024B     		ldr	r3, .L31
  449 0012 034A     		ldr	r2, .L31+4
  450 0014 0348     		ldr	r0, .L31+8
  451              	.LVL33:
- 452              		.loc 1 108 3 discriminator 1 view .LVU136
+ 452              		.loc 1 156 3 discriminator 1 view .LVU136
  453 0016 FFF7FEFF 		bl	__assert_func
  454              	.LVL34:
  455              	.L29:
- 109:Src/app_cam.c **** }
- 456              		.loc 1 109 1 view .LVU137
+ 157:Src/app_cam.c **** }
+ 456              		.loc 1 157 1 view .LVU137
  457 001a 08BD     		pop	{r3, pc}
  458              	.L32:
  459              		.align	2
@@ -710,52 +761,57 @@ ARM GAS  /tmp/cc1VCE5j.s 			page 1
  474              	CAM_NNPipe_Start:
  475              	.LVL35:
  476              	.LFB3347:
- 110:Src/app_cam.c **** 
- 111:Src/app_cam.c **** void CAM_NNPipe_Start(uint8_t *nn_pipe_dst, uint32_t cam_mode)
- 112:Src/app_cam.c **** {
- 477              		.loc 1 112 1 is_stmt 1 view -0
+ 158:Src/app_cam.c **** 
+ 159:Src/app_cam.c **** /**
+ 160:Src/app_cam.c ****  * @brief Starts the video stream for the NN input pipe.
+ 161:Src/app_cam.c ****  * @param nn_pipe_dst Pointer to the destination buffer for the AI model's input frames.
+ 162:Src/app_cam.c ****  * @param cam_mode The camera mode (e.g., continuous streaming).
+ 163:Src/app_cam.c ****  */
+ 164:Src/app_cam.c **** void CAM_NNPipe_Start(uint8_t *nn_pipe_dst, uint32_t cam_mode)
+ 165:Src/app_cam.c **** {
+ 477              		.loc 1 165 1 is_stmt 1 view -0
  478              		.cfi_startproc
  479              		@ args = 0, pretend = 0, frame = 0
  480              		@ frame_needed = 0, uses_anonymous_args = 0
- 113:Src/app_cam.c ****   int ret;
-ARM GAS  /tmp/cc1VCE5j.s 			page 13
+ 166:Src/app_cam.c ****   int ret;
+ 481              		.loc 1 166 3 view .LVU139
+ 167:Src/app_cam.c **** 
+ 168:Src/app_cam.c ****   ret = CMW_CAMERA_Start(DCMIPP_PIPE2, nn_pipe_dst, cam_mode);
+ 482              		.loc 1 168 3 view .LVU140
+ARM GAS  /tmp/cceyb8Te.s 			page 14
 
 
- 481              		.loc 1 113 3 view .LVU139
- 114:Src/app_cam.c **** 
- 115:Src/app_cam.c ****   ret = CMW_CAMERA_Start(DCMIPP_PIPE2, nn_pipe_dst, cam_mode);
- 482              		.loc 1 115 3 view .LVU140
- 112:Src/app_cam.c ****   int ret;
- 483              		.loc 1 112 1 is_stmt 0 view .LVU141
+ 165:Src/app_cam.c ****   int ret;
+ 483              		.loc 1 165 1 is_stmt 0 view .LVU141
  484 0000 0A46     		mov	r2, r1
  485 0002 08B5     		push	{r3, lr}
  486              		.cfi_def_cfa_offset 8
  487              		.cfi_offset 3, -8
  488              		.cfi_offset 14, -4
- 489              		.loc 1 115 9 view .LVU142
+ 489              		.loc 1 168 9 view .LVU142
  490 0004 0146     		mov	r1, r0
  491              	.LVL36:
- 492              		.loc 1 115 9 view .LVU143
+ 492              		.loc 1 168 9 view .LVU143
  493 0006 0220     		movs	r0, #2
  494              	.LVL37:
- 495              		.loc 1 115 9 view .LVU144
+ 495              		.loc 1 168 9 view .LVU144
  496 0008 FFF7FEFF 		bl	CMW_CAMERA_Start
  497              	.LVL38:
- 116:Src/app_cam.c ****   assert(ret == CMW_ERROR_NONE);
- 498              		.loc 1 116 3 is_stmt 1 view .LVU145
+ 169:Src/app_cam.c ****   assert(ret == CMW_ERROR_NONE);
+ 498              		.loc 1 169 3 is_stmt 1 view .LVU145
  499 000c 28B1     		cbz	r0, .L33
- 500              		.loc 1 116 3 is_stmt 0 discriminator 1 view .LVU146
- 501 000e 7421     		movs	r1, #116
+ 500              		.loc 1 169 3 is_stmt 0 discriminator 1 view .LVU146
+ 501 000e A921     		movs	r1, #169
  502 0010 024B     		ldr	r3, .L35
  503 0012 034A     		ldr	r2, .L35+4
  504 0014 0348     		ldr	r0, .L35+8
  505              	.LVL39:
- 506              		.loc 1 116 3 discriminator 1 view .LVU147
+ 506              		.loc 1 169 3 discriminator 1 view .LVU147
  507 0016 FFF7FEFF 		bl	__assert_func
  508              	.LVL40:
  509              	.L33:
- 117:Src/app_cam.c **** }
- 510              		.loc 1 117 1 view .LVU148
+ 170:Src/app_cam.c **** }
+ 510              		.loc 1 170 1 view .LVU148
  511 001a 08BD     		pop	{r3, pc}
  512              	.L36:
  513              		.align	2
@@ -773,45 +829,51 @@ ARM GAS  /tmp/cc1VCE5j.s 			page 1
  526              		.thumb_func
  528              	CAM_IspUpdate:
  529              	.LFB3348:
- 118:Src/app_cam.c **** 
- 119:Src/app_cam.c **** void CAM_IspUpdate(void)
- 120:Src/app_cam.c **** {
- 530              		.loc 1 120 1 is_stmt 1 view -0
+ 171:Src/app_cam.c **** 
+ 172:Src/app_cam.c **** /**
+ 173:Src/app_cam.c ****  * @brief Main processing loop function for the camera.
+ 174:Src/app_cam.c ****  * @details This function should be called periodically (e.g., in your main while loop).
+ 175:Src/app_cam.c ****  * It runs the camera's internal Image Signal Processing (ISP) tasks,
+ 176:Src/app_cam.c ****  * such as auto-white-balance and auto-exposure.
+ 177:Src/app_cam.c ****  */
+ 178:Src/app_cam.c **** void CAM_IspUpdate(void)
+ 179:Src/app_cam.c **** {
+ARM GAS  /tmp/cceyb8Te.s 			page 15
+
+
+ 530              		.loc 1 179 1 is_stmt 1 view -0
  531              		.cfi_startproc
-ARM GAS  /tmp/cc1VCE5j.s 			page 14
-
-
  532              		@ args = 0, pretend = 0, frame = 0
  533              		@ frame_needed = 0, uses_anonymous_args = 0
- 121:Src/app_cam.c ****   int ret;
- 534              		.loc 1 121 3 view .LVU150
- 122:Src/app_cam.c **** 
- 123:Src/app_cam.c ****   ret = CMW_CAMERA_Run();
- 535              		.loc 1 123 3 view .LVU151
- 120:Src/app_cam.c ****   int ret;
- 536              		.loc 1 120 1 is_stmt 0 view .LVU152
+ 180:Src/app_cam.c ****   int ret;
+ 534              		.loc 1 180 3 view .LVU150
+ 181:Src/app_cam.c **** 
+ 182:Src/app_cam.c ****   ret = CMW_CAMERA_Run();
+ 535              		.loc 1 182 3 view .LVU151
+ 179:Src/app_cam.c ****   int ret;
+ 536              		.loc 1 179 1 is_stmt 0 view .LVU152
  537 0000 08B5     		push	{r3, lr}
  538              		.cfi_def_cfa_offset 8
  539              		.cfi_offset 3, -8
  540              		.cfi_offset 14, -4
- 541              		.loc 1 123 9 view .LVU153
+ 541              		.loc 1 182 9 view .LVU153
  542 0002 FFF7FEFF 		bl	CMW_CAMERA_Run
  543              	.LVL41:
- 124:Src/app_cam.c ****   assert(ret == CMW_ERROR_NONE);
- 544              		.loc 1 124 3 is_stmt 1 view .LVU154
+ 183:Src/app_cam.c ****   assert(ret == CMW_ERROR_NONE);
+ 544              		.loc 1 183 3 is_stmt 1 view .LVU154
  545 0006 28B1     		cbz	r0, .L37
- 546              		.loc 1 124 3 is_stmt 0 discriminator 1 view .LVU155
- 547 0008 7C21     		movs	r1, #124
+ 546              		.loc 1 183 3 is_stmt 0 discriminator 1 view .LVU155
+ 547 0008 B721     		movs	r1, #183
  548 000a 034B     		ldr	r3, .L39
  549 000c 034A     		ldr	r2, .L39+4
  550 000e 0448     		ldr	r0, .L39+8
  551              	.LVL42:
- 552              		.loc 1 124 3 discriminator 1 view .LVU156
+ 552              		.loc 1 183 3 discriminator 1 view .LVU156
  553 0010 FFF7FEFF 		bl	__assert_func
  554              	.LVL43:
  555              	.L37:
- 125:Src/app_cam.c **** }
- 556              		.loc 1 125 1 view .LVU157
+ 184:Src/app_cam.c **** }
+ 556              		.loc 1 184 1 view .LVU157
  557 0014 08BD     		pop	{r3, pc}
  558              	.L40:
  559 0016 00BF     		.align	2
@@ -836,11 +898,11 @@ ARM GAS  /tmp/cc1VCE5j.s 			page 1
  576      00
  577              		.section	.rodata.__func__.2,"a"
  580              	__func__.2:
+ARM GAS  /tmp/cceyb8Te.s 			page 16
+
+
  581 0000 43414D5F 		.ascii	"CAM_DisplayPipe_Start\000"
  581      44697370 
-ARM GAS  /tmp/cc1VCE5j.s 			page 15
-
-
  581      6C617950 
  581      6970655F 
  581      53746172 
@@ -872,41 +934,41 @@ ARM GAS  /tmp/cc1VCE5j.s 			page 1
  601      00
  602              		.text
  603              	.Letext0:
- 604              		.file 2 "/home/tanjiajun2002/renesas/rzv/e2studio_v2025-01_fsp_v3.1.0/toolchains/gcc_arm/arm-gnu-t
- 605              		.file 3 "/home/tanjiajun2002/renesas/rzv/e2studio_v2025-01_fsp_v3.1.0/toolchains/gcc_arm/arm-gnu-t
+ 604              		.file 2 "/opt/st/stm32cubeide_1.18.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-
+ 605              		.file 3 "/opt/st/stm32cubeide_1.18.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-
  606              		.file 4 "STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_def.h"
  607              		.file 5 "Lib/Camera_Middleware/cmw_camera.h"
- 608              		.file 6 "/home/tanjiajun2002/renesas/rzv/e2studio_v2025-01_fsp_v3.1.0/toolchains/gcc_arm/arm-gnu-t
-ARM GAS  /tmp/cc1VCE5j.s 			page 16
+ 608              		.file 6 "/opt/st/stm32cubeide_1.18.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-
+ARM GAS  /tmp/cceyb8Te.s 			page 17
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 app_cam.c
-     /tmp/cc1VCE5j.s:33     .text.CAM_InitCropConfig:00000000 $t
-     /tmp/cc1VCE5j.s:38     .text.CAM_InitCropConfig:00000000 CAM_InitCropConfig
-     /tmp/cc1VCE5j.s:176    .text.CAM_InitCropConfig:000000b0 $d
-     /tmp/cc1VCE5j.s:590    .rodata.__func__.4:00000000 __func__.4
-     /tmp/cc1VCE5j.s:195    .text.CAM_Init:00000000 $t
-     /tmp/cc1VCE5j.s:201    .text.CAM_Init:00000000 CAM_Init
-     /tmp/cc1VCE5j.s:403    .text.CAM_Init:000000c0 $d
-     /tmp/cc1VCE5j.s:600    .rodata.__func__.6:00000000 __func__.6
-     /tmp/cc1VCE5j.s:595    .rodata.__func__.5:00000000 __func__.5
-     /tmp/cc1VCE5j.s:585    .rodata.__func__.3:00000000 __func__.3
-     /tmp/cc1VCE5j.s:414    .text.CAM_DisplayPipe_Start:00000000 $t
-     /tmp/cc1VCE5j.s:420    .text.CAM_DisplayPipe_Start:00000000 CAM_DisplayPipe_Start
-     /tmp/cc1VCE5j.s:461    .text.CAM_DisplayPipe_Start:0000001c $d
-     /tmp/cc1VCE5j.s:580    .rodata.__func__.2:00000000 __func__.2
-     /tmp/cc1VCE5j.s:468    .text.CAM_NNPipe_Start:00000000 $t
-     /tmp/cc1VCE5j.s:474    .text.CAM_NNPipe_Start:00000000 CAM_NNPipe_Start
-     /tmp/cc1VCE5j.s:515    .text.CAM_NNPipe_Start:0000001c $d
-     /tmp/cc1VCE5j.s:575    .rodata.__func__.1:00000000 __func__.1
-     /tmp/cc1VCE5j.s:522    .text.CAM_IspUpdate:00000000 $t
-     /tmp/cc1VCE5j.s:528    .text.CAM_IspUpdate:00000000 CAM_IspUpdate
-     /tmp/cc1VCE5j.s:561    .text.CAM_IspUpdate:00000018 $d
-     /tmp/cc1VCE5j.s:570    .rodata.__func__.0:00000000 __func__.0
+     /tmp/cceyb8Te.s:33     .text.CAM_InitCropConfig:00000000 $t
+     /tmp/cceyb8Te.s:38     .text.CAM_InitCropConfig:00000000 CAM_InitCropConfig
+     /tmp/cceyb8Te.s:176    .text.CAM_InitCropConfig:000000b0 $d
+     /tmp/cceyb8Te.s:590    .rodata.__func__.4:00000000 __func__.4
+     /tmp/cceyb8Te.s:195    .text.CAM_Init:00000000 $t
+     /tmp/cceyb8Te.s:201    .text.CAM_Init:00000000 CAM_Init
+     /tmp/cceyb8Te.s:403    .text.CAM_Init:000000c0 $d
+     /tmp/cceyb8Te.s:600    .rodata.__func__.6:00000000 __func__.6
+     /tmp/cceyb8Te.s:595    .rodata.__func__.5:00000000 __func__.5
+     /tmp/cceyb8Te.s:585    .rodata.__func__.3:00000000 __func__.3
+     /tmp/cceyb8Te.s:414    .text.CAM_DisplayPipe_Start:00000000 $t
+     /tmp/cceyb8Te.s:420    .text.CAM_DisplayPipe_Start:00000000 CAM_DisplayPipe_Start
+     /tmp/cceyb8Te.s:461    .text.CAM_DisplayPipe_Start:0000001c $d
+     /tmp/cceyb8Te.s:580    .rodata.__func__.2:00000000 __func__.2
+     /tmp/cceyb8Te.s:468    .text.CAM_NNPipe_Start:00000000 $t
+     /tmp/cceyb8Te.s:474    .text.CAM_NNPipe_Start:00000000 CAM_NNPipe_Start
+     /tmp/cceyb8Te.s:515    .text.CAM_NNPipe_Start:0000001c $d
+     /tmp/cceyb8Te.s:575    .rodata.__func__.1:00000000 __func__.1
+     /tmp/cceyb8Te.s:522    .text.CAM_IspUpdate:00000000 $t
+     /tmp/cceyb8Te.s:528    .text.CAM_IspUpdate:00000000 CAM_IspUpdate
+     /tmp/cceyb8Te.s:561    .text.CAM_IspUpdate:00000018 $d
+     /tmp/cceyb8Te.s:570    .rodata.__func__.0:00000000 __func__.0
                            .group:00000000 wm4.0.c552ae9005b0f2cca11872fae5d4b7f2
                            .group:00000000 wm4._newlib_version.h.4.411db44ea2338a62eca2f0777f81481b
-                           .group:00000000 wm4.newlib.h.27.4b972ceed5d01f491020c20f1e546cab
+                           .group:00000000 wm4.newlib.h.27.a82728f74da661df333d09507bfef510
                            .group:00000000 wm4.ieeefp.h.77.bd5feb87d9990dd328793ced294f6a87
                            .group:00000000 wm4.features.h.22.9dfb1293666eb4caf24cccb81c86a551
                            .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
@@ -927,6 +989,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.reent.h.78.6b87466b04591b1f1cb88c14fdf2ba9e
                            .group:00000000 wm4.string.h.15.dab3980bf35408a4c507182805e2de3a
                            .group:00000000 wm4.stddef.h.158.eec8bf00b5213f43d095cb984c5f22e3
+                           .group:00000000 wm4.string.h.177.59a005921fa78485abc80a0267de5752
                            .group:00000000 wm4.math.h.13.47cfc34cae8a1153323939c4d32cf7c2
                            .group:00000000 wm4.float.h.29.0e9d9baf95ec39f9555dc80c6e28186b
                            .group:00000000 wm4.syslimits.h.34.de5cbd310098bc5895998b6bde577ed2
@@ -936,17 +999,17 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.stdbool.h.29.c08aa3eec75cf5b9b5003883f43253f0
                            .group:00000000 wm4.arm_mve.h.38.47b22bbd301ce82bc6dafd1a387f65a3
                            .group:00000000 wm4.arm_math_types.h.559.cab78f278b684a3ea2271947c7aea680
+ARM GAS  /tmp/cceyb8Te.s 			page 18
+
+
                            .group:00000000 wm4.arm_math_memory.h.28.fe8a81c6a9ac13061a5f748732089249
-ARM GAS  /tmp/cc1VCE5j.s 			page 17
-
-
                            .group:00000000 wm4.none.h.185.db055cca83e83f96d8d0bb450fbdf4bb
                            .group:00000000 wm4.utils.h.27.57524573fe37b04009eecf3582a4c591
                            .group:00000000 wm4.fast_math_functions.h.28.8eb7477260c1d6b62047c49a01c4cbaa
                            .group:00000000 wm4.controller_functions.h.28.7bed7d7a726df2f65b8a3d89cff01247
                            .group:00000000 wm4.filtering_functions.h.46.6cf1424fb1f86d5f9958d208b83340a1
                            .group:00000000 wm4.postprocess_conf.h.22.8fb7890cba4665223adeb18e003381c8
-                           .group:00000000 wm4.app.h.24.1e91b432981a608d23d4a667d6d768a5
+                           .group:00000000 wm4.app.h.24.08bb40488efd2dfcc732c5f0f1ffdd10
                            .group:00000000 wm4.cmw_errno.h.21.91021ac9b2627a1ce6b8517d105715d1
                            .group:00000000 wm4.stm32n6xx_hal_conf.h.21.004a06df6e15ac197e03f723792da58a
                            .group:00000000 wm4.arm_cmse.h.103.a0d15a79c4c9a67da8d5831704d7248e
@@ -996,10 +1059,10 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.stm32n6xx_hal_tim.h.21.839dd2b2a70382fb2c44f8f293a84d5f
                            .group:00000000 wm4.stm32n6xx_hal_tim_ex.h.21.e372d5ac63c13441211ea4ecbd353150
                            .group:00000000 wm4.stm32n6xx_hal_uart.h.21.230f549bfa0d5ebfd77bfb311b2aca15
+ARM GAS  /tmp/cceyb8Te.s 			page 19
+
+
                            .group:00000000 wm4.stm32n6xx_hal_uart_ex.h.21.a0d5511e1d0703b7b5278c8f5472b96d
-ARM GAS  /tmp/cc1VCE5j.s 			page 18
-
-
                            .group:00000000 wm4.stm32n6xx_hal_xspi.h.21.e17898be2073b6b6b19faf30b4e304e9
                            .group:00000000 wm4.stm32n6xx_hal_cacheaxi.h.21.7c3375b7903ec42376e4883320997f74
                            .group:00000000 wm4.stm32n6xx_hal_gpu2d.h.21.48d0249122abad294a630c39cc4ebaed

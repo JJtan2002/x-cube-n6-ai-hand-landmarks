@@ -4,7 +4,7 @@ STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_pwr_ex.c:316:19:H
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_pwr_ex.c:346:10:HAL_PWREx_GetVoltageRange	0	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_pwr_ex.c:362:6:HAL_PWREx_ControlStopModeVoltageScaling	8	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_pwr_ex.c:375:10:HAL_PWREx_GetStopModeVoltageRange	0	static
-STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_pwr_ex.c:423:6:HAL_PWREx_EnableWakeUpPin	16	static
+STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_pwr_ex.c:423:6:HAL_PWREx_EnableWakeUpPin	16	static,ignoring_inline_asm
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_pwr_ex.c:496:6:HAL_PWREx_EnableBkupRAMRetention	0	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_pwr_ex.c:507:6:HAL_PWREx_DisableBkupRAMRetention	0	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_pwr_ex.c:516:6:HAL_PWREx_EnableTCMRetention	0	static

@@ -13,7 +13,7 @@ STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery_xspi.c:817:9:BSP_
 STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery_xspi.c:282:9:BSP_XSPI_NOR_DeInit	16	static
 STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery_xspi.c:853:9:BSP_XSPI_NOR_ReadID	8	static
 STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery_xspi.c:885:9:BSP_XSPI_NOR_ConfigFlash	40	static
-STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery_xspi.c:200:9:BSP_XSPI_NOR_Init	96	static
+STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery_xspi.c:200:9:BSP_XSPI_NOR_Init	96	static,ignoring_inline_asm
 STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery_xspi.c:967:9:BSP_XSPI_NOR_SuspendErase	8	static
 STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery_xspi.c:1004:9:BSP_XSPI_NOR_ResumeErase	8	static
 STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery_xspi.c:1046:9:BSP_XSPI_NOR_EnterDeepPowerDown	8	static

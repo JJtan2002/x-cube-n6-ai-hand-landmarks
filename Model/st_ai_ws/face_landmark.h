@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    face_landmark.h
   * @author  STEdgeAI
-  * @date    2025-07-30 15:23:47
+  * @date    2025-08-08 11:15:25
   * @brief   Minimal description of the generated c-implemention of the network
   ******************************************************************************
   * @attention

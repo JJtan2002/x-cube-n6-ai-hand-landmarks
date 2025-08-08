@@ -1,6 +1,6 @@
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_dma_ex.c:4119:17:DMA_List_CheckNodesBaseAddresses	0	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_dma_ex.c:4162:17:DMA_List_CheckNodesTypes	0	static
-STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_dma_ex.c:4263:17:DMA_List_FindNode	28	static
+STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_dma_ex.c:4263:17:DMA_List_FindNode	32	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_dma_ex.c:4219:13:DMA_List_GetCLLRNodeInfo.isra	0	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_dma_ex.c:4655:13:DMA_List_UpdateStaticQueueNodesCLLR	32	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_dma_ex.c:4579:13:DMA_List_UpdateDynamicQueueNodesCLLR	48	static

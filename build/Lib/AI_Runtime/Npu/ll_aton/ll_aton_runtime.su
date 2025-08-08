@@ -11,7 +11,7 @@ Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:385:6:LL_ATON_RT_SetEpochCallback	8
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:395:6:LL_ATON_RT_Init_Network	8	static
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:436:6:LL_ATON_RT_DeInit_Network	8	static
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:485:6:LL_ATON_RT_Reset_Network	8	static
-Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:494:6:LL_ATON_RT_RuntimeInit	8	static
-Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:542:6:LL_ATON_RT_RuntimeDeInit	8	static
-Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:574:24:LL_ATON_RT_RunEpochBlock	24	static
-Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:931:6:NPU0_IRQHandler	24	static
+Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:494:6:LL_ATON_RT_RuntimeInit	8	static,ignoring_inline_asm
+Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:542:6:LL_ATON_RT_RuntimeDeInit	8	static,ignoring_inline_asm
+Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:574:24:LL_ATON_RT_RunEpochBlock	24	static,ignoring_inline_asm
+Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.c:931:6:NPU0_IRQHandler	24	static,ignoring_inline_asm

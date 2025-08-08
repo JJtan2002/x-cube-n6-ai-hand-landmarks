@@ -37,7 +37,7 @@
        "signature": "0xbf7dfa10d1e5068ce5d921aa16be904d"
       }
      ],
-     "generated_time": "2025-07-30T15:23:44+0800"
+     "generated_time": "2025-08-08T11:15:22+0800"
     }
    }
   ],
@@ -88,9 +88,9 @@
      "signature": ""
     }
    ],
-   "generated_time": "2025-07-30T15:23:44+0800"
+   "generated_time": "2025-08-08T11:15:23+0800"
   },
-  "network_signature": "0x5eee75ad7d64034f",
+  "network_signature": "0xd8f6a19bd638079a",
   "target": "",
   "test_name": ""
  },

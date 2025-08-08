@@ -23,6 +23,8 @@
 #define LD_HEIGHT             224.0f
 #define LD_LANDMARK_NB        21
 #define LD_BINDING_NB         21
+#define FL_LANDMARK_NB       478
+
 /* you can tune this */
 #define LD_PROB_THRESHOLD     0.25f
 

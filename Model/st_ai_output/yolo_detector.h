@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    yolo_detector.h
   * @author  STEdgeAI
-  * @date    2025-07-30 15:22:03
+  * @date    2025-08-08 11:13:40
   * @brief   Minimal description of the generated c-implemention of the network
   ******************************************************************************
   * @attention

@@ -6,9 +6,9 @@ STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:436:6:HAL_
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:462:6:HAL_GPIO_WriteMultipleStatePin	16	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:485:19:HAL_GPIO_LockPin	24	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:524:6:HAL_GPIO_SetRetime	24	static
-STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:564:19:HAL_GPIO_GetRetime	16	static
+STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:564:19:HAL_GPIO_GetRetime	16	static,ignoring_inline_asm
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:601:6:HAL_GPIO_SetDelay	24	static
-STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:645:19:HAL_GPIO_GetDelay	16	static
+STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:645:19:HAL_GPIO_GetDelay	16	static,ignoring_inline_asm
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:697:13:HAL_GPIO_EXTI_Rising_Callback	0	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:712:13:HAL_GPIO_EXTI_Falling_Callback	0	static
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_gpio.c:676:6:HAL_GPIO_EXTI_IRQHandler	16	static

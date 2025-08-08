@@ -36,7 +36,7 @@ Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib.c:636:13:__LL_LIB_Outputs_Channel_Split_B
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib.c:780:13:__LL_LIB_DMA_Pad_Filling_Start_EpochBlock	24	static
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib.c:42:5:LL_LIB_TENSOR_ELEMENTS	8	static
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib.c:50:6:__ll_lib_error	4	static
-Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib.c:1580:5:LL_ATON_LIB_DMA_ImageToRow	216	static
+Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib.c:1580:5:LL_ATON_LIB_DMA_ImageToRow	208	static
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib.c:1714:5:LL_ATON_LIB_DMA_SpaceToDepth	40	static
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib.c:1737:5:LL_ATON_LIB_DMA_RowToImage	192	static
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib.c:1845:5:LL_ATON_LIB_DMA_DepthToSpace	40	static

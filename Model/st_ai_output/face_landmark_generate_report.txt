@@ -1,5 +1,5 @@
 ST Edge AI Core v2.1.0-20194 329b0e98d
-Created date          : 2025-07-30 15:23:51
+Created date          : 2025-08-08 11:15:30
 Parameters            : generate --no-inputs-allocation --no-outputs-allocation --name face_landmark --model face_landmark_ptq.tflite --target stm32n6 --st-neural-art face_landmark@user_neuralart.json
 
 Model name - face_landmark_ptq

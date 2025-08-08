@@ -57,11 +57,9 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-#if HAS_ROTATION_SUPPORT == 1
 #include "nema_core.h"
 #include "nema_error.h"
 void nema_enable_tiling(int);
-#endif
 
 #define LCD_FG_WIDTH LCD_BG_WIDTH
 #define LCD_FG_HEIGHT LCD_BG_HEIGHT
@@ -84,9 +82,7 @@ void nema_enable_tiling(int);
 #define PD_MAX_HAND_NB 1
 #define YOLO_MAX_NB 20
 
-#if HAS_ROTATION_SUPPORT == 1
 typedef float app_v3_t[3];
-#endif
 
 /**
  * @brief Defines a Region Of Interest (ROI).
@@ -166,6 +162,19 @@ typedef struct {
 } hand_info_t;
 
 /**
+ * @brief Holds all information for a single detected hand/face instance.
+ * @details This is the main data structure linking the output of the first model
+ * to the input of the second, and finally to the display.
+ */
+typedef struct {
+  int is_valid;             /* Flag to check if the detection in this struct is current. */
+  pd_pp_box_t pd_hands;     /* Palm Detector raw output. */
+  roi_t roi;            /* Region of Interest for the detected hand. */
+  ld_point_t ld_landmarks[LD_LANDMARK_NB];        /* Final output from the landmark model */
+} face_info_t;
+
+
+/**
  * @brief Aggregates all information needed by the display thread to render one frame.
  */
 typedef struct {
@@ -207,7 +216,7 @@ typedef struct {
 } pd_model_info_t;
 
 /**
- * @brief Encapsulates all data related to the YOLO Detector model.
+ * @brief Encapsulates all data related to the YOLO model.
  * @details This struct holds pointers to the model's raw output and contains the
  * necessary parameters and buffers for the YOLOv8 post-processing library.
  */
@@ -222,7 +231,7 @@ typedef struct {
   od_pp_out_t pp_output;              /* Struct to hold the final, processed detection results. */
   od_pp_outBuffer_t final_boxes[YOLO_MAX_NB]; /* The actual buffer to store the final bounding boxes. */
 
-} yolo_detector_info_t;
+} yolo_model_info_t;
 
 /**
  * @brief Encapsulates all data related to the Hand Landmark (HL) model.
@@ -296,17 +305,17 @@ static cpuload_info_t cpu_load;
 static uint8_t screen_buffer[LCD_BG_WIDTH * LCD_BG_HEIGHT * 2] ALIGN_32 IN_PSRAM;
 
 /* model */
+LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(palm_detector);
  /* Declare the necessary runtime instances and global buffers to hold outputs */
  /* palm detector */
-LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(palm_detector);
 static roi_t rois[PD_MAX_HAND_NB];
  /* hand landmark */
 LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(hand_landmark);
 static ld_point_t ld_landmarks[PD_MAX_HAND_NB][LD_LANDMARK_NB];
-//LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(yolo_detector);
-//static roi_t rois[YOLO_MAX_NB];
+LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(yolo_detector);
+static roi_t rois_yolo[YOLO_MAX_NB];
 //LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(face_landmark);
-//static ld_point_t fl_landmarks[1[FL_LANDMARK_NB]; // Use new constants
+static ld_point_t fl_landmarks[1][FL_LANDMARK_NB]; // Use new constants
 /* Counters for frame synchronization. */
 static uint32_t frame_event_nb;
 static volatile uint32_t frame_event_nb_for_resize;
@@ -328,10 +337,8 @@ static StackType_t isp_thread_stack[2 *configMINIMAL_STACK_SIZE];
 static SemaphoreHandle_t isp_sem;
 static StaticSemaphore_t isp_sem_buffer;
 
-#if HAS_ROTATION_SUPPORT == 1
 static GFXMMU_HandleTypeDef hgfxmmu;
 static nema_cmdlist_t cl;
-#endif
 
 static int is_cache_enable()
 {
@@ -354,29 +361,10 @@ static float pd_normalize_angle(float angle)
   return angle - 2 * M_PI * floorf((angle - (-M_PI)) / (2 * M_PI));
 }
 
-/* Without rotation support allow limited amount of angles */
-#if HAS_ROTATION_SUPPORT == 0
-static float pd_cook_rotation(float angle)
-{
-  if (angle >= (3 * M_PI) / 4)
-    angle = M_PI;
-  else if (angle >= (1 * M_PI) / 4)
-    angle = M_PI / 2;
-  else if (angle >= -(1 * M_PI) / 4)
-    angle = 0;
-  else if (angle >= -(3 * M_PI) / 4)
-    angle = -M_PI / 2;
-  else
-    angle = -M_PI;
-
-  return angle;
-}
-#else
 static float pd_cook_rotation(float angle)
 {
   return angle;
 }
-#endif
 
 static float pd_compute_rotation(pd_pp_box_t *box)
 {
@@ -471,10 +459,6 @@ static void pd_box_to_roi(pd_pp_box_t *box,  roi_t *roi)
 
   roi_shift_and_scale(roi, shift_x, shift_y, scale, scale);
 
-#if HAS_ROTATION_SUPPORT == 0
-  /* In that case we can cancel rotation. This ensure corners are corrected oriented */
-  roi->rotation = 0;
-#endif
 }
 
 /**
@@ -1061,6 +1045,147 @@ static void palm_detector_init(pd_model_info_t *info)
 }
 
 /**
+ * @brief Initializes the YOLOv8 Detector model and its post-processor parameters.
+ * @details This function gets the memory address for the model's single raw output
+ * tensor and configures the parameters for the YOLOv8 post-processing library.
+ * @param info Pointer to the yolo_detector_info_t structure to be filled.
+ */
+static void yolo_detector_init(yolo_model_info_t *info)
+{
+  /* Get pointers to the model's buffer information from the AI library. */
+  /* The model name "yolo_detector" is used here as requested. */
+  const LL_Buffer_InfoTypeDef *nn_out_info = LL_ATON_Output_Buffers_Info_yolo_detector();
+  const LL_Buffer_InfoTypeDef *nn_in_info = LL_ATON_Input_Buffers_Info_yolo_detector();
+
+  /* --- 1. Configure Model I/O --- */
+  info->nn_in_len = LL_Buffer_len(&nn_in_info[0]);
+  /* YOLOv8 has a single, large raw output tensor. */
+  info->raw_output_tensor = LL_Buffer_addr_start(&nn_out_info[0]);
+  info->raw_output_len = LL_Buffer_len(&nn_out_info[0]);
+
+  /* --- 2. Configure Post-Processing Library Parameters --- */
+  /* These parameters MUST match the properties of your trained YOLOv8 model. */
+  info->pp_params.nb_classes = 3;      // Your model has 3 classes: cigarette, phone, face
+  info->pp_params.nb_total_boxes = 2100; // Standard for many YOLOv8 models
+  info->pp_params.conf_threshold = 0.5f; // Set your desired confidence threshold
+  info->pp_params.iou_threshold = 0.45f; // Set your desired NMS overlap threshold
+  info->pp_params.max_boxes_limit = YOLO_MAX_NB; // Use our new constant
+
+  /* For INT8 quantized models, you must also provide the scale and zero-point. */
+  // info->pp_params.raw_output_scale = 0.1234f;      // Example value
+  // info->pp_params.raw_output_zero_point = -128;   // Example value
+
+  /* Link the output buffer for the post-processing results. */
+  info->pp_output.pOutBuff = info->final_boxes;
+  info->pp_output.nb_detect = 0;
+}
+
+/**
+ * @brief Runs one inference of the YOLOv8 Detector model.
+ * @details This function runs the NPU inference, calls the YOLOv8 post-processing
+ * library, filters the results for faces (class ID 2), and prepares the
+ * Regions of Interest (ROIs) for the next stage.
+ * @param buffer Pointer to the input image from the camera.
+ * @param info Pointer to the initialized yolo_detector_info_t structure.
+ * @param yolo_exec_time Pointer to store the execution time of this stage.
+ * @return The number of *faces* detected.
+ */
+static int yolo_detector_run(uint8_t *buffer, yolo_model_info_t *info, uint32_t *yolo_exec_time)
+{
+  uint32_t start_ts;
+  int total_detections;
+  int face_nb = 0; /* This will count only the faces we find. */
+  int ret;
+
+  start_ts = HAL_GetTick();
+
+  /* --- 1. Run Inference --- */
+  /* Set the input buffer for the NPU using your model's name. */
+  ret = LL_ATON_Set_User_Input_Buffer_yolo_detector(0, buffer, info->nn_in_len);
+  assert(ret == LL_ATON_User_IO_NOERROR);
+
+  /* Trigger the NPU to run the inference. This is a blocking call. */
+  LL_ATON_RT_Main(&NN_Instance_yolo_detector);
+
+  /* The NPU wrote to the output buffer. Invalidate the CPU's Data Cache to see the new data. */
+  CACHE_OP(SCB_InvalidateDCache_by_Addr(info->raw_output_tensor, info->raw_output_len));
+
+  /* --- 2. Run YOLOv8 Post-Processing --- */
+  /* Set up the input struct for the post-processing library. */
+  yolov8_pp_in_centroid_int8_t pp_input;
+  pp_input.pRaw_detections = info->raw_output_tensor;
+
+  /* Call the YOLOv8 post-processing function. */
+  /* NOTE: Use od_yolov8_pp_process_int8 if you have a quantized INT8 model. */
+  ret = od_yolov8_pp_process_int8(&pp_input, &info->pp_output, &info->pp_params);
+  assert(ret == AI_OD_POSTPROCESS_ERROR_NO);
+  total_detections = info->pp_output.nb_detect;
+
+  /* --- 3. Filter for Faces & Prepare ROIs --- */
+  for (int i = 0; i < total_detections; i++)
+  {
+    /* Check if the detected object is a face (class ID 2). */
+    if (info->pp_output.pOutBuff[i].class_index == 2)
+    {
+      /* To reuse existing helper functions, we map the YOLO output to the old struct format. */
+      pd_pp_box_t temp_box = {0};
+      temp_box.x_center = info->pp_output.pOutBuff[i].x_center;
+      temp_box.y_center = info->pp_output.pOutBuff[i].y_center;
+      temp_box.width    = info->pp_output.pOutBuff[i].width;
+      temp_box.height   = info->pp_output.pOutBuff[i].height;
+      temp_box.prob     = info->pp_output.pOutBuff[i].conf;
+
+      /* Call the helper functions to convert coords and create the ROI for the landmark model. */
+      /* NOTE: We will rename these functions and adapt their logic later. */
+      cvt_pd_coord_to_screen_coord(&temp_box);
+      pd_box_to_roi(&temp_box, &rois[face_nb]);
+
+      face_nb++; /* Increment the count of found faces. */
+      if (face_nb >= YOLO_MAX_NB) { break; } /* Stop if we've reached our limit. */
+    }
+  }
+
+  *yolo_exec_time = HAL_GetTick() - start_ts;
+  return face_nb; /* Return the count of faces, not total objects. */
+}
+
+/**
+ * @brief Initializes the Face Landmark model.
+ * @details This function gets memory addresses for the model's input and output
+ * tensors. It is configured based on analysis of the Python post-processing script.
+ * @param info Pointer to the face landmark model info structure to be filled.
+ * @note The indices for nn_out_info have been updated to match the model's
+ * actual output order: [0] for score, [1] for landmarks.
+ */
+static void face_landmark_init(fl_model_info_t *info)
+{
+  // Get pointers to the info structures for the model's input/output buffers
+  const LL_Buffer_InfoTypeDef *nn_out_info = LL_ATON_Output_Buffers_Info_face_landmark();
+  const LL_Buffer_InfoTypeDef *nn_in_info = LL_ATON_Input_Buffers_Info_face_landmark();
+
+  // --- INPUT TENSOR ---
+  // The input is the image buffer for the model to process.
+  info->nn_in = LL_Buffer_addr_start(&nn_in_info[0]);
+  info->nn_in_len = LL_Buffer_len(&nn_in_info[0]);
+
+  // --- OUTPUT TENSORS (Order corrected based on Python analysis) ---
+
+  // Output 0: Presence Score
+  // This buffer will contain a single float indicating the confidence that a face was detected.
+  info->prob_out = (float *) LL_Buffer_addr_start(&nn_out_info[0]);
+  info->prob_out_len = LL_Buffer_len(&nn_out_info[0]);
+  assert(info->prob_out_len == sizeof(float));
+
+  // Output 1: Landmarks
+  // This buffer contains the raw coordinates for all 468 facial landmarks.
+  // Even if post-processing only uses x and y, we must map the full 3D output buffer.
+  info->landmarks_out = (float *) LL_Buffer_addr_start(&nn_out_info[1]);
+  info->landmarks_out_len = LL_Buffer_len(&nn_out_info[1]);
+  assert(info->landmarks_out_len == sizeof(float) * 1404); // 468 landmarks * 3 (x,y,z)
+}
+
+
+/**
  * @brief Runs one inference of the Palm Detector model.
  * @param buffer Pointer to the input image from the camera.
  * @param info Pointer to the initialized model info structure.
@@ -1124,85 +1249,7 @@ static void hand_landmark_init(hl_model_info_t *info)
   assert(info->landmarks_out_len == sizeof(float) * 63);
 }
 
-#if HAS_ROTATION_SUPPORT == 0
 
-/**
- * @brief Prepares the landmark model's input using the CPU.
- * @details This function performs a crop and bilinear resize in software. It handles
- * cases where the ROI is partially outside the screen by clearing the destination
- * buffer and only resizing the valid, on-screen portion of the image.
- * @return 0 on success.
- */
-static int hand_landmark_prepare_input(uint8_t *buffer, roi_t *roi, hl_model_info_t *info)
-{
-  float corners_f[4][2];
-  int corners[4][2];
-  uint8_t* out_data;
-  size_t height_out;
-  uint8_t *in_data;
-  size_t height_in;
-  size_t width_out;
-  size_t width_in;
-  int is_clamped;
-
-  /* defaults when no clamping occurs */
-  out_data = info->nn_in;
-  width_out = LD_WIDTH;
-  height_out = LD_HEIGHT;
-
-  roi_to_corners(roi, corners_f);
-  is_clamped = clamp_corners(corners_f, corners);
-
-  /* If clamp perform a partial resize */
-  if (is_clamped) {
-    int offset_x;
-    int offset_y;
-
-    /* clear target memory since resize will partially write it */
-    memset(info->nn_in, 0, info->nn_in_len);
-
-    /* compute start address of output buffer */
-    offset_x = (int)(((corners[0][0] - corners_f[0][0]) * LD_WIDTH) / (corners_f[2][0] - corners_f[0][0]));
-    offset_y = (int)(((corners[0][1] - corners_f[0][1]) * LD_HEIGHT) / (corners_f[2][1] - corners_f[0][1]));
-    out_data += offset_y * (int)LD_WIDTH * DISPLAY_BPP + offset_x * DISPLAY_BPP;
-
-    /* compute output width and height */
-    width_out = (int)((corners[2][0] - corners[0][0]) / (corners_f[2][0] - corners_f[0][0]) * LD_WIDTH);
-    height_out = (int)((corners[2][1] - corners[0][1]) / (corners_f[2][1] - corners_f[0][1]) * LD_HEIGHT);
-
-    assert(width_out > 0);
-    assert(height_out > 0);
-    {
-      uint8_t* out_data_end;
-
-      out_data_end = out_data + (int)LD_WIDTH * DISPLAY_BPP * (height_out - 1) + DISPLAY_BPP * width_out - 1;
-
-      assert(out_data_end >= info->nn_in);
-      assert(out_data_end < info->nn_in + info->nn_in_len);
-    }
-  }
-
-  in_data = buffer + corners[0][1] * LCD_BG_WIDTH * DISPLAY_BPP + corners[0][0]* DISPLAY_BPP;
-  width_in = corners[2][0] - corners[0][0];
-  height_in = corners[2][1] - corners[0][1];
-
-  assert(width_in > 0);
-  assert(height_in > 0);
-  {
-    uint8_t* in_data_end;
-
-    in_data_end = in_data + LCD_BG_WIDTH * DISPLAY_BPP * (height_in - 1) + DISPLAY_BPP * width_in - 1;
-
-    assert(in_data_end >= buffer);
-    assert(in_data_end < buffer + LCD_BG_WIDTH * LCD_BG_HEIGHT * DISPLAY_BPP);
-  }
-
-  IPL_resize_bilinear_iu8ou8_with_strides_RGB(in_data, out_data, LCD_BG_WIDTH * DISPLAY_BPP, LD_WIDTH * DISPLAY_BPP,
-                                              width_in, height_in, width_out, height_out);
-
-  return 0;
-}
-#else
 static void app_transform(nema_matrix3x3_t t, app_v3_t v)
 {
   app_v3_t r;
@@ -1266,7 +1313,6 @@ static int hand_landmark_prepare_input(uint8_t *buffer, roi_t *roi, hl_model_inf
 
   return 0;
 }
-#endif
 
 /**
  * @brief Runs one inference of the Hand Landmark model.
@@ -1298,7 +1344,6 @@ static int hand_landmark_run(uint8_t *buffer, hl_model_info_t *info, roi_t *roi,
   return is_valid;
 }
 
-#if HAS_ROTATION_SUPPORT == 1
 
 /**
  * @brief Initializes the NEMA GPU and its associated drivers.
@@ -1332,7 +1377,6 @@ static void app_rot_init(hl_model_info_t *info)
   cl = nema_cl_create_sized(8192);
   nema_cl_bind_circular(&cl);
 }
-#endif
 
 /**
  * @brief Computes the rotation based on the final landmark points.
@@ -1414,11 +1458,6 @@ static void compute_next_roi(roi_t *src, ld_point_t lm_in[LD_LANDMARK_NB], roi_t
   ld_to_roi(lm, &roi, next_pd);
   roi_shift_and_scale(&roi, shift_x, shift_y, scale, scale);
 
-#if HAS_ROTATION_SUPPORT == 0
-  /* In that case we can cancel rotation. This ensure corners are corrected oriented */
-  roi.rotation = 0;
-#endif
-
   *next = roi;
 }
 
@@ -1437,6 +1476,7 @@ static void nn_thread_fct(void *arg)
   /* Model-specific info structures. */
   hl_model_info_t hl_info;
   pd_model_info_t pd_info;
+  yolo_model_info_t yolo_info;
 
   /* Timing variables. */
   uint32_t nn_period_ms;
@@ -1446,12 +1486,18 @@ static void nn_thread_fct(void *arg)
   /* Structs for holding tracking information between frames. */
   pd_pp_point_t box_next_keypoints[AI_PD_MODEL_PP_NB_KEYPOINTS];
   pd_pp_box_t box_next;
+  od_pp_out_t boxes_next[YOLO_MAX_NB];
+
+
   int is_tracking = 0;
   roi_t roi_next;
   uint32_t pd_ms;
   uint32_t hl_ms;
+  uint32_t yolo_ms;
+  uint32_t fl_ms;
   int ret;
   int j;
+  int temp = 0;
 
   /* Current tracking algo only support single hand */
   assert(PD_MAX_HAND_NB == 1);
@@ -1460,11 +1506,8 @@ static void nn_thread_fct(void *arg)
   palm_detector_init(&pd_info);
   box_next.pKps = box_next_keypoints;
   hand_landmark_init(&hl_info);
-
-#if HAS_ROTATION_SUPPORT == 1
   app_rot_init(&hl_info);
-#endif
-
+  yolo_detector_init(&yolo_info);
   /*** Application Main Loop ***************************************************************/
   nn_period[1] = HAL_GetTick();
 
@@ -1672,11 +1715,7 @@ static void Display_init()
     {
       .origin = {lcd_bg_area.X0, lcd_bg_area.Y0},
       .size = {lcd_bg_area.XSize, lcd_bg_area.YSize},
-#if HAS_ROTATION_SUPPORT == 0
-      .format = SCRL_RGB888,
-#else
       .format = SCRL_ARGB8888,
-#endif
       .address = lcd_bg_buffer[lcd_bg_buffer_disp_idx],
     },
     {
