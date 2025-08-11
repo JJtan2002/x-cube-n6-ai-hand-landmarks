@@ -79,7 +79,7 @@ Three binaries must be programmed in the board's external flash using the follow
 Make sure to have the STM32CubeProgrammer bin folder added to your path.
 
 ```bash
-export DKEL="<STM32CubeProgrammer_N6 Install Folder>/bin/ExternalLoader/MX66UW1G45G_STM32N6570-DK.stldr"
+export DKEL="/home/tanjiajun2002/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/ExternalLoader/MX66UW1G45G_STM32N6570-DK.stldr"
 
 # First Stage Boot Loader
 STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -el $DKEL -hardRst -w Binary/ai_fsbl.hex
