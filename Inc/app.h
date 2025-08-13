@@ -21,8 +21,8 @@
 #include "postprocess_conf.h"
 
 /* Model Related Info */
-#define NN_WIDTH AI_PD_MODEL_PP_WIDTH
-#define NN_HEIGHT AI_PD_MODEL_PP_HEIGHT
+#define NN_WIDTH 320
+#define NN_HEIGHT 320
 #define NN_FORMAT DCMIPP_PIXEL_PACKER_FORMAT_RGB888_YUV444_1
 #define NN_BPP 3
 

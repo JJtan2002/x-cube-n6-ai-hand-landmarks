@@ -12,7 +12,7 @@ Lib/FreeRTOS/Source/tasks.c:1839:10:vTaskResume	24	static
 Lib/FreeRTOS/Source/tasks.c:1893:16:xTaskResumeFromISR	24	static
 Lib/FreeRTOS/Source/tasks.c:1968:6:vTaskStartScheduler	48	static
 Lib/FreeRTOS/Source/tasks.c:2093:6:vTaskEndScheduler	8	static
-Lib/FreeRTOS/Source/tasks.c:2104:6:vTaskSuspendAll	0	static,ignoring_inline_asm
+Lib/FreeRTOS/Source/tasks.c:2104:6:vTaskSuspendAll	0	static
 Lib/FreeRTOS/Source/tasks.c:2300:12:xTaskGetTickCount	0	static
 Lib/FreeRTOS/Source/tasks.c:2315:12:xTaskGetTickCountFromISR	8	static
 Lib/FreeRTOS/Source/tasks.c:2346:13:uxTaskGetNumberOfTasks	0	static
@@ -20,7 +20,7 @@ Lib/FreeRTOS/Source/tasks.c:2354:8:pcTaskGetName	8	static
 Lib/FreeRTOS/Source/tasks.c:2503:16:xTaskGetStaticBuffers	8	static
 Lib/FreeRTOS/Source/tasks.c:2625:18:xTaskGetIdleTaskHandle	8	static
 Lib/FreeRTOS/Source/tasks.c:2781:12:xTaskIncrementTick	40	static
-Lib/FreeRTOS/Source/tasks.c:2188:12:xTaskResumeAll	40	static,ignoring_inline_asm
+Lib/FreeRTOS/Source/tasks.c:2188:12:xTaskResumeAll	40	static
 Lib/FreeRTOS/Source/tasks.c:1218:16:xTaskDelayUntil	8	static
 Lib/FreeRTOS/Source/tasks.c:1305:10:vTaskDelay	8	static
 Lib/FreeRTOS/Source/tasks.c:2677:12:xTaskCatchUpTicks	8	static

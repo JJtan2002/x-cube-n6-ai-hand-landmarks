@@ -12,7 +12,7 @@
         },
         "yolo_detector": {
             "memory_pool": "./my_mpools/yolo_detector.mpool",
-            "options" : "--enable-epoch-controller -O3 --all-buffers-info --mvei --cache-maintenance --Oalt-sched --native-float --enable-virtual-mem-pools --Omax-ca-pipe 4 --Ocache-opt --Os"
+            "options" : "-O3 --all-buffers-info --mvei --cache-maintenance --Oalt-sched --native-float --enable-virtual-mem-pools --Omax-ca-pipe 4 --Ocache-opt --Os --enable-epoch-controller"
         },
         "face_landmark": {
             "memory_pool": "./my_mpools/face_landmark.mpool",

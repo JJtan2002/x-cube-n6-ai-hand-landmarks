@@ -180,14 +180,17 @@ typedef struct {
 typedef struct {
   float nn_period_ms;
   uint32_t pd_ms;
+  uint32_t yolo_ms;
   uint32_t hl_ms;
   uint32_t pp_ms;
   uint32_t disp_ms;
   int is_ld_displayed;    /* Toggle for showing landmarks. */
   int is_pd_displayed;    /* Toggle for showing palm detector boxes. */
   int pd_hand_nb;       /* Number of valid hands detected by the palm detector. */
+  int nb_faces;
   float pd_max_prob;      /* Maximum confidence score of the detected hands. */
   hand_info_t hands[PD_MAX_HAND_NB];  /* Array of detected hands. */
+  face_info_t faces[YOLO_MAX_NB];
 } display_info_t;
 
 /**
@@ -221,17 +224,17 @@ typedef struct {
  * necessary parameters and buffers for the YOLOv8 post-processing library.
  */
 typedef struct {
-  /* Model I/O Info */
-  uint32_t nn_in_len;               /* Size of the model's input tensor. */
-  void *raw_output_tensor;          /* Pointer to the single raw output tensor from YOLOv8. */
-  uint32_t raw_output_len;          /* Size of the raw output tensor. */
+  void* nn_in;                  // Pointer to the input tensor buffer (the image)
+  size_t nn_in_len;             // Length of the input tensor buffer in bytes
 
-  /* Post-Processing Parameters & Buffers */
-  yolov8_pp_static_param_t pp_params; /* Static configuration for the YOLOv8 post-processing library. */
-  od_pp_out_t pp_output;              /* Struct to hold the final, processed detection results. */
-  od_pp_outBuffer_t final_boxes[YOLO_MAX_NB]; /* The actual buffer to store the final bounding boxes. */
+  int8_t* raw_output_tensor;    // Pointer to the raw output from the NPU
+  size_t raw_output_len;        // Length of the raw output buffer in bytes
+
+  od_pp_out_t pp_output;        // Struct to hold the final, processed output (bounding boxes)
+  yolov8_pp_static_param_t pp_params; // Static parameters for the YOLOv8 post-processing
 
 } yolo_model_info_t;
+
 
 /**
  * @brief Encapsulates all data related to the Hand Landmark (HL) model.
@@ -1052,32 +1055,20 @@ static void palm_detector_init(pd_model_info_t *info)
  */
 static void yolo_detector_init(yolo_model_info_t *info)
 {
-  /* Get pointers to the model's buffer information from the AI library. */
-  /* The model name "yolo_detector" is used here as requested. */
+  /* Get pointers to the info structures for the model's I/O buffers. */
   const LL_Buffer_InfoTypeDef *nn_out_info = LL_ATON_Output_Buffers_Info_yolo_detector();
   const LL_Buffer_InfoTypeDef *nn_in_info = LL_ATON_Input_Buffers_Info_yolo_detector();
 
-  /* --- 1. Configure Model I/O --- */
+  /* --- Get I/O Buffer Addresses --- */
+  info->nn_in = LL_Buffer_addr_start(&nn_in_info[0]);
   info->nn_in_len = LL_Buffer_len(&nn_in_info[0]);
-  /* YOLOv8 has a single, large raw output tensor. */
-  info->raw_output_tensor = LL_Buffer_addr_start(&nn_out_info[0]);
+  info->raw_output_tensor = (int8_t *) LL_Buffer_addr_start(&nn_out_info[0]);
   info->raw_output_len = LL_Buffer_len(&nn_out_info[0]);
 
-  /* --- 2. Configure Post-Processing Library Parameters --- */
-  /* These parameters MUST match the properties of your trained YOLOv8 model. */
-  info->pp_params.nb_classes = 3;      // Your model has 3 classes: cigarette, phone, face
-  info->pp_params.nb_total_boxes = 2100; // Standard for many YOLOv8 models
-  info->pp_params.conf_threshold = 0.5f; // Set your desired confidence threshold
-  info->pp_params.iou_threshold = 0.45f; // Set your desired NMS overlap threshold
-  info->pp_params.max_boxes_limit = YOLO_MAX_NB; // Use our new constant
-
-  /* For INT8 quantized models, you must also provide the scale and zero-point. */
-  // info->pp_params.raw_output_scale = 0.1234f;      // Example value
-  // info->pp_params.raw_output_zero_point = -128;   // Example value
-
-  /* Link the output buffer for the post-processing results. */
-  info->pp_output.pOutBuff = info->final_boxes;
-  info->pp_output.nb_detect = 0;
+  /* --- Initialize the Post-Processing Parameters --- */
+  /* Call the generic init function. It will populate the pp_params struct
+     with the correct default values from the pre-processor defines. */
+  app_postprocess_init(&info->pp_params);
 }
 
 /**
@@ -1100,24 +1091,16 @@ static int yolo_detector_run(uint8_t *buffer, yolo_model_info_t *info, uint32_t 
   start_ts = HAL_GetTick();
 
   /* --- 1. Run Inference --- */
-  /* Set the input buffer for the NPU using your model's name. */
   ret = LL_ATON_Set_User_Input_Buffer_yolo_detector(0, buffer, info->nn_in_len);
   assert(ret == LL_ATON_User_IO_NOERROR);
 
-  /* Trigger the NPU to run the inference. This is a blocking call. */
   LL_ATON_RT_Main(&NN_Instance_yolo_detector);
 
-  /* The NPU wrote to the output buffer. Invalidate the CPU's Data Cache to see the new data. */
   CACHE_OP(SCB_InvalidateDCache_by_Addr(info->raw_output_tensor, info->raw_output_len));
 
-  /* --- 2. Run YOLOv8 Post-Processing --- */
-  /* Set up the input struct for the post-processing library. */
-  yolov8_pp_in_centroid_int8_t pp_input;
-  pp_input.pRaw_detections = info->raw_output_tensor;
-
-  /* Call the YOLOv8 post-processing function. */
-  /* NOTE: Use od_yolov8_pp_process_int8 if you have a quantized INT8 model. */
-  ret = od_yolov8_pp_process_int8(&pp_input, &info->pp_output, &info->pp_params);
+  /* --- 2. Run Post-Processing via Wrapper --- */
+  /* Call the generic post-processing wrapper. It will internally call the correct INT8 function. */
+  ret = app_postprocess_run((void * []){info->raw_output_tensor}, 1, &info->pp_output, &info->pp_params);
   assert(ret == AI_OD_POSTPROCESS_ERROR_NO);
   total_detections = info->pp_output.nb_detect;
 
@@ -1127,7 +1110,6 @@ static int yolo_detector_run(uint8_t *buffer, yolo_model_info_t *info, uint32_t 
     /* Check if the detected object is a face (class ID 2). */
     if (info->pp_output.pOutBuff[i].class_index == 2)
     {
-      /* To reuse existing helper functions, we map the YOLO output to the old struct format. */
       pd_pp_box_t temp_box = {0};
       temp_box.x_center = info->pp_output.pOutBuff[i].x_center;
       temp_box.y_center = info->pp_output.pOutBuff[i].y_center;
@@ -1135,8 +1117,6 @@ static int yolo_detector_run(uint8_t *buffer, yolo_model_info_t *info, uint32_t 
       temp_box.height   = info->pp_output.pOutBuff[i].height;
       temp_box.prob     = info->pp_output.pOutBuff[i].conf;
 
-      /* Call the helper functions to convert coords and create the ROI for the landmark model. */
-      /* NOTE: We will rename these functions and adapt their logic later. */
       cvt_pd_coord_to_screen_coord(&temp_box);
       pd_box_to_roi(&temp_box, &rois[face_nb]);
 
@@ -1148,7 +1128,7 @@ static int yolo_detector_run(uint8_t *buffer, yolo_model_info_t *info, uint32_t 
   *yolo_exec_time = HAL_GetTick() - start_ts;
   return face_nb; /* Return the count of faces, not total objects. */
 }
-
+ 
 /**
  * @brief Initializes the Face Landmark model.
  * @details This function gets memory addresses for the model's input and output
@@ -1466,7 +1446,7 @@ static void compute_next_roi(roi_t *src, ld_point_t lm_in[LD_LANDMARK_NB], roi_t
  * @details This is the entry point for the FreeRTOS task that handles all AI inference.
  * It will contain a `while(1)` loop to process frames as they become available.
  */
-static void nn_thread_fct(void *arg)
+static void nn_thread_fct_backup(void *arg)
 {
   /* Variables for filtering/smoothing performance metrics. */
   float nn_period_filtered_ms = 0;
@@ -1574,6 +1554,122 @@ static void nn_thread_fct(void *arg)
     disp.info.hands[0].roi = rois[0];
     for (j = 0; j < LD_LANDMARK_NB; j++)
       disp.info.hands[0].ld_landmarks[j] = ld_landmarks[0][j];
+    ret = xSemaphoreGive(disp.lock);
+    assert(ret == pdTRUE);
+
+    /* It's possible xqueue is empty if display is slow. So don't check error code that may by pdFALSE in that case */
+    xSemaphoreGive(disp.update);
+  }
+}
+
+static void nn_thread_fct(void *arg)
+{
+  /* Variables for filtering/smoothing performance metrics. */
+  float nn_period_filtered_ms = 0;
+  float pd_filtered_ms = 0;
+  float ld_filtered_ms = 0;
+
+  /* Model-specific info structures. */
+  hl_model_info_t hl_info; // Disabled
+  // pd_model_info_t pd_info; // Disabled
+  yolo_model_info_t yolo_info; // Disabled
+
+  /* Timing variables. */
+  uint32_t nn_period_ms;
+  uint32_t nn_period[2];
+  uint8_t *nn_pipe_dst;
+
+  /* Structs for holding tracking information between frames. */
+  pd_pp_point_t box_next_keypoints[AI_PD_MODEL_PP_NB_KEYPOINTS];
+  pd_pp_box_t box_next;
+  // od_pp_out_t boxes_next[YOLO_MAX_NB]; // Unused for now
+
+
+  int is_tracking = 0;
+  roi_t roi_next;
+  uint32_t pd_ms;
+  uint32_t hl_ms;
+  uint32_t yolo_ms;
+  // uint32_t fl_ms; // Unused for now
+  int ret;
+  int j;
+  // int temp = 0; // Unused for now
+
+  /* Current tracking algo only support single hand */
+  assert(PD_MAX_HAND_NB == 1);
+
+  /* setup models buffer info */
+  // palm_detector_init(&pd_info); // Disabled
+  box_next.pKps = box_next_keypoints;
+  // hand_landmark_init(&hl_info); // Disabled
+  app_rot_init(&hl_info);       // Disabled
+  yolo_detector_init(&yolo_info); // Disabled
+  /*** Application Main Loop ***************************************************************/
+  nn_period[1] = HAL_GetTick();
+
+  /* Get an initial free buffer and start the camera's NN pipe. */
+  nn_pipe_dst = bqueue_get_free(&nn_input_queue, 0);
+  assert(nn_pipe_dst);
+  CAM_NNPipe_Start(nn_pipe_dst, CMW_MODE_CONTINUOUS);
+  while (1)
+  {
+    uint8_t *capture_buffer;
+    int idx_for_resize;
+    /* Measure and filter the time between loop iterations. */
+    nn_period[0] = nn_period[1];
+    nn_period[1] = HAL_GetTick();
+    nn_period_ms = nn_period[1] - nn_period[0];
+    nn_period_filtered_ms = USE_FILTERED_TS ? (15 * nn_period_filtered_ms + nn_period_ms) / 16 : nn_period_ms;
+    
+    /* Block and wait for a new NN frame to be ready from the camera. */
+    capture_buffer = bqueue_get_ready(&nn_input_queue);
+    assert(capture_buffer);
+    idx_for_resize = frame_event_nb_for_resize % DISPLAY_BUFFER_NB;
+
+    /* --- Core Tracking Logic --- */
+    /* If we are NOT currently tracking an object, run the full-frame detector. */
+    if (!is_tracking) {
+      /* --- ALL MODEL CALLS ARE REMOVED FOR THIS TEST --- */
+      int nb_faces = yolo_detector_run(capture_buffer, &yolo_info, &yolo_ms);
+      
+      /* --- Force tracking to be ON and create a dummy box --- */
+      is_tracking = 0;
+      pd_ms = 0; // Set dummy timing
+    } else {
+      rois[0] = roi_next;
+      // copy_pd_box(&pd_info.pd_out.pOutData[0], &box_next); // Disabled
+      pd_ms = 0;
+    }
+    pd_filtered_ms = USE_FILTERED_TS ? (7 * pd_filtered_ms + pd_ms) / 8 : pd_ms;
+    bqueue_put_free(&nn_input_queue);
+
+    /* then run hand landmark detector if needed */
+    if (is_tracking) {
+      /* --- Hand landmarking is disabled for this test --- */
+      hl_ms = 0; // Set to 0 since it's disabled
+    } else {
+      /* If no object is being tracked, skip landmarking. */
+      hl_ms = 0;
+    }
+    ld_filtered_ms = USE_FILTERED_TS ? (7 * ld_filtered_ms + hl_ms) / 8 : hl_ms;
+
+    /* update display stats */
+    ret = xSemaphoreTake(disp.lock, portMAX_DELAY);
+    assert(ret == pdTRUE);
+    disp.info.pd_ms = is_tracking ? 0 : (int)pd_filtered_ms; /* This will now show 0 */
+    disp.info.hl_ms = (int)ld_filtered_ms; /* This will be 0 */
+    disp.info.nn_period_ms = nn_period_filtered_ms;
+    disp.info.pd_hand_nb = is_tracking; /* This will show 1 */
+    disp.info.pd_max_prob = 0.0f; /* Dummy data */
+    disp.info.hands[0].is_valid = is_tracking;
+    // copy_pd_box(&disp.info.hands[0].pd_hands, &pd_info.pd_out.pOutData[0]); // Disabled
+    if (is_tracking)
+    {
+      disp.info.hands[0].roi = rois[0]; /* Show the dummy ROI */
+    }
+    /* Landmark drawing is disabled */
+    // for (j = 0; j < LD_LANDMARK_NB; j++)
+    //   disp.info.hands[0].ld_landmarks[j] = ld_landmarks[0][j];
     ret = xSemaphoreGive(disp.lock);
     assert(ret == pdTRUE);
 

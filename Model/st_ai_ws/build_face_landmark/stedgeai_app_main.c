@@ -29,7 +29,7 @@ static ai_u8 activations_1[0];
 AI_ALIGNED(32)
 static ai_u8 activations_2[0];
 AI_ALIGNED(32)
-static ai_u8 activations_3[425984];
+static ai_u8 activations_3[278528];
 AI_ALIGNED(32)
 static ai_u8 activations_4[458752];
 AI_ALIGNED(32)
@@ -48,7 +48,7 @@ static ai_u8 weights_4[0];
 AI_ALIGNED(32)
 static ai_u8 weights_5[0];
 AI_ALIGNED(32)
-static ai_u8 weights_6[699009];
+static ai_u8 weights_6[643137];
 AI_ALIGNED(32)
 static ai_u8 weights_7[0];
 AI_ALIGNED(32)

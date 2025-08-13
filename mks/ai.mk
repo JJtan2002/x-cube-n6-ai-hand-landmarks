@@ -17,6 +17,9 @@ C_SOURCES_AI += $(AI_REL_DIR)/Npu/Devices/STM32N6XX/npu_cache.c
 C_SOURCES_AI += $(AI_REL_DIR)/Npu/Devices/STM32N6XX/mcu_cache.c
 
 C_SOURCES_AI += $(PP_REL_DIR)/Src/pd_pp_model.c
+C_SOURCES_AI += $(PP_REL_DIR)/Src/od_pp_yolov8.c
+C_SOURCES_AI += $(PP_REL_DIR)/Src/vision_models_pp_maxi_if32.c
+C_SOURCES_AI += $(PP_REL_DIR)/Src/vision_models_pp.c
 
 C_SOURCES_AI += $(wildcard $(PPW_REL_DIR)/*.c)
 

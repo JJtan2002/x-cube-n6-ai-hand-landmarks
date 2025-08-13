@@ -1,5 +1,5 @@
-ST Edge AI Core v2.1.0-20194 329b0e98d
-Created date          : 2025-08-08 11:15:12
+ST Edge AI Core v2.2.0-20266 2adc00962
+Created date          : 2025-08-13 16:41:58
 Parameters            : generate --no-inputs-allocation --no-outputs-allocation --name yolo_detector --model yolov8_face_call_smk_full_integer_quant.tflite --target stm32n6 --st-neural-art yolo_detector@user_neuralart.json
 
 Model name - yolov8_face_call_smk_full_integer_quant
@@ -1314,20 +1314,23 @@ model: macc=1,065,329,552 weights=3,035,042 activations=-- io=--
 
 Compilation details
 ------------------------------------------------------------------------------------
-Compiler version: 1.1.0-31
-Compiler arguments:  -i /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/yolov8_face_call_smk_full_integer_quant_OE_3_2_0.onnx --json-quant-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/yolov8_face_call_smk_full_integer_quant_OE_3_2_0_Q.json -g yolo_detector.c --load-mdesc /opt/ST/STEdgeAI/2.1/Utilities/configs/stm32n6.mdesc --load-mpool /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/my_mpools/yolo_detector.mpool --save-mpool-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__yolo_detector/yolo_detector.mpool --out-dir-prefix /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__yolo_detector/ --enable-epoch-controller -O3 --all-buffers-info --mvei --cache-maintenance --Oalt-sched --native-float --enable-virtual-mem-pools --Omax-ca-pipe 4 --Ocache-opt --Os --output-info-file c_info.json --network-name yolo_detector
+Compiler version: 1.1.1-14
+Compiler arguments:  -i /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/yolov8_face_call_smk_full_integer_quant_OE_3_3_0.onnx --json-quant-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/yolov8_face_call_smk_full_integer_quant_OE_3_3_0_Q.json -g yolo_detector.c --load-mdesc /home/tanjiajun2002/ST/STEdgeAI/2.2/Utilities/configs/stm32n6.mdesc --load-mpool /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/my_mpools/yolo_detector.mpool --save-mpool-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__yolo_detector/yolo_detector.mpool --out-dir-prefix /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__yolo_detector/ --enable-epoch-controller -O3 --all-buffers-info --mvei --cache-maintenance --Oalt-sched --native-float --enable-virtual-mem-pools --Omax-ca-pipe 4 --Ocache-opt --Os --output-info-file c_info.json --network-name yolo_detector
 ====================================================================================
 
 Memory usage information 
 ------------------------------------------------------------------------------------
+	flexMEM    [0x34000000 - 0x34000000]:          0  B /          0  B  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
+	cpuRAM1    [0x34080000 - 0x34080000]:          0  B /          0  B  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
+	cpuRAM2    [0x34100000 - 0x34200000]:      1.000 MB /      1.000 MB  (100.00 % used) -- weights:          0  B (  0.00 % used)  activations:      1.000 MB (100.00 % used)
 	npuRAM3    [0x34200000 - 0x34270000]:    448.000 kB /    448.000 kB  (100.00 % used) -- weights:          0  B (  0.00 % used)  activations:    448.000 kB (100.00 % used)
-	npuRAM4    [0x34270000 - 0x342E0000]:    448.000 kB /    448.000 kB  (100.00 % used) -- weights:          0  B (  0.00 % used)  activations:    448.000 kB (100.00 % used)
+	npuRAM4    [0x34270000 - 0x342E0000]:    425.000 kB /    448.000 kB  ( 94.87 % used) -- weights:          0  B (  0.00 % used)  activations:    425.000 kB ( 94.87 % used)
 	npuRAM5    [0x342E0000 - 0x34350000]:    448.000 kB /    448.000 kB  (100.00 % used) -- weights:          0  B (  0.00 % used)  activations:    448.000 kB (100.00 % used)
 	npuRAM6    [0x34350000 - 0x343C0000]:    400.000 kB /    448.000 kB  ( 89.29 % used) -- weights:          0  B (  0.00 % used)  activations:    400.000 kB ( 89.29 % used)
-	octoFlash  [0x70380000 - 0x70780000]:      2.878 MB /      4.000 MB  ( 71.96 % used) -- weights:      2.878 MB ( 71.96 % used)  activations:          0  B (  0.00 % used)
-	hyperRAM   [0x90000000 - 0x91000000]:      2.734 MB /     16.000 MB  ( 17.09 % used) -- weights:          0  B (  0.00 % used)  activations:      2.734 MB ( 17.09 % used)
+	octoFlash  [0x70380000 - 0x74080000]:      2.878 MB /     61.000 MB  (  4.72 % used) -- weights:      2.878 MB (  4.72 % used)  activations:          0  B (  0.00 % used)
+	hyperRAM   [0x90000000 - 0x91000000]:      1.562 MB /     16.000 MB  (  9.77 % used) -- weights:          0  B (  0.00 % used)  activations:      1.562 MB (  9.77 % used)
 ---
-Total:                                             7.316 MB                                  -- weights:      2.878 MB                  activations:      4.438 MB                   
+Total:                                             7.121 MB                                  -- weights:      2.878 MB                  activations:      4.243 MB                   
 ====================================================================================
 
 Memory to be allocated by the user: inputs (300.000 kB), outputs (14.375 kB)
@@ -1338,12 +1341,13 @@ Memory to be allocated by the user: inputs (300.000 kB), outputs (14.375 kB)
 
 Used memory ranges
 ------------------------------------------------------------------------------------
+	cpuRAM2    [0x34100000 - 0x34200000]: 0x34100000-0x34200000
 	npuRAM3    [0x34200000 - 0x34270000]: 0x34200000-0x34270000
-	npuRAM4    [0x34270000 - 0x342E0000]: 0x34270000-0x342E0000
+	npuRAM4    [0x34270000 - 0x342E0000]: 0x34270000-0x342DA400
 	npuRAM5    [0x342E0000 - 0x34350000]: 0x342E0000-0x34350000
 	npuRAM6    [0x34350000 - 0x343C0000]: 0x34350000-0x343B4000
-	octoFlash  [0x70380000 - 0x70780000]: 0x70380000-0x70660D80
-	hyperRAM   [0x90000000 - 0x91000000]: 0x90000000-0x902BC000
+	octoFlash  [0x70380000 - 0x74080000]: 0x70380000-0x70660D80
+	hyperRAM   [0x90000000 - 0x91000000]: 0x90000000-0x90190000
 ====================================================================================
 
 Epochs details

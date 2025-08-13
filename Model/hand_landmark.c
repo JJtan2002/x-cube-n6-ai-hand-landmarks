@@ -23,17 +23,17 @@
  * GIT_DESCRIPTION "atonn-v1.1.0-31-g27f5d5bc"
  *
  * Command Line options:
- * --onnx-input = "Model/st_ai_output/033_hand_landmark_full_quant_pc_uf_handl_OE_3_2_0.onnx"
- * --out-dir-prefix = "Model/st_ai_ws/neural_art__hand_landmark/"
+ * --onnx-input = "/home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/033_hand_landmark_full_quant_pc_uf_handl_OE_3_2_0.onnx"
+ * --out-dir-prefix = "/home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__hand_landmark/"
  * --network-name = "hand_landmark"
  * --all-buffers-info = true
  * --mvei = true
- * --load-mdesc-file = "STEdgeAI_2.1.0/2.1/Utilities/configs/stm32n6"
- * --load-mpool-file = "Model/my_mpools/hand_landmark"
+ * --load-mdesc-file = "/home/tanjiajun2002/ST/STEdgeAI/2.1/Utilities/configs/stm32n6"
+ * --load-mpool-file = "/home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/my_mpools/hand_landmark"
  * --cache-maintenance = true
  * --enable-virtual-mem-pools = true
  * --native-float = true
- * --json-quant-file = "Model/st_ai_output/033_hand_landmark_full_quant_pc_uf_handl_OE_3_2_0_Q.json"
+ * --json-quant-file = "/home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/033_hand_landmark_full_quant_pc_uf_handl_OE_3_2_0_Q.json"
  * --optimization = 3
  * --Os = true
  * --Omax-ca-pipe = 4

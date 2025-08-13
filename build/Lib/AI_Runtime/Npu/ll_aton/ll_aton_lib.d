@@ -74,7 +74,8 @@ build/Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib.o: \
  Lib/AI_Runtime/Npu/ll_aton/ll_aton.h \
  Lib/AI_Runtime/Npu/ll_aton/ll_aton_NN_interface.h \
  Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib_sw_operators.h \
- Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.h
+ Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.h \
+ Lib/AI_Runtime/Npu/ll_aton/ll_aton_rt_user_api.h
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_util.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_caches_interface.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_osal.h:
@@ -153,3 +154,4 @@ Lib/AI_Runtime/Npu/ll_aton/ll_aton.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_NN_interface.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_lib_sw_operators.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.h:
+Lib/AI_Runtime/Npu/ll_aton/ll_aton_rt_user_api.h:

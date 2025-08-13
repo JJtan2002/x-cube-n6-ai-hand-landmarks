@@ -23,17 +23,17 @@
  * GIT_DESCRIPTION "atonn-v1.1.0-31-g27f5d5bc"
  *
  * Command Line options:
- * --onnx-input = "Model/st_ai_output/033_palm_detection_full_quant_pc_uf_od_OE_3_2_0.onnx"
- * --out-dir-prefix = "Model/st_ai_ws/neural_art__palm_detector/"
+ * --onnx-input = "/home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/033_palm_detection_full_quant_pc_uf_od_OE_3_2_0.onnx"
+ * --out-dir-prefix = "/home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__palm_detector/"
  * --network-name = "palm_detector"
  * --all-buffers-info = true
  * --mvei = true
- * --load-mdesc-file = "STEdgeAI_2.1.0/2.1/Utilities/configs/stm32n6"
- * --load-mpool-file = "Model/my_mpools/palm_detector"
+ * --load-mdesc-file = "/home/tanjiajun2002/ST/STEdgeAI/2.1/Utilities/configs/stm32n6"
+ * --load-mpool-file = "/home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/my_mpools/palm_detector"
  * --cache-maintenance = true
  * --enable-virtual-mem-pools = true
  * --native-float = true
- * --json-quant-file = "Model/st_ai_output/033_palm_detection_full_quant_pc_uf_od_OE_3_2_0_Q.json"
+ * --json-quant-file = "/home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/033_palm_detection_full_quant_pc_uf_od_OE_3_2_0_Q.json"
  * --optimization = 3
  * --Os = true
  * --Omax-ca-pipe = 4
@@ -61,7 +61,7 @@
 /* global pool 4 is ? */
 /* index=4 file postfix=xSPI1 name=hyperRAM offset=0x90000000  absolute_mode size=16777208 READ_WRITE THROUGHPUT=MID LATENCY=HIGH byte width=2 freq ratio=5 burst max length=MAXINT burst penalty=0 pipelined=ON cacheable=ON read_power=380 write_power=340 use4initializers=YES score=82  */
 /* global pool 5 is 1.07 MB */
-/* index=5 file postfix=xSPI2 name=octoFlash offset=0x70380000  absolute_mode size=2097144 READ_ONLY THROUGHPUT=MID LATENCY=HIGH byte width=1 freq ratio=6 burst max length=MAXINT burst penalty=0 pipelined=ON cacheable=ON read_power=110 write_power=400 use4initializers=YES score=50  */
+/* index=5 file postfix=xSPI2 name=octoFlash offset=0x70380000  absolute_mode size=4194296 READ_ONLY THROUGHPUT=MID LATENCY=HIGH byte width=1 freq ratio=6 burst max length=MAXINT burst penalty=0 pipelined=ON cacheable=ON read_power=110 write_power=400 use4initializers=YES score=50  */
 /* global pool 8 is 1.12 MB */
 /* index=8 file postfix=AXISRAM3_AXISRAM4_AXISRAM5_AXISRAM6 name=npuRAM3_npuRAM4_npuRAM5_npuRAM6 offset=0x34200000  absolute_mode size=1835000 vpool READ_WRITE THROUGHPUT=HIGH LATENCY=LOW byte width=8 freq ratio=1.25 burst max length=MAXINT burst penalty=0 pipelined=ON cacheable=OFF read_power=19.006 write_power=16.201 use4initializers=NO score=95  */
 /* global pool 1 is 256.00 KB */

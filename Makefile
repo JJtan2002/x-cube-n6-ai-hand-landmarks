@@ -63,7 +63,6 @@ C_SOURCES += Model/hand_landmark.c
 C_SOURCES += Model/face_landmark.c
 C_SOURCES += Src/app_cam.c
 C_SOURCES += Src/freertos_bsp.c
-
 # ASM sources
 ASM_SOURCES =
 ASM_SOURCES_S =

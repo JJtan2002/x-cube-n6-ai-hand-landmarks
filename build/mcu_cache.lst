@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccLS329P.s 			page 1
+ARM GAS  /tmp/ccw7BDwI.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -52,17 +52,19 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
   17:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
   18:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** #include "mcu_cache.h"
   19:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
-  20:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_enable(void)
-  21:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
-  34              		.loc 1 21 1 view -0
+  20:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** #include "assert.h"
+  21:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
+  22:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_enable(void)
+  23:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
+  34              		.loc 1 23 1 view -0
   35              		.cfi_startproc
+ARM GAS  /tmp/ccw7BDwI.s 			page 2
+
+
   36              		@ args = 0, pretend = 0, frame = 0
   37              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccLS329P.s 			page 2
-
-
-  22:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   SCB_EnableDCache();
-  38              		.loc 1 22 3 view .LVU1
+  24:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   SCB_EnableDCache();
+  38              		.loc 1 24 3 view .LVU1
   39              	.LBB204:
   40              	.LBI204:
   41              		.file 2 "STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h"
@@ -116,11 +118,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
   48:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
   49:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** #ifndef __SCB_ICACHE_LINE_SIZE
   50:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** #define __SCB_ICACHE_LINE_SIZE  32U /*!< Cortex-M7 cache line size is fixed to 32 bytes (8 words). 
+ARM GAS  /tmp/ccw7BDwI.s 			page 3
+
+
   51:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** #endif
   52:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
-ARM GAS  /tmp/ccLS329P.s 			page 3
-
-
   53:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** /**
   54:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   \brief   Enable I-Cache
   55:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   \details Turns on I-Cache
@@ -176,11 +178,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  105:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
  106:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
  107:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** /**
+ARM GAS  /tmp/ccw7BDwI.s 			page 4
+
+
  108:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   \brief   I-Cache Invalidate by address
  109:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   \details Invalidates I-Cache for the given address.
-ARM GAS  /tmp/ccLS329P.s 			page 4
-
-
  110:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****            I-Cache is invalidated starting from a 32 byte aligned address in 32 byte granularity.
  111:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****            I-Cache memory blocks which are part of given address + given size are invalidated.
  112:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   \param[in]   addr    address
@@ -230,17 +232,17 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
   49 0000 184A     		ldr	r2, .L7
   50              	.LBE205:
   51              	.LBE204:
-  21:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   SCB_EnableDCache();
-  52              		.loc 1 21 1 view .LVU8
+  23:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   SCB_EnableDCache();
+  52              		.loc 1 23 1 view .LVU8
   53 0002 70B5     		push	{r4, r5, r6, lr}
   54              		.cfi_def_cfa_offset 16
   55              		.cfi_offset 4, -16
   56              		.cfi_offset 5, -12
+ARM GAS  /tmp/ccw7BDwI.s 			page 5
+
+
   57              		.cfi_offset 6, -8
   58              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccLS329P.s 			page 5
-
-
   59              	.LBB215:
   60              	.LBB214:
   61              		.loc 2 148 12 view .LVU9
@@ -296,11 +298,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
   36:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __has_builtin(x) (0)
   37:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
   38:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  /tmp/ccw7BDwI.s 			page 6
+
+
   39:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
   40:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ASM
-ARM GAS  /tmp/ccLS329P.s 			page 6
-
-
   41:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ASM                                  __asm
   42:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
   43:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __INLINE
@@ -356,11 +358,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
   93:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
   94:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_WRITE
   95:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+ARM GAS  /tmp/ccw7BDwI.s 			page 7
+
+
   96:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
   97:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
-ARM GAS  /tmp/ccLS329P.s 			page 7
-
-
   98:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
   99:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
  100:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))-
@@ -416,11 +418,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  150:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
  151:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   for (__copy_table_t const* pTable = &__copy_table_start__; pTable < &__copy_table_end__; ++pTable
  152:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****     for(uint32_t i=0u; i<pTable->wlen; ++i) {
+ARM GAS  /tmp/ccw7BDwI.s 			page 8
+
+
  153:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****       pTable->dest[i] = pTable->src[i];
  154:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****     }
-ARM GAS  /tmp/ccLS329P.s 			page 8
-
-
  155:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   }
  156:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
  157:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   for (__zero_table_t const* pTable = &__zero_table_start__; pTable < &__zero_table_end__; ++pTable
@@ -476,11 +478,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  207:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   Access to dedicated instructions
  208:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
  209:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** */
+ARM GAS  /tmp/ccw7BDwI.s 			page 9
+
+
  210:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
  211:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /* Define macros for porting to both thumb1 and thumb2.
-ARM GAS  /tmp/ccLS329P.s 			page 9
-
-
  212:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * For thumb1, use low register (r0-r7), specified by constraint "l"
  213:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Otherwise, use general registers, specified by constraint "r" */
  214:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined (__thumb__) && !defined (__thumb2__)
@@ -536,11 +538,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  264:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  265:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Data Synchronization Barrier
  266:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Acts as a special kind of Data Memory Barrier.
+ARM GAS  /tmp/ccw7BDwI.s 			page 10
+
+
  267:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****            It completes when all explicit memory accesses before this instruction complete.
  268:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
-ARM GAS  /tmp/ccLS329P.s 			page 10
-
-
  269:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __DSB(void)
   73              		.loc 3 269 27 view .LVU14
   74              	.LBB207:
@@ -596,11 +598,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  105 002c 4EF001E0 		dls	lr, lr
  106              		.loc 2 160 52 view .LVU26
  107 0030 03EA0406 		and	r6, r3, r4
+ARM GAS  /tmp/ccw7BDwI.s 			page 11
+
+
  108              	.LVL3:
  109              	.L3:
-ARM GAS  /tmp/ccLS329P.s 			page 11
-
-
  159:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****         SCB->DCISW = (((sets << SCB_DCISW_SET_Pos) & SCB_DCISW_SET_Msk) |
  110              		.loc 2 159 7 is_stmt 1 view .LVU27
  111              		.loc 2 160 9 view .LVU28
@@ -656,11 +658,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  269:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
  149              		.loc 3 269 27 view .LVU42
  150              	.LBB211:
+ARM GAS  /tmp/ccw7BDwI.s 			page 12
+
+
  151              		.loc 3 271 3 view .LVU43
  152              		.syntax unified
-ARM GAS  /tmp/ccLS329P.s 			page 12
-
-
  153              	@ 271 "STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
  154 0056 BFF34F8F 		dsb 0xF
  155              	@ 0 "" 2
@@ -691,10 +693,10 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  176              	.LBE212:
  177              	.LBE214:
  178              	.LBE215:
-  23:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
- 179              		.loc 1 23 3 is_stmt 1 view .LVU48
-  24:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
- 180              		.loc 1 24 1 is_stmt 0 view .LVU49
+  25:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
+ 179              		.loc 1 25 3 is_stmt 1 view .LVU48
+  26:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
+ 180              		.loc 1 26 1 is_stmt 0 view .LVU49
  181 005e 0020     		movs	r0, #0
  182 0060 70BD     		pop	{r4, r5, r6, pc}
  183              	.L8:
@@ -711,18 +713,18 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  195              		.thumb_func
  197              	mcu_cache_disable:
  198              	.LFB837:
-  25:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
-  26:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_disable(void)
-  27:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
- 199              		.loc 1 27 1 is_stmt 1 view -0
+  27:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
+  28:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_disable(void)
+  29:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
+ 199              		.loc 1 29 1 is_stmt 1 view -0
  200              		.cfi_startproc
+ARM GAS  /tmp/ccw7BDwI.s 			page 13
+
+
  201              		@ args = 0, pretend = 0, frame = 0
  202              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccLS329P.s 			page 13
-
-
-  28:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   SCB_DisableDCache();
- 203              		.loc 1 28 3 view .LVU51
+  30:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   SCB_DisableDCache();
+ 203              		.loc 1 30 3 view .LVU51
  204              	.LBB216:
  205              	.LBI216:
  173:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   #endif
@@ -756,8 +758,8 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  212 0002 164A     		ldr	r2, .L14
  213              	.LBE217:
  214              	.LBE216:
-  27:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   SCB_DisableDCache();
- 215              		.loc 1 27 1 view .LVU56
+  29:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   SCB_DisableDCache();
+ 215              		.loc 1 29 1 view .LVU56
  216 0004 70B5     		push	{r4, r5, r6, lr}
  217              		.cfi_def_cfa_offset 16
  218              		.cfi_offset 4, -16
@@ -776,11 +778,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  229              		.loc 3 269 27 view .LVU59
  230              	.LBB219:
  231              		.loc 3 271 3 view .LVU60
+ARM GAS  /tmp/ccw7BDwI.s 			page 14
+
+
  232              		.syntax unified
  233              	@ 271 "STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
-ARM GAS  /tmp/ccLS329P.s 			page 14
-
-
  234 000a BFF34F8F 		dsb 0xF
  235              	@ 0 "" 2
  236              		.thumb
@@ -836,11 +838,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  221:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****       __DSB();
  222:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****       __ISB();
  223:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     #endif
+ARM GAS  /tmp/ccw7BDwI.s 			page 15
+
+
  224:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
  225:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     locals.ccsidr = SCB->CCSIDR;
-ARM GAS  /tmp/ccLS329P.s 			page 15
-
-
  260              		.loc 2 225 5 view .LVU67
  226:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****                                             /* clean & invalidate D-Cache */
  227:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     locals.sets = (uint32_t)(CCSIDR_SETS(locals.ccsidr));
@@ -896,11 +898,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  292              		.loc 2 236 30 is_stmt 1 discriminator 1 view .LVU82
  293              		.loc 2 236 27 is_stmt 0 discriminator 1 view .LVU83
  294 0042 0139     		subs	r1, r1, #1
+ARM GAS  /tmp/ccw7BDwI.s 			page 16
+
+
  295              	.LVL10:
  296              		.loc 2 236 30 discriminator 1 view .LVU84
-ARM GAS  /tmp/ccLS329P.s 			page 16
-
-
  297 0044 0FF007C8 		le	lr, .L10
  237:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     } while(locals.sets-- != 0U);
  298              		.loc 2 237 27 is_stmt 1 view .LVU85
@@ -946,21 +948,21 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  331              	.LBE224:
  332              	.LBE226:
  333              	.LBE227:
-  29:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
- 334              		.loc 1 29 3 is_stmt 1 view .LVU93
-  30:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
- 335              		.loc 1 30 1 is_stmt 0 view .LVU94
+  31:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
+ 334              		.loc 1 31 3 is_stmt 1 view .LVU93
+  32:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
+ 335              		.loc 1 32 1 is_stmt 0 view .LVU94
  336 0058 0020     		movs	r0, #0
  337 005a 70BD     		pop	{r4, r5, r6, pc}
  338              	.L15:
  339              		.align	2
  340              	.L14:
  341 005c 00ED00E0 		.word	-536810240
+ARM GAS  /tmp/ccw7BDwI.s 			page 17
+
+
  342              		.cfi_endproc
  343              	.LFE837:
-ARM GAS  /tmp/ccLS329P.s 			page 17
-
-
  345              		.section	.text.mcu_cache_invalidate,"ax",%progbits
  346              		.align	1
  347              		.global	mcu_cache_invalidate
@@ -969,15 +971,15 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  350              		.thumb_func
  352              	mcu_cache_invalidate:
  353              	.LFB838:
-  31:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****  
-  32:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_invalidate(void)
-  33:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
- 354              		.loc 1 33 1 is_stmt 1 view -0
+  33:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
+  34:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_invalidate(void)
+  35:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
+ 354              		.loc 1 35 1 is_stmt 1 view -0
  355              		.cfi_startproc
  356              		@ args = 0, pretend = 0, frame = 0
  357              		@ frame_needed = 0, uses_anonymous_args = 0
-  34:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
- 358              		.loc 1 34 3 view .LVU96
+  36:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
+ 358              		.loc 1 36 3 view .LVU96
  359              	.LBB228:
  360              	.LBI228:
  361              		.file 4 "Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.h"
@@ -1013,14 +1015,14 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  366 0000 154A     		ldr	r2, .L25
  367              	.LBE229:
  368              	.LBE228:
-  33:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
- 369              		.loc 1 33 1 view .LVU100
+  35:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
+ 369              		.loc 1 35 1 view .LVU100
  370 0002 70B5     		push	{r4, r5, r6, lr}
+ARM GAS  /tmp/ccw7BDwI.s 			page 18
+
+
  371              		.cfi_def_cfa_offset 16
  372              		.cfi_offset 4, -16
-ARM GAS  /tmp/ccLS329P.s 			page 18
-
-
  373              		.cfi_offset 5, -12
  374              		.cfi_offset 6, -8
  375              		.cfi_offset 14, -4
@@ -1034,8 +1036,8 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  383              		.loc 4 25 35 is_stmt 1 discriminator 1 view .LVU103
  384              	.LBE230:
  385              	.LBE231:
-  35:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_InvalidateDCache();
- 386              		.loc 1 35 5 view .LVU104
+  37:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_InvalidateDCache();
+ 386              		.loc 1 37 5 view .LVU104
  387              	.LBB232:
  388              	.LBI232:
  241:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   #endif
@@ -1076,11 +1078,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  406 0010 BFF34F8F 		dsb 0xF
  407              	@ 0 "" 2
  408              		.thumb
+ARM GAS  /tmp/ccw7BDwI.s 			page 19
+
+
  409              		.syntax unified
  410              	.LBE235:
-ARM GAS  /tmp/ccLS329P.s 			page 19
-
-
  411              	.LBE234:
  258:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
  259:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     ccsidr = SCB->CCSIDR;
@@ -1136,11 +1138,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  268:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****         #if defined ( __CC_ARM )
  269:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****           __schedule_barrier();
  270:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****         #endif
+ARM GAS  /tmp/ccw7BDwI.s 			page 20
+
+
  271:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****       } while (ways-- != 0U);
  444              		.loc 2 271 23 is_stmt 1 discriminator 1 view .LVU129
-ARM GAS  /tmp/ccLS329P.s 			page 20
-
-
  445              		.loc 2 271 20 is_stmt 0 discriminator 1 view .LVU130
  446 003c 0139     		subs	r1, r1, #1
  447              	.LVL16:
@@ -1191,16 +1193,16 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  484              	.LBE238:
  485              	.LBE233:
  486              	.LBE232:
-  36:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }  
-  37:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
- 487              		.loc 1 37 3 is_stmt 1 view .LVU140
-  38:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
- 488              		.loc 1 38 1 is_stmt 0 view .LVU141
+  38:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
+  39:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
+ 487              		.loc 1 39 3 is_stmt 1 view .LVU140
+  40:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
+ 488              		.loc 1 40 1 is_stmt 0 view .LVU141
+ARM GAS  /tmp/ccw7BDwI.s 			page 21
+
+
  489 0052 0020     		movs	r0, #0
  490 0054 70BD     		pop	{r4, r5, r6, pc}
-ARM GAS  /tmp/ccLS329P.s 			page 21
-
-
  491              	.L26:
  492 0056 00BF     		.align	2
  493              	.L25:
@@ -1215,15 +1217,15 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  503              		.thumb_func
  505              	mcu_cache_clean:
  506              	.LFB839:
-  39:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
-  40:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_clean(void)
-  41:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
- 507              		.loc 1 41 1 is_stmt 1 view -0
+  41:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
+  42:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_clean(void)
+  43:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
+ 507              		.loc 1 43 1 is_stmt 1 view -0
  508              		.cfi_startproc
  509              		@ args = 0, pretend = 0, frame = 0
  510              		@ frame_needed = 0, uses_anonymous_args = 0
-  42:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
- 511              		.loc 1 42 3 view .LVU143
+  44:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
+ 511              		.loc 1 44 3 view .LVU143
  512              	.LBB240:
  513              	.LBI240:
   23:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.h **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
@@ -1234,8 +1236,8 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  518 0000 154A     		ldr	r2, .L36
  519              	.LBE241:
  520              	.LBE240:
-  41:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
- 521              		.loc 1 41 1 view .LVU147
+  43:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
+ 521              		.loc 1 43 1 view .LVU147
  522 0002 70B5     		push	{r4, r5, r6, lr}
  523              		.cfi_def_cfa_offset 16
  524              		.cfi_offset 4, -16
@@ -1252,15 +1254,15 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  535              		.loc 4 25 35 is_stmt 1 discriminator 1 view .LVU150
  536              	.LBE242:
  537              	.LBE243:
-  43:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_CleanDCache();
- 538              		.loc 1 43 5 view .LVU151
+  45:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_CleanDCache();
+ 538              		.loc 1 45 5 view .LVU151
  539              	.LBB244:
  540              	.LBI244:
+ARM GAS  /tmp/ccw7BDwI.s 			page 22
+
+
  276:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   #endif
  277:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** }
-ARM GAS  /tmp/ccLS329P.s 			page 22
-
-
  278:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
  279:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
  280:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** /**
@@ -1316,11 +1318,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  567              		.loc 2 294 12 view .LVU163
  568 0018 D2F88030 		ldr	r3, [r2, #128]
  569              	.LVL18:
+ARM GAS  /tmp/ccw7BDwI.s 			page 23
+
+
  297:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     do {
  570              		.loc 2 297 5 is_stmt 1 view .LVU164
-ARM GAS  /tmp/ccLS329P.s 			page 23
-
-
  299:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****       do {
  571              		.loc 2 299 12 is_stmt 0 view .LVU165
  572 001c C3F3C900 		ubfx	r0, r3, #3, #10
@@ -1376,11 +1378,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  608              	.LBI248:
  269:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
  609              		.loc 3 269 27 view .LVU181
+ARM GAS  /tmp/ccw7BDwI.s 			page 24
+
+
  610              	.LBB249:
  611              		.loc 3 271 3 view .LVU182
-ARM GAS  /tmp/ccLS329P.s 			page 24
-
-
  612              		.syntax unified
  613              	@ 271 "STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
  614 004a BFF34F8F 		dsb 0xF
@@ -1412,11 +1414,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  636              	.LBE250:
  637              	.LBE245:
  638              	.LBE244:
-  44:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }  
-  45:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
- 639              		.loc 1 45 3 is_stmt 1 view .LVU187
-  46:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
- 640              		.loc 1 46 1 is_stmt 0 view .LVU188
+  46:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
+  47:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
+ 639              		.loc 1 47 3 is_stmt 1 view .LVU187
+  48:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
+ 640              		.loc 1 48 1 is_stmt 0 view .LVU188
  641 0052 0020     		movs	r0, #0
  642 0054 70BD     		pop	{r4, r5, r6, pc}
  643              	.L37:
@@ -1433,18 +1435,18 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  655              		.thumb_func
  657              	mcu_cache_clean_invalidate:
  658              	.LFB840:
-  47:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
-  48:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_clean_invalidate(void)
-  49:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
- 659              		.loc 1 49 1 is_stmt 1 view -0
+  49:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
+  50:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_clean_invalidate(void)
+  51:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
+ARM GAS  /tmp/ccw7BDwI.s 			page 25
+
+
+ 659              		.loc 1 51 1 is_stmt 1 view -0
  660              		.cfi_startproc
-ARM GAS  /tmp/ccLS329P.s 			page 25
-
-
  661              		@ args = 0, pretend = 0, frame = 0
  662              		@ frame_needed = 0, uses_anonymous_args = 0
-  50:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
- 663              		.loc 1 50 3 view .LVU190
+  52:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
+ 663              		.loc 1 52 3 view .LVU190
  664              	.LBB252:
  665              	.LBI252:
   23:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.h **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
@@ -1455,8 +1457,8 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  670 0000 154A     		ldr	r2, .L47
  671              	.LBE253:
  672              	.LBE252:
-  49:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
- 673              		.loc 1 49 1 view .LVU194
+  51:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
+ 673              		.loc 1 51 1 view .LVU194
  674 0002 70B5     		push	{r4, r5, r6, lr}
  675              		.cfi_def_cfa_offset 16
  676              		.cfi_offset 4, -16
@@ -1473,8 +1475,8 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  687              		.loc 4 25 35 is_stmt 1 discriminator 1 view .LVU197
  688              	.LBE254:
  689              	.LBE255:
-  51:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_CleanInvalidateDCache();
- 690              		.loc 1 51 5 view .LVU198
+  53:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_CleanInvalidateDCache();
+ 690              		.loc 1 53 5 view .LVU198
  691              	.LBB256:
  692              	.LBI256:
  311:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   #endif
@@ -1496,11 +1498,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  696              		.loc 2 323 5 view .LVU201
  324:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     uint32_t ways;
  697              		.loc 2 324 5 view .LVU202
+ARM GAS  /tmp/ccw7BDwI.s 			page 26
+
+
  325:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
  326:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
-ARM GAS  /tmp/ccLS329P.s 			page 26
-
-
  698              		.loc 2 326 5 view .LVU203
  699              		.loc 2 326 17 is_stmt 0 view .LVU204
  700 000a 0023     		movs	r3, #0
@@ -1556,11 +1558,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  334:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****       do {
  733              		.loc 2 334 7 view .LVU216
  334:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****       do {
+ARM GAS  /tmp/ccw7BDwI.s 			page 27
+
+
  734              		.loc 2 334 12 is_stmt 0 view .LVU217
  735 0026 00F1010E 		add	lr, r0, #1
-ARM GAS  /tmp/ccLS329P.s 			page 27
-
-
  736 002a 0146     		mov	r1, r0
  737 002c 4EF001E0 		dls	lr, lr
  738              		.loc 2 336 54 view .LVU218
@@ -1616,11 +1618,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  776              	.LBB263:
  260:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
  777              		.loc 3 260 3 view .LVU232
+ARM GAS  /tmp/ccw7BDwI.s 			page 28
+
+
  778              		.syntax unified
  779              	@ 260 "STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
-ARM GAS  /tmp/ccLS329P.s 			page 28
-
-
  780 004e BFF36F8F 		isb 0xF
  781              	@ 0 "" 2
  782              	.LVL29:
@@ -1633,11 +1635,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  788              	.LBE262:
  789              	.LBE257:
  790              	.LBE256:
-  52:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }  
-  53:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
- 791              		.loc 1 53 3 is_stmt 1 view .LVU234
-  54:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
- 792              		.loc 1 54 1 is_stmt 0 view .LVU235
+  54:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
+  55:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
+ 791              		.loc 1 55 3 is_stmt 1 view .LVU234
+  56:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
+ 792              		.loc 1 56 1 is_stmt 0 view .LVU235
  793 0052 0020     		movs	r0, #0
  794 0054 70BD     		pop	{r4, r5, r6, pc}
  795              	.L48:
@@ -1655,15 +1657,15 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  809              	mcu_cache_invalidate_range:
  810              	.LVL30:
  811              	.LFB841:
-  55:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
-  56:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_invalidate_range(uint32_t start_addr, uint32_t end_addr) 
-  57:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
- 812              		.loc 1 57 1 is_stmt 1 view -0
+  57:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
+  58:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_invalidate_range(uint32_t start_addr, uint32_t end_addr)
+  59:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
+ 812              		.loc 1 59 1 is_stmt 1 view -0
  813              		.cfi_startproc
  814              		@ args = 0, pretend = 0, frame = 0
  815              		@ frame_needed = 0, uses_anonymous_args = 0
-  58:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
- 816              		.loc 1 58 3 view .LVU237
+  60:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
+ 816              		.loc 1 60 3 view .LVU237
  817              	.LBB264:
  818              	.LBI264:
   23:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.h **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
@@ -1672,15 +1674,15 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  821              		.loc 4 25 4 view .LVU239
  822              	.LBE265:
  823              	.LBE264:
-  57:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
- 824              		.loc 1 57 1 is_stmt 0 view .LVU240
+  59:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
+ 824              		.loc 1 59 1 is_stmt 0 view .LVU240
  825 0000 30B5     		push	{r4, r5, lr}
  826              		.cfi_def_cfa_offset 12
+ARM GAS  /tmp/ccw7BDwI.s 			page 29
+
+
  827              		.cfi_offset 4, -12
  828              		.cfi_offset 5, -8
-ARM GAS  /tmp/ccLS329P.s 			page 29
-
-
  829              		.cfi_offset 14, -4
  830              	.LBB267:
  831              	.LBB266:
@@ -1693,9 +1695,9 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  838              		.loc 4 25 35 is_stmt 1 discriminator 1 view .LVU243
  839              	.LBE266:
  840              	.LBE267:
-  59:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_InvalidateDCache_by_Addr((volatile void *)start_addr, (int32_t)(end_addr - start_addr));
- 841              		.loc 1 59 5 view .LVU244
- 842              		.loc 1 59 82 is_stmt 0 view .LVU245
+  61:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_InvalidateDCache_by_Addr((volatile void *)start_addr, (int32_t)(end_addr - start_addr));
+ 841              		.loc 1 61 5 view .LVU244
+ 842              		.loc 1 61 82 is_stmt 0 view .LVU245
  843 000a 0A1A     		subs	r2, r1, r0
  844              	.LVL31:
  845              	.LBB268:
@@ -1736,11 +1738,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  365:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****       __DSB();
  861              		.loc 2 365 7 view .LVU253
  862              	.LBB271:
+ARM GAS  /tmp/ccw7BDwI.s 			page 30
+
+
  863              	.LBI271:
  269:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
-ARM GAS  /tmp/ccLS329P.s 			page 30
-
-
  864              		.loc 3 269 27 view .LVU254
  865              	.LBB272:
  866              		.loc 3 271 3 view .LVU255
@@ -1796,11 +1798,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  904 003e 0FF005C8 		le	lr, .L51
  372:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
  373:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****       __DSB();
+ARM GAS  /tmp/ccw7BDwI.s 			page 31
+
+
  905              		.loc 2 373 7 view .LVU266
  906              	.LBB273:
-ARM GAS  /tmp/ccLS329P.s 			page 31
-
-
  907              	.LBI273:
  269:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
  908              		.loc 3 269 27 view .LVU267
@@ -1838,11 +1840,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  936              	.LBE270:
  937              	.LBE269:
  938              	.LBE268:
-  60:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
-  61:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
- 939              		.loc 1 61 3 is_stmt 1 view .LVU273
-  62:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
- 940              		.loc 1 62 1 is_stmt 0 view .LVU274
+  62:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
+  63:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
+ 939              		.loc 1 63 3 is_stmt 1 view .LVU273
+  64:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
+ 940              		.loc 1 64 1 is_stmt 0 view .LVU274
  941 004a 0020     		movs	r0, #0
  942 004c 30BD     		pop	{r4, r5, pc}
  943              	.L58:
@@ -1856,21 +1858,21 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  952              		.global	mcu_cache_clean_range
  953              		.syntax unified
  954              		.thumb
+ARM GAS  /tmp/ccw7BDwI.s 			page 32
+
+
  955              		.thumb_func
  957              	mcu_cache_clean_range:
-ARM GAS  /tmp/ccLS329P.s 			page 32
-
-
  958              	.LVL38:
  959              	.LFB842:
-  63:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
-  64:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_clean_range(uint32_t start_addr, uint32_t end_addr) {
- 960              		.loc 1 64 67 is_stmt 1 view -0
+  65:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
+  66:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** int mcu_cache_clean_range(uint32_t start_addr, uint32_t end_addr) {
+ 960              		.loc 1 66 67 is_stmt 1 view -0
  961              		.cfi_startproc
  962              		@ args = 0, pretend = 0, frame = 0
  963              		@ frame_needed = 0, uses_anonymous_args = 0
-  65:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
- 964              		.loc 1 65 3 view .LVU276
+  67:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
+ 964              		.loc 1 67 3 view .LVU276
  965              	.LBB277:
  966              	.LBI277:
   23:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.h **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
@@ -1879,8 +1881,8 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  969              		.loc 4 25 4 view .LVU278
  970              	.LBE278:
  971              	.LBE277:
-  64:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
- 972              		.loc 1 64 67 is_stmt 0 view .LVU279
+  66:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
+ 972              		.loc 1 66 67 is_stmt 0 view .LVU279
  973 0000 30B5     		push	{r4, r5, lr}
  974              		.cfi_def_cfa_offset 12
  975              		.cfi_offset 4, -12
@@ -1897,9 +1899,9 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  986              		.loc 4 25 35 is_stmt 1 discriminator 1 view .LVU282
  987              	.LBE279:
  988              	.LBE280:
-  66:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_CleanDCache_by_Addr((volatile void *)start_addr, (int32_t)(end_addr - start_addr));
- 989              		.loc 1 66 5 view .LVU283
- 990              		.loc 1 66 77 is_stmt 0 view .LVU284
+  68:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_CleanDCache_by_Addr((volatile void *)start_addr, (int32_t)(end_addr - start_addr));
+ 989              		.loc 1 68 5 view .LVU283
+ 990              		.loc 1 68 77 is_stmt 0 view .LVU284
  991 000a 0A1A     		subs	r2, r1, r0
  992              	.LVL39:
  993              	.LBB281:
@@ -1916,11 +1918,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  384:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****            D-Cache memory blocks which are part of given address + given size are cleaned.
  385:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   \param[in]   addr    address
  386:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   \param[in]   dsize   size of memory block (in number of bytes)
+ARM GAS  /tmp/ccw7BDwI.s 			page 33
+
+
  387:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** */
  388:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** __STATIC_FORCEINLINE void SCB_CleanDCache_by_Addr (volatile void *addr, int32_t dsize)
-ARM GAS  /tmp/ccLS329P.s 			page 33
-
-
  995              		.loc 2 388 27 is_stmt 1 view .LVU285
  996              	.LBB282:
  389:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** {
@@ -1976,11 +1978,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1033 0024 203B     		subs	r3, r3, #32
  1034 0026 5209     		lsrs	r2, r2, #5
  1035 0028 2033     		adds	r3, r3, #32
+ARM GAS  /tmp/ccw7BDwI.s 			page 34
+
+
  1036 002a 02F1010E 		add	lr, r2, #1
  1037 002e D8BF     		it	le
-ARM GAS  /tmp/ccLS329P.s 			page 34
-
-
  1038 0030 4FF0010E 		movle	lr, #1
  1039 0034 4EF001E0 		dls	lr, lr
  1040              	.LVL43:
@@ -2036,21 +2038,21 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1078              		.thumb
  1079              		.syntax unified
  1080              	.L60:
+ARM GAS  /tmp/ccw7BDwI.s 			page 35
+
+
  260:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
  1081              		.loc 3 260 3 is_stmt 0 view .LVU311
-ARM GAS  /tmp/ccLS329P.s 			page 35
-
-
  1082              	.LBE289:
  1083              	.LBE288:
  1084              	.LBE283:
  1085              	.LBE282:
  1086              	.LBE281:
-  67:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
-  68:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
- 1087              		.loc 1 68 3 is_stmt 1 view .LVU312
-  69:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
- 1088              		.loc 1 69 1 is_stmt 0 view .LVU313
+  69:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
+  70:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
+ 1087              		.loc 1 70 3 is_stmt 1 view .LVU312
+  71:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
+ 1088              		.loc 1 71 1 is_stmt 0 view .LVU313
  1089 004a 0020     		movs	r0, #0
  1090 004c 30BD     		pop	{r4, r5, pc}
  1091              	.L68:
@@ -2068,13 +2070,13 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1105              	mcu_cache_clean_invalidate_range:
  1106              	.LVL46:
  1107              	.LFB843:
-  70:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****  int mcu_cache_clean_invalidate_range(uint32_t start_addr, uint32_t end_addr) {
- 1108              		.loc 1 70 79 is_stmt 1 view -0
+  72:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****  int mcu_cache_clean_invalidate_range(uint32_t start_addr, uint32_t end_addr) {
+ 1108              		.loc 1 72 79 is_stmt 1 view -0
  1109              		.cfi_startproc
  1110              		@ args = 0, pretend = 0, frame = 0
  1111              		@ frame_needed = 0, uses_anonymous_args = 0
-  71:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
- 1112              		.loc 1 71 3 view .LVU315
+  73:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if(mcu_cache_enabled()) {
+ 1112              		.loc 1 73 3 view .LVU315
  1113              	.LBB290:
  1114              	.LBI290:
   23:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.h **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
@@ -2083,8 +2085,8 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1117              		.loc 4 25 4 view .LVU317
  1118              	.LBE291:
  1119              	.LBE290:
-  70:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****  int mcu_cache_clean_invalidate_range(uint32_t start_addr, uint32_t end_addr) {
- 1120              		.loc 1 70 79 is_stmt 0 view .LVU318
+  72:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****  int mcu_cache_clean_invalidate_range(uint32_t start_addr, uint32_t end_addr) {
+ 1120              		.loc 1 72 79 is_stmt 0 view .LVU318
  1121 0000 30B5     		push	{r4, r5, lr}
  1122              		.cfi_def_cfa_offset 12
  1123              		.cfi_offset 4, -12
@@ -2096,17 +2098,17 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1129 0002 134D     		ldr	r5, .L77
  1130 0004 6B69     		ldr	r3, [r5, #20]
  1131              		.loc 4 25 7 view .LVU320
+ARM GAS  /tmp/ccw7BDwI.s 			page 36
+
+
  1132 0006 DB03     		lsls	r3, r3, #15
  1133 0008 1FD5     		bpl	.L70
-ARM GAS  /tmp/ccLS329P.s 			page 36
-
-
  1134              		.loc 4 25 35 is_stmt 1 discriminator 1 view .LVU321
  1135              	.LBE292:
  1136              	.LBE293:
-  72:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_CleanInvalidateDCache_by_Addr((volatile void *)start_addr, (int32_t)(end_addr - start_addr)
- 1137              		.loc 1 72 5 view .LVU322
- 1138              		.loc 1 72 87 is_stmt 0 view .LVU323
+  74:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_CleanInvalidateDCache_by_Addr((volatile void *)start_addr, (int32_t)(end_addr - start_addr)
+ 1137              		.loc 1 74 5 view .LVU322
+ 1138              		.loc 1 74 87 is_stmt 0 view .LVU323
  1139 000a 0A1A     		subs	r2, r1, r0
  1140              	.LVL47:
  1141              	.LBB294:
@@ -2156,11 +2158,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1163              		.syntax unified
  1164              	@ 271 "STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
  1165 0016 BFF34F8F 		dsb 0xF
+ARM GAS  /tmp/ccw7BDwI.s 			page 37
+
+
  1166              	@ 0 "" 2
  1167              		.thumb
-ARM GAS  /tmp/ccLS329P.s 			page 37
-
-
  1168              		.syntax unified
  1169              	.LBE298:
  1170              	.LBE297:
@@ -2216,11 +2218,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1205              	.LBB300:
  1206              		.loc 3 271 3 view .LVU346
  1207              		.syntax unified
+ARM GAS  /tmp/ccw7BDwI.s 			page 38
+
+
  1208              	@ 271 "STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
  1209 0042 BFF34F8F 		dsb 0xF
-ARM GAS  /tmp/ccLS329P.s 			page 38
-
-
  1210              	@ 0 "" 2
  1211              		.thumb
  1212              		.syntax unified
@@ -2250,11 +2252,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1232              	.LBE296:
  1233              	.LBE295:
  1234              	.LBE294:
-  73:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
-  74:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
- 1235              		.loc 1 74 3 is_stmt 1 view .LVU351
-  75:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
- 1236              		.loc 1 75 1 is_stmt 0 view .LVU352
+  75:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
+  76:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   return 0;
+ 1235              		.loc 1 76 3 is_stmt 1 view .LVU351
+  77:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }
+ 1236              		.loc 1 77 1 is_stmt 0 view .LVU352
  1237 004a 0020     		movs	r0, #0
  1238 004c 30BD     		pop	{r4, r5, pc}
  1239              	.L78:
@@ -2272,20 +2274,20 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1253              	set_mcu_cache_state:
  1254              	.LVL54:
  1255              	.LFB844:
-  76:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
-  77:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** void set_mcu_cache_state(uint8_t i_cache_state, uint8_t d_cache_state)
-  78:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
- 1256              		.loc 1 78 1 is_stmt 1 view -0
+  78:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
+  79:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** void set_mcu_cache_state(uint8_t i_cache_state, uint8_t d_cache_state)
+  80:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** {
+ 1256              		.loc 1 80 1 is_stmt 1 view -0
+ARM GAS  /tmp/ccw7BDwI.s 			page 39
+
+
  1257              		.cfi_startproc
  1258              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccLS329P.s 			page 39
-
-
  1259              		@ frame_needed = 0, uses_anonymous_args = 0
-  79:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if (i_cache_state)
- 1260              		.loc 1 79 3 view .LVU354
-  78:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if (i_cache_state)
- 1261              		.loc 1 78 1 is_stmt 0 view .LVU355
+  81:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if (i_cache_state)
+ 1260              		.loc 1 81 3 view .LVU354
+  80:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if (i_cache_state)
+ 1261              		.loc 1 80 1 is_stmt 0 view .LVU355
  1262 0000 70B5     		push	{r4, r5, r6, lr}
  1263              		.cfi_def_cfa_offset 16
  1264              		.cfi_offset 4, -16
@@ -2293,12 +2295,12 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1266              		.cfi_offset 6, -8
  1267              		.cfi_offset 14, -4
  1268 0002 3D4B     		ldr	r3, .L94
- 1269              		.loc 1 79 6 view .LVU356
+ 1269              		.loc 1 81 6 view .LVU356
  1270 0004 0028     		cmp	r0, #0
  1271 0006 45D0     		beq	.L80
-  80:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   {
-  81:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_EnableICache();
- 1272              		.loc 1 81 5 is_stmt 1 view .LVU357
+  82:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   {
+  83:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_EnableICache();
+ 1272              		.loc 1 83 5 is_stmt 1 view .LVU357
  1273              	.LBB303:
  1274              	.LBI303:
   57:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** {
@@ -2336,11 +2338,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  258:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
  1300              		.loc 3 258 27 view .LVU366
  1301              	.LBB308:
+ARM GAS  /tmp/ccw7BDwI.s 			page 40
+
+
  260:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
  1302              		.loc 3 260 3 view .LVU367
-ARM GAS  /tmp/ccLS329P.s 			page 40
-
-
  1303              		.syntax unified
  1304              	@ 260 "STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
  1305 0014 BFF36F8F 		isb 0xF
@@ -2396,11 +2398,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1345              		.loc 2 67 14 view .LVU378
  1346 0026 42F40032 		orr	r2, r2, #131072
  1347 002a 5A61     		str	r2, [r3, #20]
+ARM GAS  /tmp/ccw7BDwI.s 			page 41
+
+
   68:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     __ISB();
  1348              		.loc 2 68 5 is_stmt 1 view .LVU379
-ARM GAS  /tmp/ccLS329P.s 			page 41
-
-
  1349              	.LBB313:
  1350              	.LBI313:
  269:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -2450,23 +2452,23 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1389              	.LBE319:
  1390              	.LBE316:
  1391              	.LBE315:
-  82:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
-  83:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   else
-  84:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   {
-  85:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_DisableICache();
-  86:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
-  87:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   
-  88:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if (d_cache_state)
- 1392              		.loc 1 88 3 view .LVU388
-ARM GAS  /tmp/ccLS329P.s 			page 42
+  84:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
+  85:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   else
+  86:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   {
+  87:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_DisableICache();
+  88:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
+  89:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** 
+ARM GAS  /tmp/ccw7BDwI.s 			page 42
 
 
+  90:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   if (d_cache_state)
+ 1392              		.loc 1 90 3 view .LVU388
  1393 0034 304B     		ldr	r3, .L94
- 1394              		.loc 1 88 6 is_stmt 0 view .LVU389
+ 1394              		.loc 1 90 6 is_stmt 0 view .LVU389
  1395 0036 C1B3     		cbz	r1, .L82
-  89:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   {
-  90:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_EnableDCache();
- 1396              		.loc 1 90 5 is_stmt 1 view .LVU390
+  91:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   {
+  92:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_EnableDCache();
+ 1396              		.loc 1 92 5 is_stmt 1 view .LVU390
  1397              	.LBB326:
  1398              	.LBI326:
  141:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** {
@@ -2516,11 +2518,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  153:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
  1430              		.loc 2 153 12 view .LVU405
  1431 004c D3F88020 		ldr	r2, [r3, #128]
+ARM GAS  /tmp/ccw7BDwI.s 			page 43
+
+
  1432              	.LVL55:
  156:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     do {
-ARM GAS  /tmp/ccLS329P.s 			page 43
-
-
  1433              		.loc 2 156 5 is_stmt 1 view .LVU406
  158:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****       do {
  1434              		.loc 2 158 12 is_stmt 0 view .LVU407
@@ -2576,11 +2578,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  167:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** 
  1470              		.loc 2 167 5 view .LVU422
  1471              	.LBB330:
+ARM GAS  /tmp/ccw7BDwI.s 			page 44
+
+
  1472              	.LBI330:
  269:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
-ARM GAS  /tmp/ccLS329P.s 			page 44
-
-
  1473              		.loc 3 269 27 view .LVU423
  1474              	.LBB331:
  1475              		.loc 3 271 3 view .LVU424
@@ -2636,11 +2638,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1518              	.LBE336:
  240:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****   #endif
  1519              		.loc 2 240 5 view .LVU435
+ARM GAS  /tmp/ccw7BDwI.s 			page 45
+
+
  1520              	.LBB338:
  1521              	.LBI338:
-ARM GAS  /tmp/ccLS329P.s 			page 45
-
-
  258:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
  1522              		.loc 3 258 27 view .LVU436
  1523              	.LBB339:
@@ -2657,18 +2659,18 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1533              	.LBE338:
  1534              	.LBE335:
  1535              	.LBE334:
-  91:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
-  92:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   else
-  93:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   {
-  94:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_DisableDCache();
-  95:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
-  96:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }...
- 1536              		.loc 1 96 1 is_stmt 0 view .LVU438
+  93:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
+  94:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   else
+  95:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   {
+  96:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_DisableDCache();
+  97:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****   }
+  98:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c **** }...
+ 1536              		.loc 1 98 1 is_stmt 0 view .LVU438
  1537 0092 70BD     		pop	{r4, r5, r6, pc}
  1538              	.LVL62:
  1539              	.L80:
-  85:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_DisableICache();
- 1540              		.loc 1 85 5 is_stmt 1 view .LVU439
+  87:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_DisableICache();
+ 1540              		.loc 1 87 5 is_stmt 1 view .LVU439
  1541              	.LBB345:
  1542              	.LBI315:
   78:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** {
@@ -2696,11 +2698,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1561              	.LBI323:
  258:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
  1562              		.loc 3 258 27 view .LVU445
+ARM GAS  /tmp/ccw7BDwI.s 			page 46
+
+
  1563              	.LBB324:
  260:STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
-ARM GAS  /tmp/ccLS329P.s 			page 46
-
-
  1564              		.loc 3 260 3 view .LVU446
  1565              		.syntax unified
  1566              	@ 260 "STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
@@ -2728,8 +2730,8 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1583              	.L82:
  1584              	.LBE325:
  1585              	.LBE345:
-  94:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_DisableDCache();
- 1586              		.loc 1 94 5 is_stmt 1 view .LVU452
+  96:Lib/AI_Runtime/Npu/Devices/STM32N6XX/mcu_cache.c ****     SCB_DisableDCache();
+ 1586              		.loc 1 96 5 is_stmt 1 view .LVU452
  1587              	.LBB346:
  1588              	.LBI334:
  181:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h **** {
@@ -2756,11 +2758,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1604              	@ 0 "" 2
  1605              		.thumb
  1606              		.syntax unified
+ARM GAS  /tmp/ccw7BDwI.s 			page 47
+
+
  1607              	.LBE341:
  1608              	.LBE340:
-ARM GAS  /tmp/ccLS329P.s 			page 47
-
-
  197:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     __DSB();
  1609              		.loc 2 197 5 view .LVU460
  197:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****     __DSB();
@@ -2816,11 +2818,11 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1647              		.loc 2 229 7 view .LVU474
  229:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****       do {
  1648              		.loc 2 229 19 is_stmt 0 view .LVU475
+ARM GAS  /tmp/ccw7BDwI.s 			page 48
+
+
  1649 00d0 00F1010E 		add	lr, r0, #1
  1650 00d4 0146     		mov	r1, r0
-ARM GAS  /tmp/ccLS329P.s 			page 48
-
-
  1651 00d6 4EF001E0 		dls	lr, lr
  231:STM32Cube_FW_N6/Drivers/CMSIS/Include/cachel1_armv7.h ****                        ((locals.ways << SCB_DCCISW_WAY_Pos) & SCB_DCCISW_WAY_Msk)  );
  1652              		.loc 2 231 61 view .LVU476
@@ -2862,41 +2864,41 @@ ARM GAS  /tmp/ccLS329P.s 			page 1
  1680              	.LFE844:
  1682              		.text
  1683              	.Letext0:
- 1684              		.file 5 "/opt/st/stm32cubeide_1.18.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-
- 1685              		.file 6 "/opt/st/stm32cubeide_1.18.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-
+ 1684              		.file 5 "/home/tanjiajun2002/renesas/rzv/e2studio_v2025-01_fsp_v3.1.0/toolchains/gcc_arm/arm-gnu-t
+ 1685              		.file 6 "/home/tanjiajun2002/renesas/rzv/e2studio_v2025-01_fsp_v3.1.0/toolchains/gcc_arm/arm-gnu-t
  1686              		.file 7 "STM32Cube_FW_N6/Drivers/CMSIS/Include/core_cm55.h"
-ARM GAS  /tmp/ccLS329P.s 			page 49
+ARM GAS  /tmp/ccw7BDwI.s 			page 49
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 mcu_cache.c
-     /tmp/ccLS329P.s:26     .text.mcu_cache_enable:00000000 $t
-     /tmp/ccLS329P.s:32     .text.mcu_cache_enable:00000000 mcu_cache_enable
-     /tmp/ccLS329P.s:186    .text.mcu_cache_enable:00000064 $d
-     /tmp/ccLS329P.s:191    .text.mcu_cache_disable:00000000 $t
-     /tmp/ccLS329P.s:197    .text.mcu_cache_disable:00000000 mcu_cache_disable
-     /tmp/ccLS329P.s:341    .text.mcu_cache_disable:0000005c $d
-     /tmp/ccLS329P.s:346    .text.mcu_cache_invalidate:00000000 $t
-     /tmp/ccLS329P.s:352    .text.mcu_cache_invalidate:00000000 mcu_cache_invalidate
-     /tmp/ccLS329P.s:494    .text.mcu_cache_invalidate:00000058 $d
-     /tmp/ccLS329P.s:499    .text.mcu_cache_clean:00000000 $t
-     /tmp/ccLS329P.s:505    .text.mcu_cache_clean:00000000 mcu_cache_clean
-     /tmp/ccLS329P.s:646    .text.mcu_cache_clean:00000058 $d
-     /tmp/ccLS329P.s:651    .text.mcu_cache_clean_invalidate:00000000 $t
-     /tmp/ccLS329P.s:657    .text.mcu_cache_clean_invalidate:00000000 mcu_cache_clean_invalidate
-     /tmp/ccLS329P.s:798    .text.mcu_cache_clean_invalidate:00000058 $d
-     /tmp/ccLS329P.s:803    .text.mcu_cache_invalidate_range:00000000 $t
-     /tmp/ccLS329P.s:809    .text.mcu_cache_invalidate_range:00000000 mcu_cache_invalidate_range
-     /tmp/ccLS329P.s:946    .text.mcu_cache_invalidate_range:00000050 $d
-     /tmp/ccLS329P.s:951    .text.mcu_cache_clean_range:00000000 $t
-     /tmp/ccLS329P.s:957    .text.mcu_cache_clean_range:00000000 mcu_cache_clean_range
-     /tmp/ccLS329P.s:1094   .text.mcu_cache_clean_range:00000050 $d
-     /tmp/ccLS329P.s:1099   .text.mcu_cache_clean_invalidate_range:00000000 $t
-     /tmp/ccLS329P.s:1105   .text.mcu_cache_clean_invalidate_range:00000000 mcu_cache_clean_invalidate_range
-     /tmp/ccLS329P.s:1242   .text.mcu_cache_clean_invalidate_range:00000050 $d
-     /tmp/ccLS329P.s:1247   .text.set_mcu_cache_state:00000000 $t
-     /tmp/ccLS329P.s:1253   .text.set_mcu_cache_state:00000000 set_mcu_cache_state
-     /tmp/ccLS329P.s:1676   .text.set_mcu_cache_state:000000f8 $d
+     /tmp/ccw7BDwI.s:26     .text.mcu_cache_enable:00000000 $t
+     /tmp/ccw7BDwI.s:32     .text.mcu_cache_enable:00000000 mcu_cache_enable
+     /tmp/ccw7BDwI.s:186    .text.mcu_cache_enable:00000064 $d
+     /tmp/ccw7BDwI.s:191    .text.mcu_cache_disable:00000000 $t
+     /tmp/ccw7BDwI.s:197    .text.mcu_cache_disable:00000000 mcu_cache_disable
+     /tmp/ccw7BDwI.s:341    .text.mcu_cache_disable:0000005c $d
+     /tmp/ccw7BDwI.s:346    .text.mcu_cache_invalidate:00000000 $t
+     /tmp/ccw7BDwI.s:352    .text.mcu_cache_invalidate:00000000 mcu_cache_invalidate
+     /tmp/ccw7BDwI.s:494    .text.mcu_cache_invalidate:00000058 $d
+     /tmp/ccw7BDwI.s:499    .text.mcu_cache_clean:00000000 $t
+     /tmp/ccw7BDwI.s:505    .text.mcu_cache_clean:00000000 mcu_cache_clean
+     /tmp/ccw7BDwI.s:646    .text.mcu_cache_clean:00000058 $d
+     /tmp/ccw7BDwI.s:651    .text.mcu_cache_clean_invalidate:00000000 $t
+     /tmp/ccw7BDwI.s:657    .text.mcu_cache_clean_invalidate:00000000 mcu_cache_clean_invalidate
+     /tmp/ccw7BDwI.s:798    .text.mcu_cache_clean_invalidate:00000058 $d
+     /tmp/ccw7BDwI.s:803    .text.mcu_cache_invalidate_range:00000000 $t
+     /tmp/ccw7BDwI.s:809    .text.mcu_cache_invalidate_range:00000000 mcu_cache_invalidate_range
+     /tmp/ccw7BDwI.s:946    .text.mcu_cache_invalidate_range:00000050 $d
+     /tmp/ccw7BDwI.s:951    .text.mcu_cache_clean_range:00000000 $t
+     /tmp/ccw7BDwI.s:957    .text.mcu_cache_clean_range:00000000 mcu_cache_clean_range
+     /tmp/ccw7BDwI.s:1094   .text.mcu_cache_clean_range:00000050 $d
+     /tmp/ccw7BDwI.s:1099   .text.mcu_cache_clean_invalidate_range:00000000 $t
+     /tmp/ccw7BDwI.s:1105   .text.mcu_cache_clean_invalidate_range:00000000 mcu_cache_clean_invalidate_range
+     /tmp/ccw7BDwI.s:1242   .text.mcu_cache_clean_invalidate_range:00000050 $d
+     /tmp/ccw7BDwI.s:1247   .text.set_mcu_cache_state:00000000 $t
+     /tmp/ccw7BDwI.s:1253   .text.set_mcu_cache_state:00000000 set_mcu_cache_state
+     /tmp/ccw7BDwI.s:1676   .text.set_mcu_cache_state:000000f8 $d
                            .group:00000000 wm4.0.c552ae9005b0f2cca11872fae5d4b7f2
                            .group:00000000 wm4.stm32n6xx_hal_conf.h.21.004a06df6e15ac197e03f723792da58a
                            .group:00000000 wm4.stddef.h.39.0dc9006b34572d4d9cae4c8b422c4971
@@ -2920,12 +2922,12 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.stm32n657xx.h.575.1c2a5e6bedffc6f9083dcc857bc6d09d
                            .group:00000000 wm4.stm32n6xx.h.114.5cf793d8af485e14f110e3e24bde1aa5
                            .group:00000000 wm4.stm32_hal_legacy.h.22.87fb12bf5a1a1e00fc134f22bc9aa8c4
-                           .group:00000000 wm4.newlib.h.7.a37ffbe9e5aff74303f4e60b1cc1c01b
+                           .group:00000000 wm4.newlib.h.7.591ac1bd65c1f5b34864757667a05252
                            .group:00000000 wm4.ieeefp.h.77.bd5feb87d9990dd328793ced294f6a87
                            .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
                            .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
                            .group:00000000 wm4.cdefs.h.49.70fc7af612f78ddcace70fdd90b5623b
-ARM GAS  /tmp/ccLS329P.s 			page 50
+ARM GAS  /tmp/ccw7BDwI.s 			page 50
 
 
                            .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
@@ -2974,5 +2976,6 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.stm32n6xx_hal_cacheaxi.h.21.7c3375b7903ec42376e4883320997f74
                            .group:00000000 wm4.stm32n6xx_hal_gpu2d.h.21.48d0249122abad294a630c39cc4ebaed
                            .group:00000000 wm4.stm32n6xx_hal.h.81.5e59143eba07faca3e9aeaa5470826c8
+                           .group:00000000 wm4.assert.h.11.db24e541f16414db224bf986d21017e2
 
 NO UNDEFINED SYMBOLS

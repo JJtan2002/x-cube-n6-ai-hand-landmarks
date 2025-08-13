@@ -29,13 +29,19 @@ static ai_u8 activations_1[409600];
 AI_ALIGNED(32)
 static ai_u8 activations_2[458752];
 AI_ALIGNED(32)
-static ai_u8 activations_3[458752];
+static ai_u8 activations_3[435200];
 AI_ALIGNED(32)
 static ai_u8 activations_4[458752];
 AI_ALIGNED(32)
-static ai_u8 activations_5[2867200];
+static ai_u8 activations_5[1048576];
 AI_ALIGNED(32)
 static ai_u8 activations_6[0];
+AI_ALIGNED(32)
+static ai_u8 activations_7[0];
+AI_ALIGNED(32)
+static ai_u8 activations_8[1638400];
+AI_ALIGNED(32)
+static ai_u8 activations_9[0];
 
 AI_ALIGNED(32)
 static ai_u8 weights_1[0];
@@ -48,11 +54,17 @@ static ai_u8 weights_4[0];
 AI_ALIGNED(32)
 static ai_u8 weights_5[0];
 AI_ALIGNED(32)
-static ai_u8 weights_6[3018097];
+static ai_u8 weights_6[0];
 AI_ALIGNED(32)
 static ai_u8 weights_7[0];
 AI_ALIGNED(32)
 static ai_u8 weights_8[0];
+AI_ALIGNED(32)
+static ai_u8 weights_9[3018097];
+AI_ALIGNED(32)
+static ai_u8 weights_10[0];
+AI_ALIGNED(32)
+static ai_u8 weights_11[0];
 
 /* 
  * Example of system initialization function

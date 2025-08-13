@@ -1,0 +1,2 @@
+Lib/ai-postprocessing-wrapper/app_postprocess_od_yolov8_uf.c:27:9:app_postprocess_init	0	static
+Lib/ai-postprocessing-wrapper/app_postprocess_od_yolov8_uf.c:42:9:app_postprocess_run	16	static

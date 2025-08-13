@@ -108,10 +108,12 @@ build/Src/app.o: Src/app.c Inc/app.h Inc/postprocess_conf.h \
  STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_cacheaxi.h \
  STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_gpu2d.h \
  Inc/ld.h Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.h \
- Lib/AI_Runtime/Npu/ll_aton/ll_aton_config.h \
+ Lib/AI_Runtime/Npu/ll_aton/ll_aton_rt_user_api.h \
  Lib/AI_Runtime/Npu/ll_aton/ll_aton_NN_interface.h \
+ Lib/AI_Runtime/Npu/ll_aton/ll_aton_config.h \
  Lib/AI_Runtime/Npu/ll_aton/ll_aton_attributes.h \
  Lib/AI_Runtime/Npu/ll_aton/ll_aton_util.h \
+ Lib/AI_Runtime/Npu/ll_aton/ll_aton_caches_interface.h \
  Lib/AI_Runtime/Npu/ll_aton/ll_aton_osal.h \
  Lib/AI_Runtime/Npu/ll_aton/ll_aton_osal_freertos.h \
  Lib/FreeRTOS/Source/include/FreeRTOS.h Inc/FreeRTOSConfig.h \
@@ -264,10 +266,12 @@ STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_cacheaxi.h:
 STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_gpu2d.h:
 Inc/ld.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.h:
-Lib/AI_Runtime/Npu/ll_aton/ll_aton_config.h:
+Lib/AI_Runtime/Npu/ll_aton/ll_aton_rt_user_api.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_NN_interface.h:
+Lib/AI_Runtime/Npu/ll_aton/ll_aton_config.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_attributes.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_util.h:
+Lib/AI_Runtime/Npu/ll_aton/ll_aton_caches_interface.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_osal.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_osal_freertos.h:
 Lib/FreeRTOS/Source/include/FreeRTOS.h:

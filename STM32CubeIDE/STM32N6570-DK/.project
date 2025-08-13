@@ -72,6 +72,16 @@
       <locationURI>PARENT-2-PROJECT_LOC/Model/hand_landmark.c</locationURI>
     </link>
     <link>
+      <name>Model/face_landmark.c</name>
+      <type>1</type>
+      <locationURI>PARENT-2-PROJECT_LOC/Model/face_landmark.c</locationURI>
+    </link>
+    <link>
+      <name>Model/yolo_detector.c</name>
+      <type>1</type>
+      <locationURI>PARENT-2-PROJECT_LOC/Model/yolo_detector.c</locationURI>
+    </link>
+    <link>
       <name>Src/app_cam.c</name>
       <type>1</type>
       <locationURI>PARENT-2-PROJECT_LOC/Src/app_cam.c</locationURI>
@@ -340,6 +350,11 @@
       <name>Lib/lib_vision_models_pp/lib_vision_models_pp/Src/pd_pp_model.c</name>
       <type>1</type>
       <locationURI>PARENT-2-PROJECT_LOC/Lib/lib_vision_models_pp/lib_vision_models_pp/Src/pd_pp_model.c</locationURI>
+    </link>
+    <link>
+      <name>Lib/lib_vision_models_pp/lib_vision_models_pp/Src/od_pp_yolov8.c</name>
+      <type>1</type>
+      <locationURI>PARENT-2-PROJECT_LOC/Lib/lib_vision_models_pp/lib_vision_models_pp/Src/od_pp_yolov8.c</locationURI>
     </link>
     <link>
       <name>Lib/ai-postprocessing-wrapper/app_postprocess_od_st_ssd_uf.c</name>

@@ -1,5 +1,5 @@
-ST Edge AI Core v2.1.0-20194 329b0e98d
-Created date          : 2025-08-08 11:15:30
+ST Edge AI Core v2.2.0-20266 2adc00962
+Created date          : 2025-08-13 16:42:21
 Parameters            : generate --no-inputs-allocation --no-outputs-allocation --name face_landmark --model face_landmark_ptq.tflite --target stm32n6 --st-neural-art face_landmark@user_neuralart.json
 
 Model name - face_landmark_ptq
@@ -233,20 +233,20 @@ model: macc=37,887,863 weights=618,788 activations=-- io=--
 
 Compilation details
 ------------------------------------------------------------------------------------
-Compiler version: 1.1.0-31
-Compiler arguments:  -i /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/face_landmark_ptq_OE_3_2_0.onnx --json-quant-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/face_landmark_ptq_OE_3_2_0_Q.json -g face_landmark.c --load-mdesc /opt/ST/STEdgeAI/2.1/Utilities/configs/stm32n6.mdesc --load-mpool /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/my_mpools/face_landmark.mpool --save-mpool-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__face_landmark/face_landmark.mpool --out-dir-prefix /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__face_landmark/ --enable-epoch-controller -O3 --all-buffers-info --mvei --cache-maintenance --Oalt-sched --native-float --enable-virtual-mem-pools --Omax-ca-pipe 4 --Ocache-opt --Os --output-info-file c_info.json --network-name face_landmark
+Compiler version: 1.1.1-14
+Compiler arguments:  -i /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/face_landmark_ptq_OE_3_3_0.onnx --json-quant-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/face_landmark_ptq_OE_3_3_0_Q.json -g face_landmark.c --load-mdesc /home/tanjiajun2002/ST/STEdgeAI/2.2/Utilities/configs/stm32n6.mdesc --load-mpool /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/my_mpools/face_landmark.mpool --save-mpool-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__face_landmark/face_landmark.mpool --out-dir-prefix /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__face_landmark/ --enable-epoch-controller -O3 --all-buffers-info --mvei --cache-maintenance --Oalt-sched --native-float --enable-virtual-mem-pools --Omax-ca-pipe 4 --Ocache-opt --Os --output-info-file c_info.json --network-name face_landmark
 ====================================================================================
 
 Memory usage information 
 ------------------------------------------------------------------------------------
 	npuRAM3    [0x34200000 - 0x34270000]:    448.000 kB /    448.000 kB  (100.00 % used) -- weights:          0  B (  0.00 % used)  activations:    448.000 kB (100.00 % used)
-	npuRAM4    [0x34270000 - 0x342E0000]:    416.000 kB /    448.000 kB  ( 92.86 % used) -- weights:          0  B (  0.00 % used)  activations:    416.000 kB ( 92.86 % used)
+	npuRAM4    [0x34270000 - 0x342E0000]:    272.000 kB /    448.000 kB  ( 60.71 % used) -- weights:          0  B (  0.00 % used)  activations:    272.000 kB ( 60.71 % used)
 	npuRAM5    [0x342E0000 - 0x34350000]:          0  B /    448.000 kB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
 	npuRAM6    [0x34350000 - 0x343C0000]:          0  B /    448.000 kB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
-	octoFlash  [0x70580000 - 0x70980000]:    682.626 kB /      4.000 MB  ( 16.67 % used) -- weights:    682.626 kB ( 16.67 % used)  activations:          0  B (  0.00 % used)
+	octoFlash  [0x70780000 - 0x70B80000]:    628.063 kB /      4.000 MB  ( 15.33 % used) -- weights:    628.063 kB ( 15.33 % used)  activations:          0  B (  0.00 % used)
 	hyperRAM   [0x90000000 - 0x91000000]:          0  B /     16.000 MB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
 ---
-Total:                                             1.510 MB                                  -- weights:    682.626 kB                  activations:    864.000 kB                   
+Total:                                             1.316 MB                                  -- weights:    628.063 kB                  activations:    720.000 kB                   
 ====================================================================================
 
 Memory to be allocated by the user: inputs (432.000 kB), outputs (5.531 kB)
@@ -259,13 +259,13 @@ Memory to be allocated by the user: inputs (432.000 kB), outputs (5.531 kB)
 Used memory ranges
 ------------------------------------------------------------------------------------
 	npuRAM3    [0x34200000 - 0x34270000]: 0x34200000-0x34270000
-	npuRAM4    [0x34270000 - 0x342E0000]: 0x34270000-0x342D8000
-	octoFlash  [0x70580000 - 0x70980000]: 0x70580000-0x7062AA90
+	npuRAM4    [0x34270000 - 0x342E0000]: 0x34270000-0x342B4000
+	octoFlash  [0x70780000 - 0x70B80000]: 0x70780000-0x7081D050
 ====================================================================================
 
 Epochs details
 ------------------------------------------------------------------------------------
-Total number of epochs: 102 of which 9 implemented in software
+Total number of epochs: 112 of which 9 implemented in software
 ---
 epoch ID   HW/SW/EC Operation (SW only)
 epoch 1       EC    
@@ -279,12 +279,12 @@ epoch 8       EC
 epoch 9       EC    
 epoch 10      EC    
 epoch 11      EC    
-epoch 12      EC    
+epoch 12     -SW-   (     Transpose      )
 epoch 13      EC    
-epoch 14     -SW-   (     Transpose      )
-epoch 15      EC    
+epoch 14      EC    
+epoch 15     -SW-   (     Transpose      )
 epoch 16      EC    
-epoch 17     -SW-   (     Transpose      )
+epoch 17      EC    
 epoch 18      EC    
 epoch 19      EC    
 epoch 20      EC    
@@ -312,9 +312,9 @@ epoch 41      EC
 epoch 42      EC    
 epoch 43      EC    
 epoch 44      EC    
-epoch 45     -SW-   (     Transpose      )
+epoch 45      EC    
 epoch 46      EC    
-epoch 47      EC    
+epoch 47     -SW-   (     Transpose      )
 epoch 48      EC    
 epoch 49      EC    
 epoch 50      EC    
@@ -350,24 +350,34 @@ epoch 79      EC
 epoch 80      EC    
 epoch 81      EC    
 epoch 82      EC    
-epoch 83     -SW-   (    SpaceToDepth    )
+epoch 83      EC    
 epoch 84      EC    
-epoch 85     -SW-   (  DequantizeLinear  )
+epoch 85      EC    
 epoch 86      EC    
 epoch 87      EC    
 epoch 88      EC    
 epoch 89      EC    
 epoch 90      EC    
 epoch 91      EC    
-epoch 92      EC    
+epoch 92     -SW-   (    SpaceToDepth    )
 epoch 93      EC    
-epoch 94      EC    
+epoch 94     -SW-   (  DequantizeLinear  )
 epoch 95      EC    
 epoch 96      EC    
 epoch 97      EC    
 epoch 98      EC    
-epoch 99     -SW-   (    SpaceToDepth    )
+epoch 99      EC    
 epoch 100     EC    
-epoch 101    -SW-   (  DequantizeLinear  )
+epoch 101     EC    
 epoch 102     EC    
+epoch 103     EC    
+epoch 104     EC    
+epoch 105     EC    
+epoch 106     EC    
+epoch 107     EC    
+epoch 108     EC    
+epoch 109    -SW-   (    SpaceToDepth    )
+epoch 110     EC    
+epoch 111    -SW-   (  DequantizeLinear  )
+epoch 112     EC    
 ====================================================================================

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc71V6j3.s 			page 1
+ARM GAS  /tmp/ccsTxC08.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
   23:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *                                 be called whenever the core clock is changed
   24:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *                                 during program execution.
   25:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *
-ARM GAS  /tmp/cc71V6j3.s 			page 2
+ARM GAS  /tmp/ccsTxC08.s 			page 2
 
 
   26:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *   After each device reset the HSI (64 MHz) is used as system clock source.
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
   80:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   * @{
   81:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   */
   82:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** #if !defined  (HSE_VALUE)
-ARM GAS  /tmp/cc71V6j3.s 			page 3
+ARM GAS  /tmp/ccsTxC08.s 			page 3
 
 
   83:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** #define HSE_VALUE      48000000UL /*!< Value of the High-Speed External oscillator in Hz */
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  137:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       3) each time HAL_RCC_ClockConfig() is called to configure the system clock frequency
  138:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****          Note: If you use this function to configure the system clock; then there
  139:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****                is no need to call the 2 first functions listed above, since SystemCoreClock
-ARM GAS  /tmp/cc71V6j3.s 			page 4
+ARM GAS  /tmp/ccsTxC08.s 			page 4
 
 
  140:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****                variable is updated automatically.
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
   44              		.cfi_def_cfa_offset 16
   45              		.cfi_offset 4, -16
   46              		.cfi_offset 5, -12
-ARM GAS  /tmp/cc71V6j3.s 			page 5
+ARM GAS  /tmp/ccsTxC08.s 			page 5
 
 
   47              		.cfi_offset 6, -8
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  221:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** 
  222:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   /* Set default Vector Table location after system reset or return from Standby */
  223:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   SYSCFG->INITSVTORCR = SCB->VTOR;
-ARM GAS  /tmp/cc71V6j3.s 			page 6
+ARM GAS  /tmp/ccsTxC08.s 			page 6
 
 
   60              		.loc 1 223 23 view .LVU10
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
   93              		.loc 1 199 3 is_stmt 1 view .LVU31
  201:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   SAU->RBAR = 0;
   94              		.loc 1 201 12 is_stmt 0 view .LVU32
-ARM GAS  /tmp/cc71V6j3.s 			page 7
+ARM GAS  /tmp/ccsTxC08.s 			page 7
 
 
   95 003e 0325     		movs	r5, #3
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  128 0068 0625     		movs	r5, #6
  208:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   SAU->RLAR = 0;
  129              		.loc 1 208 13 view .LVU54
-ARM GAS  /tmp/cc71V6j3.s 			page 8
+ARM GAS  /tmp/ccsTxC08.s 			page 8
 
 
  130 006a C3F8DC20 		str	r2, [r3, #220]
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  226:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   PWR->SVMCR3 |= PWR_SVMCR3_ASV;
  164              		.loc 1 226 3 is_stmt 1 view .LVU76
  165              		.loc 1 226 6 is_stmt 0 view .LVU77
-ARM GAS  /tmp/cc71V6j3.s 			page 9
+ARM GAS  /tmp/ccsTxC08.s 			page 9
 
 
  166 0098 224A     		ldr	r2, .L2+16
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  241:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** 
  242:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   /* TIM2 reset */
  243:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   RCC->APB1RSTSR1 = RCC_APB1RSTSR1_TIM2RSTS;
-ARM GAS  /tmp/cc71V6j3.s 			page 10
+ARM GAS  /tmp/ccsTxC08.s 			page 10
 
 
  206              		.loc 1 243 3 is_stmt 1 view .LVU97
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  233 0104 084A     		ldr	r2, .L2+20
  234 0106 D2F88830 		ldr	r3, [r2, #136]
  235              		.loc 1 265 17 view .LVU114
-ARM GAS  /tmp/cc71V6j3.s 			page 11
+ARM GAS  /tmp/ccsTxC08.s 			page 11
 
 
  236 010a 43F47003 		orr	r3, r3, #15728640
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  297:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *
  298:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *        (**) MSI_VALUE default value is 4 MHz.
  299:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *             With the HAL, MSI_VALUE is a constant defined in stm32n6xx_hal_conf.h file
-ARM GAS  /tmp/cc71V6j3.s 			page 12
+ARM GAS  /tmp/ccsTxC08.s 			page 12
 
 
  300:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *             but the real value may vary depending on the variations in voltage and temperature.
@@ -706,7 +706,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  329:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   switch (RCC->CFGR1 & RCC_CFGR1_CPUSWS)
  274              		.loc 1 329 3 view .LVU125
  275              		.loc 1 329 14 is_stmt 0 view .LVU126
- 276 0000 6E4B     		ldr	r3, .L36
+ 276 0000 774B     		ldr	r3, .L38
  318:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   uint32_t sysclk = 0;
  277              		.loc 1 318 1 view .LVU127
  278 0002 F0B5     		push	{r4, r5, r6, r7, lr}
@@ -718,28 +718,28 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  284              		.cfi_offset 14, -4
  285              		.loc 1 329 14 view .LVU128
  286 0004 1A6A     		ldr	r2, [r3, #32]
-ARM GAS  /tmp/cc71V6j3.s 			page 13
+ARM GAS  /tmp/ccsTxC08.s 			page 13
 
 
  287              		.loc 1 329 22 view .LVU129
  288 0006 02F44012 		and	r2, r2, #3145728
  289              		.loc 1 329 3 view .LVU130
  290 000a B2F5001F 		cmp	r2, #2097152
- 291 000e 00F0B880 		beq	.L22
+ 291 000e 00F0CC80 		beq	.L24
  292 0012 06D8     		bhi	.L6
- 293 0014 62B9     		cbnz	r2, .L33
+ 293 0014 62B9     		cbnz	r2, .L35
  330:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   {
  331:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   case 0:  /* HSI used as system clock source (default after reset) */
  332:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     sysclk = HSI_VALUE >> ((RCC->HSICFGR & RCC_HSICFGR_HSIDIV) >> RCC_HSICFGR_HSIDIV_Pos);
  294              		.loc 1 332 5 is_stmt 1 view .LVU131
  295              		.loc 1 332 32 is_stmt 0 view .LVU132
- 296 0016 9A6C     		ldr	r2, [r3, #72]
+ 296 0016 9B6C     		ldr	r3, [r3, #72]
  297              		.loc 1 332 12 view .LVU133
- 298 0018 694B     		ldr	r3, .L36+4
+ 298 0018 724A     		ldr	r2, .L38+4
  299              		.loc 1 332 64 view .LVU134
- 300 001a C2F3C112 		ubfx	r2, r2, #7, #2
+ 300 001a C3F3C113 		ubfx	r3, r3, #7, #2
  301              		.loc 1 332 12 view .LVU135
- 302 001e D340     		lsrs	r3, r3, r2
+ 302 001e DA40     		lsrs	r2, r2, r3
  303              	.LVL1:
  333:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     break;
  304              		.loc 1 333 5 is_stmt 1 view .LVU136
@@ -752,7 +752,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  310 0026 0BD0     		beq	.L9
  319:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   uint32_t pllm = 0;
  311              		.loc 1 319 12 view .LVU138
- 312 0028 0023     		movs	r3, #0
+ 312 0028 0022     		movs	r2, #0
  313              	.LVL3:
  314              	.L5:
  334:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** 
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  354:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     case 0:  /* PLL1 selected at IC1 clock source */
  355:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllcfgr = READ_REG(RCC->PLL1CFGR1);
  356:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllsource = pllcfgr & RCC_PLL1CFGR1_PLL1SEL;
-ARM GAS  /tmp/cc71V6j3.s 			page 14
+ARM GAS  /tmp/ccsTxC08.s 			page 14
 
 
  357:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllbypass = pllcfgr & RCC_PLL1CFGR1_PLL1BYP;
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  411:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
  412:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
  413:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** 
-ARM GAS  /tmp/cc71V6j3.s 			page 15
+ARM GAS  /tmp/ccsTxC08.s 			page 15
 
 
  414:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     /* Get oscillator frequency used as PLL clock source */
@@ -889,16 +889,16 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  459:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   SystemCoreClock = sysclk;
  315              		.loc 1 459 3 is_stmt 1 view .LVU139
  316              		.loc 1 459 19 is_stmt 0 view .LVU140
- 317 002a 664A     		ldr	r2, .L36+8
- 318 002c 1360     		str	r3, [r2]
+ 317 002a 6F4B     		ldr	r3, .L38+8
+ 318 002c 1A60     		str	r2, [r3]
  460:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** }
  319              		.loc 1 460 1 view .LVU141
  320 002e F0BD     		pop	{r4, r5, r6, r7, pc}
  321              	.LVL4:
- 322              	.L33:
+ 322              	.L35:
  336:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
  323              		.loc 1 336 5 is_stmt 1 view .LVU142
-ARM GAS  /tmp/cc71V6j3.s 			page 16
+ARM GAS  /tmp/ccsTxC08.s 			page 16
 
 
  336:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
@@ -906,11 +906,11 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  325 0030 5B6C     		ldr	r3, [r3, #68]
  338:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
  326              		.loc 1 338 14 view .LVU144
- 327 0032 654A     		ldr	r2, .L36+12
+ 327 0032 6E4A     		ldr	r2, .L38+12
  328 0034 13F4007F 		tst	r3, #512
- 329 0038 644B     		ldr	r3, .L36+16
+ 329 0038 6D4B     		ldr	r3, .L38+16
  330 003a 08BF     		it	eq
- 331 003c 1346     		moveq	r3, r2
+ 331 003c 1A46     		moveq	r2, r3
  332 003e F4E7     		b	.L5
  333              	.L9:
  352:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
@@ -922,25 +922,25 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  352:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
  338              		.loc 1 352 5 view .LVU147
  339 0048 B2F1805F 		cmp	r2, #268435456
- 340 004c 2AD0     		beq	.L10
+ 340 004c 2BD0     		beq	.L10
  341 004e B2F1005F 		cmp	r2, #536870912
- 342 0052 36D0     		beq	.L11
+ 342 0052 38D0     		beq	.L11
  343 0054 002A     		cmp	r2, #0
- 344 0056 43D1     		bne	.L12
+ 344 0056 45D1     		bne	.L12
  355:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllsource = pllcfgr & RCC_PLL1CFGR1_PLL1SEL;
  345              		.loc 1 355 7 is_stmt 1 view .LVU148
  355:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllsource = pllcfgr & RCC_PLL1CFGR1_PLL1SEL;
  346              		.loc 1 355 15 is_stmt 0 view .LVU149
- 347 0058 D3F88070 		ldr	r7, [r3, #128]
+ 347 0058 D3F88020 		ldr	r2, [r3, #128]
  348              	.LVL5:
  356:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllbypass = pllcfgr & RCC_PLL1CFGR1_PLL1BYP;
  349              		.loc 1 356 7 is_stmt 1 view .LVU150
  358:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  350              		.loc 1 358 10 is_stmt 0 view .LVU151
- 351 005c 3D01     		lsls	r5, r7, #4
+ 351 005c 1601     		lsls	r6, r2, #4
  356:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllbypass = pllcfgr & RCC_PLL1CFGR1_PLL1BYP;
  352              		.loc 1 356 17 view .LVU152
- 353 005e 07F0E041 		and	r1, r7, #1879048192
+ 353 005e 02F0E041 		and	r1, r2, #1879048192
  354              	.LVL6:
  357:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       if (pllbypass == 0U)
  355              		.loc 1 357 7 is_stmt 1 view .LVU153
@@ -948,7 +948,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  356              		.loc 1 358 7 view .LVU154
  358:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  357              		.loc 1 358 10 is_stmt 0 view .LVU155
- 358 0062 00F19680 		bmi	.L13
+ 358 0062 00F1A980 		bmi	.L13
  360:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         plln = (pllcfgr & RCC_PLL1CFGR1_PLL1DIVN) >>  RCC_PLL1CFGR1_PLL1DIVN_Pos;
  359              		.loc 1 360 9 is_stmt 1 view .LVU156
  360              	.LVL7:
@@ -958,15 +958,15 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  362              		.loc 1 362 20 is_stmt 0 view .LVU158
  363 0066 D3F88400 		ldr	r0, [r3, #132]
  363:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp1 = (pllcfgr & RCC_PLL1CFGR3_PLL1PDIV1) >>  RCC_PLL1CFGR3_PLL1PDIV1_Pos;
-ARM GAS  /tmp/cc71V6j3.s 			page 17
+ARM GAS  /tmp/ccsTxC08.s 			page 17
 
 
  364              		.loc 1 363 17 view .LVU159
- 365 006a D3F88820 		ldr	r2, [r3, #136]
+ 365 006a D3F88830 		ldr	r3, [r3, #136]
  366              	.LVL8:
  361:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllfracn = READ_BIT(RCC->PLL1CFGR2, RCC_PLL1CFGR2_PLL1DIVNFRAC) >>  RCC_PLL1CFGR2_PLL1DIVNF
  367              		.loc 1 361 14 view .LVU160
- 368 006e C7F30B24 		ubfx	r4, r7, #8, #12
+ 368 006e C2F30B25 		ubfx	r5, r2, #8, #12
  369              	.LVL9:
  362:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL1CFGR3);
  370              		.loc 1 362 9 is_stmt 1 view .LVU161
@@ -978,77 +978,77 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  374              		.loc 1 363 9 is_stmt 1 view .LVU163
  364:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp2 = (pllcfgr & RCC_PLL1CFGR3_PLL1PDIV2) >>  RCC_PLL1CFGR3_PLL1PDIV2_Pos;
  375              		.loc 1 364 9 view .LVU164
- 376              	.L35:
+ 376              	.L37:
  408:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp2 = (pllcfgr & RCC_PLL4CFGR3_PLL4PDIV2) >>  RCC_PLL4CFGR3_PLL4PDIV2_Pos;
  377              		.loc 1 408 9 view .LVU165
  400:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllbypass = pllcfgr & RCC_PLL4CFGR1_PLL4BYP;
  378              		.loc 1 400 17 is_stmt 0 view .LVU166
- 379 0076 0E46     		mov	r6, r1
+ 379 0076 0C46     		mov	r4, r1
  415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
  380              		.loc 1 415 5 view .LVU167
- 381 0078 B6F1005F 		cmp	r6, #536870912
+ 381 0078 B4F1005F 		cmp	r4, #536870912
  408:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp2 = (pllcfgr & RCC_PLL4CFGR3_PLL4PDIV2) >>  RCC_PLL4CFGR3_PLL4PDIV2_Pos;
  382              		.loc 1 408 15 view .LVU168
- 383 007c C2F3C265 		ubfx	r5, r2, #27, #3
+ 383 007c C3F3C266 		ubfx	r6, r3, #27, #3
  384              	.LVL11:
  409:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       }
  385              		.loc 1 409 9 is_stmt 1 view .LVU169
  404:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         plln = (pllcfgr & RCC_PLL4CFGR1_PLL4DIVN) >>  RCC_PLL4CFGR1_PLL4DIVN_Pos;
  386              		.loc 1 404 14 is_stmt 0 view .LVU170
- 387 0080 C7F30551 		ubfx	r1, r7, #20, #6
+ 387 0080 C2F30551 		ubfx	r1, r2, #20, #6
  388              	.LVL12:
  409:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       }
  389              		.loc 1 409 15 view .LVU171
- 390 0084 C2F30262 		ubfx	r2, r2, #24, #3
+ 390 0084 C3F30263 		ubfx	r3, r3, #24, #3
  391              	.LVL13:
  415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
  392              		.loc 1 415 5 is_stmt 1 view .LVU172
- 393 0088 4FD0     		beq	.L25
+ 393 0088 79D0     		beq	.L27
  415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
  394              		.loc 1 415 5 is_stmt 0 view .LVU173
- 395 008a 7CD8     		bhi	.L18
- 396 008c 002E     		cmp	r6, #0
- 397 008e 3CD0     		beq	.L19
- 398 0090 0026     		movs	r6, #0
+ 395 008a 00F29080 		bhi	.L18
+ 396 008e 002C     		cmp	r4, #0
+ 397 0090 3DD0     		beq	.L19
+ 398 0092 0024     		movs	r4, #0
  399              	.LVL14:
  400              	.L20:
  421:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  401              		.loc 1 421 7 is_stmt 1 view .LVU174
  421:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  402              		.loc 1 421 11 is_stmt 0 view .LVU175
- 403 0092 4A4B     		ldr	r3, .L36
+ 403 0094 524A     		ldr	r2, .L38
  423:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       }
-ARM GAS  /tmp/cc71V6j3.s 			page 18
+ARM GAS  /tmp/ccsTxC08.s 			page 18
 
 
  404              		.loc 1 423 16 view .LVU176
- 405 0094 4C4F     		ldr	r7, .L36+12
+ 405 0096 564F     		ldr	r7, .L38+16
  421:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  406              		.loc 1 421 11 view .LVU177
- 407 0096 5B6C     		ldr	r3, [r3, #68]
+ 407 0098 526C     		ldr	r2, [r2, #68]
  423:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       }
  408              		.loc 1 423 16 view .LVU178
- 409 0098 13F4007F 		tst	r3, #512
- 410 009c 4B4B     		ldr	r3, .L36+16
- 411 009e 08BF     		it	eq
- 412 00a0 3B46     		moveq	r3, r7
- 413 00a2 38E0     		b	.L15
+ 409 009a 12F4007F 		tst	r2, #512
+ 410 009e 534A     		ldr	r2, .L38+12
+ 411 00a0 08BF     		it	eq
+ 412 00a2 3A46     		moveq	r2, r7
+ 413 00a4 39E0     		b	.L15
  414              	.LVL15:
  415              	.L10:
  369:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllsource = pllcfgr & RCC_PLL2CFGR1_PLL2SEL;
  416              		.loc 1 369 7 is_stmt 1 view .LVU179
  369:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllsource = pllcfgr & RCC_PLL2CFGR1_PLL2SEL;
  417              		.loc 1 369 15 is_stmt 0 view .LVU180
- 418 00a4 D3F89070 		ldr	r7, [r3, #144]
+ 418 00a6 D3F89020 		ldr	r2, [r3, #144]
  419              	.LVL16:
  370:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllbypass = pllcfgr & RCC_PLL2CFGR1_PLL2BYP;
  420              		.loc 1 370 7 is_stmt 1 view .LVU181
  372:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  421              		.loc 1 372 10 is_stmt 0 view .LVU182
- 422 00a8 3C01     		lsls	r4, r7, #4
+ 422 00aa 1501     		lsls	r5, r2, #4
  370:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllbypass = pllcfgr & RCC_PLL2CFGR1_PLL2BYP;
  423              		.loc 1 370 17 view .LVU183
- 424 00aa 07F0E041 		and	r1, r7, #1879048192
+ 424 00ac 02F0E041 		and	r1, r2, #1879048192
  425              	.LVL17:
  371:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       if (pllbypass == 0U)
  426              		.loc 1 371 7 is_stmt 1 view .LVU184
@@ -1056,7 +1056,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  427              		.loc 1 372 7 view .LVU185
  372:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  428              		.loc 1 372 10 is_stmt 0 view .LVU186
- 429 00ae 70D4     		bmi	.L13
+ 429 00b0 00F18280 		bmi	.L13
  374:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         plln = (pllcfgr & RCC_PLL2CFGR1_PLL2DIVN) >>  RCC_PLL2CFGR1_PLL2DIVN_Pos;
  430              		.loc 1 374 9 is_stmt 1 view .LVU187
  431              	.LVL18:
@@ -1064,21 +1064,21 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  432              		.loc 1 375 9 view .LVU188
  376:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL2CFGR3);
  433              		.loc 1 376 20 is_stmt 0 view .LVU189
- 434 00b0 D3F89400 		ldr	r0, [r3, #148]
+ 434 00b4 D3F89400 		ldr	r0, [r3, #148]
  375:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllfracn = READ_BIT(RCC->PLL2CFGR2, RCC_PLL2CFGR2_PLL2DIVNFRAC) >>  RCC_PLL2CFGR2_PLL2DIVNF
  435              		.loc 1 375 14 view .LVU190
- 436 00b4 C7F30B24 		ubfx	r4, r7, #8, #12
+ 436 00b8 C2F30B25 		ubfx	r5, r2, #8, #12
  437              	.LVL19:
  376:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL2CFGR3);
  438              		.loc 1 376 9 is_stmt 1 view .LVU191
  377:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp1 = (pllcfgr & RCC_PLL2CFGR3_PLL2PDIV1) >>  RCC_PLL2CFGR3_PLL2PDIV1_Pos;
  439              		.loc 1 377 17 is_stmt 0 view .LVU192
- 440 00b8 D3F89820 		ldr	r2, [r3, #152]
+ 440 00bc D3F89830 		ldr	r3, [r3, #152]
  441              	.LVL20:
  376:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL2CFGR3);
  442              		.loc 1 376 18 view .LVU193
- 443 00bc 20F07F40 		bic	r0, r0, #-16777216
-ARM GAS  /tmp/cc71V6j3.s 			page 19
+ 443 00c0 20F07F40 		bic	r0, r0, #-16777216
+ARM GAS  /tmp/ccsTxC08.s 			page 19
 
 
  444              	.LVL21:
@@ -1086,23 +1086,23 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  445              		.loc 1 377 9 is_stmt 1 view .LVU194
  378:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp2 = (pllcfgr & RCC_PLL2CFGR3_PLL2PDIV2) >>  RCC_PLL2CFGR3_PLL2PDIV2_Pos;
  446              		.loc 1 378 9 view .LVU195
- 447 00c0 D9E7     		b	.L35
+ 447 00c4 D7E7     		b	.L37
  448              	.LVL22:
  449              	.L11:
  384:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllsource = pllcfgr & RCC_PLL3CFGR1_PLL3SEL;
  450              		.loc 1 384 7 view .LVU196
  384:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllsource = pllcfgr & RCC_PLL3CFGR1_PLL3SEL;
  451              		.loc 1 384 15 is_stmt 0 view .LVU197
- 452 00c2 D3F8A070 		ldr	r7, [r3, #160]
+ 452 00c6 D3F8A020 		ldr	r2, [r3, #160]
  453              	.LVL23:
  385:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllbypass = pllcfgr & RCC_PLL3CFGR1_PLL3BYP;
  454              		.loc 1 385 7 is_stmt 1 view .LVU198
  387:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  455              		.loc 1 387 10 is_stmt 0 view .LVU199
- 456 00c6 3801     		lsls	r0, r7, #4
+ 456 00ca 1401     		lsls	r4, r2, #4
  385:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllbypass = pllcfgr & RCC_PLL3CFGR1_PLL3BYP;
  457              		.loc 1 385 17 view .LVU200
- 458 00c8 07F0E041 		and	r1, r7, #1879048192
+ 458 00cc 02F0E041 		and	r1, r2, #1879048192
  459              	.LVL24:
  386:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       if (pllbypass == 0U)
  460              		.loc 1 386 7 is_stmt 1 view .LVU201
@@ -1110,7 +1110,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  461              		.loc 1 387 7 view .LVU202
  387:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  462              		.loc 1 387 10 is_stmt 0 view .LVU203
- 463 00cc 61D4     		bmi	.L13
+ 463 00d0 72D4     		bmi	.L13
  389:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         plln = (pllcfgr & RCC_PLL3CFGR1_PLL3DIVN) >>  RCC_PLL3CFGR1_PLL3DIVN_Pos;
  464              		.loc 1 389 9 is_stmt 1 view .LVU204
  465              	.LVL25:
@@ -1118,27 +1118,27 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  466              		.loc 1 390 9 view .LVU205
  391:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL3CFGR3);
  467              		.loc 1 391 20 is_stmt 0 view .LVU206
- 468 00ce D3F8A400 		ldr	r0, [r3, #164]
+ 468 00d2 D3F8A400 		ldr	r0, [r3, #164]
  390:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllfracn = READ_BIT(RCC->PLL3CFGR2, RCC_PLL3CFGR2_PLL3DIVNFRAC) >>  RCC_PLL3CFGR2_PLL3DIVNF
  469              		.loc 1 390 14 view .LVU207
- 470 00d2 C7F30B24 		ubfx	r4, r7, #8, #12
+ 470 00d6 C2F30B25 		ubfx	r5, r2, #8, #12
  471              	.LVL26:
  391:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL3CFGR3);
  472              		.loc 1 391 9 is_stmt 1 view .LVU208
  392:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp1 = (pllcfgr & RCC_PLL3CFGR3_PLL3PDIV1) >>  RCC_PLL3CFGR3_PLL3PDIV1_Pos;
  473              		.loc 1 392 17 is_stmt 0 view .LVU209
- 474 00d6 D3F8A820 		ldr	r2, [r3, #168]
+ 474 00da D3F8A830 		ldr	r3, [r3, #168]
  475              	.LVL27:
  391:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL3CFGR3);
  476              		.loc 1 391 18 view .LVU210
- 477 00da 20F07F40 		bic	r0, r0, #-16777216
+ 477 00de 20F07F40 		bic	r0, r0, #-16777216
  478              	.LVL28:
  392:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp1 = (pllcfgr & RCC_PLL3CFGR3_PLL3PDIV1) >>  RCC_PLL3CFGR3_PLL3PDIV1_Pos;
  479              		.loc 1 392 9 is_stmt 1 view .LVU211
  393:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp2 = (pllcfgr & RCC_PLL3CFGR3_PLL3PDIV2) >>  RCC_PLL3CFGR3_PLL3PDIV2_Pos;
  480              		.loc 1 393 9 view .LVU212
- 481 00de CAE7     		b	.L35
-ARM GAS  /tmp/cc71V6j3.s 			page 20
+ 481 00e2 C8E7     		b	.L37
+ARM GAS  /tmp/ccsTxC08.s 			page 20
 
 
  482              	.LVL29:
@@ -1147,16 +1147,16 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  484              		.loc 1 399 7 view .LVU213
  399:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllsource = pllcfgr & RCC_PLL4CFGR1_PLL4SEL;
  485              		.loc 1 399 15 is_stmt 0 view .LVU214
- 486 00e0 D3F8B070 		ldr	r7, [r3, #176]
+ 486 00e4 D3F8B020 		ldr	r2, [r3, #176]
  487              	.LVL30:
  400:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllbypass = pllcfgr & RCC_PLL4CFGR1_PLL4BYP;
  488              		.loc 1 400 7 is_stmt 1 view .LVU215
  402:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  489              		.loc 1 402 10 is_stmt 0 view .LVU216
- 490 00e4 3A01     		lsls	r2, r7, #4
+ 490 00e8 1001     		lsls	r0, r2, #4
  400:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllbypass = pllcfgr & RCC_PLL4CFGR1_PLL4BYP;
  491              		.loc 1 400 17 view .LVU217
- 492 00e6 07F0E041 		and	r1, r7, #1879048192
+ 492 00ea 02F0E041 		and	r1, r2, #1879048192
  493              	.LVL31:
  401:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       if (pllbypass == 0U)
  494              		.loc 1 401 7 is_stmt 1 view .LVU218
@@ -1164,7 +1164,7 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  495              		.loc 1 402 7 view .LVU219
  402:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  496              		.loc 1 402 10 is_stmt 0 view .LVU220
- 497 00ea 52D4     		bmi	.L13
+ 497 00ee 63D4     		bmi	.L13
  404:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         plln = (pllcfgr & RCC_PLL4CFGR1_PLL4DIVN) >>  RCC_PLL4CFGR1_PLL4DIVN_Pos;
  498              		.loc 1 404 9 is_stmt 1 view .LVU221
  499              	.LVL32:
@@ -1172,53 +1172,53 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  500              		.loc 1 405 9 view .LVU222
  406:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL4CFGR3);
  501              		.loc 1 406 20 is_stmt 0 view .LVU223
- 502 00ec D3F8B400 		ldr	r0, [r3, #180]
+ 502 00f0 D3F8B400 		ldr	r0, [r3, #180]
  405:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllfracn = READ_BIT(RCC->PLL4CFGR2, RCC_PLL4CFGR2_PLL4DIVNFRAC) >>  RCC_PLL4CFGR2_PLL4DIVNF
  503              		.loc 1 405 14 view .LVU224
- 504 00f0 C7F30B24 		ubfx	r4, r7, #8, #12
+ 504 00f4 C2F30B25 		ubfx	r5, r2, #8, #12
  505              	.LVL33:
  406:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL4CFGR3);
  506              		.loc 1 406 9 is_stmt 1 view .LVU225
  407:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp1 = (pllcfgr & RCC_PLL4CFGR3_PLL4PDIV1) >>  RCC_PLL4CFGR3_PLL4PDIV1_Pos;
  507              		.loc 1 407 17 is_stmt 0 view .LVU226
- 508 00f4 D3F8B820 		ldr	r2, [r3, #184]
+ 508 00f8 D3F8B830 		ldr	r3, [r3, #184]
  509              	.LVL34:
  406:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL4CFGR3);
  510              		.loc 1 406 18 view .LVU227
- 511 00f8 20F07F40 		bic	r0, r0, #-16777216
+ 511 00fc 20F07F40 		bic	r0, r0, #-16777216
  512              	.LVL35:
  407:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp1 = (pllcfgr & RCC_PLL4CFGR3_PLL4PDIV1) >>  RCC_PLL4CFGR3_PLL4PDIV1_Pos;
  513              		.loc 1 407 9 is_stmt 1 view .LVU228
- 514 00fc BBE7     		b	.L35
+ 514 0100 B9E7     		b	.L37
  515              	.LVL36:
- 516              	.L28:
+ 516              	.L30:
  415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
  517              		.loc 1 415 5 is_stmt 0 view .LVU229
- 518 00fe 0A46     		mov	r2, r1
- 519 0100 0D46     		mov	r5, r1
- 520 0102 0846     		mov	r0, r1
- 521 0104 0C46     		mov	r4, r1
-ARM GAS  /tmp/cc71V6j3.s 			page 21
+ 518 0102 0B46     		mov	r3, r1
+ 519 0104 0E46     		mov	r6, r1
+ 520 0106 0846     		mov	r0, r1
+ 521 0108 0D46     		mov	r5, r1
+ARM GAS  /tmp/ccsTxC08.s 			page 21
 
 
- 522 0106 4FF00066 		mov	r6, #134217728
+ 522 010a 4FF00064 		mov	r4, #134217728
  523              	.LVL37:
  524              	.L19:
  418:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
  525              		.loc 1 418 7 is_stmt 1 view .LVU230
  418:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
  526              		.loc 1 418 34 is_stmt 0 view .LVU231
- 527 010a 2C4B     		ldr	r3, .L36
- 528 010c 9F6C     		ldr	r7, [r3, #72]
+ 527 010e 344A     		ldr	r2, .L38
+ 528 0110 976C     		ldr	r7, [r2, #72]
  418:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
  529              		.loc 1 418 14 view .LVU232
- 530 010e 2C4B     		ldr	r3, .L36+4
+ 530 0112 344A     		ldr	r2, .L38+4
  418:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
  531              		.loc 1 418 66 view .LVU233
- 532 0110 C7F3C117 		ubfx	r7, r7, #7, #2
+ 532 0114 C7F3C117 		ubfx	r7, r7, #7, #2
  418:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
  533              		.loc 1 418 14 view .LVU234
- 534 0114 FB40     		lsrs	r3, r3, r7
+ 534 0118 FA40     		lsrs	r2, r2, r7
  535              	.LVL38:
  419:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     case RCC_PLL1CFGR1_PLL1SEL_0: /* MSI selected as PLL clock source */
  536              		.loc 1 419 7 is_stmt 1 view .LVU235
@@ -1227,189 +1227,240 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  538              		.loc 1 442 5 view .LVU236
  442:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
  539              		.loc 1 442 8 is_stmt 0 view .LVU237
- 540 0116 4EB1     		cbz	r6, .L17
+ 540 011a 3CBB     		cbnz	r4, .L16
  541              	.LVL39:
- 542              	.L16:
+ 542              	.L22:
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ 543              		.loc 1 446 7 is_stmt 1 view .LVU238
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ 544              		.loc 1 446 53 is_stmt 0 view .LVU239
+ 545 011c 07EE100A 		vmov	s14, r0	@ int
+ 546 0120 B8EEC76A 		vcvt.f32.s32	s12, s14
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ 547              		.loc 1 446 36 view .LVU240
+ 548 0124 07EE105A 		vmov	s14, r5	@ int
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ 549              		.loc 1 446 17 view .LVU241
+ 550 0128 07EE902A 		vmov	s15, r2	@ int
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ 551              		.loc 1 446 50 view .LVU242
+ 552 012c DFED316A 		vldr.32	s13, .L38+20
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ 553              		.loc 1 446 36 view .LVU243
+ 554 0130 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ 555              		.loc 1 446 17 view .LVU244
+ 556 0134 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ 557              		.loc 1 446 50 view .LVU245
+ 558 0138 A6EE267A 		vfma.f32	s14, s12, s13
+ 559              	.LVL40:
+ 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
+ 560              		.loc 1 447 7 is_stmt 1 view .LVU246
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ARM GAS  /tmp/ccsTxC08.s 			page 22
+
+
+ 561              		.loc 1 446 33 is_stmt 0 view .LVU247
+ 562 013c 67EE877A 		vmul.f32	s15, s15, s14
+ 563              	.LVL41:
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ 564              		.loc 1 446 97 view .LVU248
+ 565 0140 07EE101A 		vmov	s14, r1	@ int
+ 566              	.LVL42:
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ 567              		.loc 1 446 97 view .LVU249
+ 568 0144 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
+ 569              		.loc 1 446 14 view .LVU250
+ 570 0148 C7EE876A 		vdiv.f32	s13, s15, s14
+ 571              	.LVL43:
+ 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
+ 572              		.loc 1 447 46 view .LVU251
+ 573 014c 07EE906A 		vmov	s15, r6	@ int
+ 574 0150 B8EEE77A 		vcvt.f32.s32	s14, s15
+ 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
+ 575              		.loc 1 447 65 view .LVU252
+ 576 0154 07EE903A 		vmov	s15, r3	@ int
+ 577 0158 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
+ 578              		.loc 1 447 62 view .LVU253
+ 579 015c 27EE277A 		vmul.f32	s14, s14, s15
+ 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
+ 580              		.loc 1 447 27 view .LVU254
+ 581 0160 C6EE877A 		vdiv.f32	s15, s13, s14
+ 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
+ 582              		.loc 1 447 14 view .LVU255
+ 583 0164 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 584 0168 17EE902A 		vmov	r2, s15	@ int
+ 585              	.LVL44:
+ 586              	.L16:
  450:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     sysclk = sysclk / ic_divider;
- 543              		.loc 1 450 5 is_stmt 1 view .LVU238
+ 587              		.loc 1 450 5 is_stmt 1 view .LVU256
  450:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     sysclk = sysclk / ic_divider;
- 544              		.loc 1 450 19 is_stmt 0 view .LVU239
- 545 0118 284A     		ldr	r2, .L36
- 546 011a D2F8C420 		ldr	r2, [r2, #196]
- 547              	.LVL40:
+ 588              		.loc 1 450 19 is_stmt 0 view .LVU257
+ 589 016c 1C4B     		ldr	r3, .L38
+ 590 016e D3F8C430 		ldr	r3, [r3, #196]
+ 591              	.LVL45:
  451:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     break;
- 548              		.loc 1 451 5 is_stmt 1 view .LVU240
+ 592              		.loc 1 451 5 is_stmt 1 view .LVU258
  450:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     sysclk = sysclk / ic_divider;
- 549              		.loc 1 450 62 is_stmt 0 view .LVU241
- 550 011e C2F30742 		ubfx	r2, r2, #16, #8
- 551              	.LVL41:
+ 593              		.loc 1 450 62 is_stmt 0 view .LVU259
+ 594 0172 C3F30743 		ubfx	r3, r3, #16, #8
+ 595              	.LVL46:
  450:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     sysclk = sysclk / ic_divider;
- 552              		.loc 1 450 16 view .LVU242
- 553 0122 0132     		adds	r2, r2, #1
+ 596              		.loc 1 450 16 view .LVU260
+ 597 0176 0133     		adds	r3, r3, #1
  451:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     break;
- 554              		.loc 1 451 12 view .LVU243
- 555 0124 B3FBF2F3 		udiv	r3, r3, r2
- 556              	.LVL42:
+ 598              		.loc 1 451 12 view .LVU261
+ 599 0178 B2FBF3F2 		udiv	r2, r2, r3
+ 600              	.LVL47:
  452:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   default:
- 557              		.loc 1 452 5 is_stmt 1 view .LVU244
- 558 0128 7FE7     		b	.L5
- 559              	.LVL43:
- 560              	.L25:
- 431:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
- 561              		.loc 1 431 14 is_stmt 0 view .LVU245
- 562 012a 294B     		ldr	r3, .L36+20
-ARM GAS  /tmp/cc71V6j3.s 			page 22
+ 601              		.loc 1 452 5 is_stmt 1 view .LVU262
+ 602 017c 55E7     		b	.L5
+ARM GAS  /tmp/ccsTxC08.s 			page 23
 
 
- 563              	.LVL44:
- 564              	.L17:
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 565              		.loc 1 446 7 is_stmt 1 view .LVU246
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 566              		.loc 1 446 53 is_stmt 0 view .LVU247
- 567 012c 07EE100A 		vmov	s14, r0	@ int
- 568 0130 B8EEC76A 		vcvt.f32.s32	s12, s14
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 569              		.loc 1 446 36 view .LVU248
- 570 0134 07EE104A 		vmov	s14, r4	@ int
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 571              		.loc 1 446 17 view .LVU249
- 572 0138 07EE903A 		vmov	s15, r3	@ int
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 573              		.loc 1 446 50 view .LVU250
- 574 013c DFED256A 		vldr.32	s13, .L36+24
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 575              		.loc 1 446 36 view .LVU251
- 576 0140 B8EEC77A 		vcvt.f32.s32	s14, s14
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 577              		.loc 1 446 17 view .LVU252
- 578 0144 F8EEE77A 		vcvt.f32.s32	s15, s15
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 579              		.loc 1 446 50 view .LVU253
- 580 0148 A6EE267A 		vfma.f32	s14, s12, s13
- 581              	.LVL45:
- 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
- 582              		.loc 1 447 7 is_stmt 1 view .LVU254
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 583              		.loc 1 446 33 is_stmt 0 view .LVU255
- 584 014c 67EE877A 		vmul.f32	s15, s15, s14
- 585              	.LVL46:
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 586              		.loc 1 446 97 view .LVU256
- 587 0150 07EE101A 		vmov	s14, r1	@ int
- 588              	.LVL47:
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 589              		.loc 1 446 97 view .LVU257
- 590 0154 B8EEC77A 		vcvt.f32.s32	s14, s14
- 446:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
- 591              		.loc 1 446 14 view .LVU258
- 592 0158 C7EE876A 		vdiv.f32	s13, s15, s14
- 593              	.LVL48:
- 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
- 594              		.loc 1 447 46 view .LVU259
- 595 015c 07EE905A 		vmov	s15, r5	@ int
- 596 0160 B8EEE77A 		vcvt.f32.s32	s14, s15
- 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
- 597              		.loc 1 447 65 view .LVU260
- 598 0164 07EE902A 		vmov	s15, r2	@ int
- 599 0168 F8EEE77A 		vcvt.f32.s32	s15, s15
- 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
- 600              		.loc 1 447 62 view .LVU261
- 601 016c 27EE277A 		vmul.f32	s14, s14, s15
- 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
- 602              		.loc 1 447 27 view .LVU262
-ARM GAS  /tmp/cc71V6j3.s 			page 23
-
-
- 603 0170 C6EE877A 		vdiv.f32	s15, s13, s14
- 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
- 604              		.loc 1 447 14 view .LVU263
- 605 0174 FCEEE77A 		vcvt.u32.f32	s15, s15
- 606 0178 17EE903A 		vmov	r3, s15	@ int
+ 603              	.LVL48:
+ 604              	.L27:
+ 415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
+ 605              		.loc 1 415 5 is_stmt 0 view .LVU263
+ 606 017e 0024     		movs	r4, #0
  607              	.LVL49:
- 447:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
- 608              		.loc 1 447 14 view .LVU264
- 609 017c CCE7     		b	.L16
- 610              	.LVL50:
- 611              	.L27:
+ 608              	.L17:
  431:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
- 612              		.loc 1 431 14 view .LVU265
- 613 017e 144B     		ldr	r3, .L36+20
- 614 0180 CAE7     		b	.L16
- 615              	.LVL51:
- 616              	.L22:
+ 609              		.loc 1 431 7 is_stmt 1 view .LVU264
+ 432:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     case (RCC_PLL1CFGR1_PLL1SEL_1 | RCC_PLL1CFGR1_PLL1SEL_0):  /* I2S_CKIN selected as PLL clock so
+ 610              		.loc 1 432 7 view .LVU265
+ 431:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
+ 611              		.loc 1 431 14 is_stmt 0 view .LVU266
+ 612 0180 1D4A     		ldr	r2, .L38+24
+ 432:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     case (RCC_PLL1CFGR1_PLL1SEL_1 | RCC_PLL1CFGR1_PLL1SEL_0):  /* I2S_CKIN selected as PLL clock so
+ 613              		.loc 1 432 7 view .LVU267
+ 614 0182 CAE7     		b	.L15
+ 615              	.LVL50:
+ 616              	.L29:
+ 415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
+ 617              		.loc 1 415 5 view .LVU268
+ 618 0184 0023     		movs	r3, #0
+ 619 0186 4FF00064 		mov	r4, #134217728
+ 620 018a 1E46     		mov	r6, r3
+ 621 018c 1846     		mov	r0, r3
+ 622 018e 1D46     		mov	r5, r3
+ 623 0190 1946     		mov	r1, r3
+ 624              	.LVL51:
+ 415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
+ 625              		.loc 1 415 5 view .LVU269
+ 626 0192 F5E7     		b	.L17
+ 627              	.LVL52:
+ 628              	.L28:
+ 415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
+ 629              		.loc 1 415 5 view .LVU270
+ 630 0194 0024     		movs	r4, #0
+ 631              	.LVL53:
+ 632              	.L21:
+ 434:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
+ 633              		.loc 1 434 7 is_stmt 1 view .LVU271
+ 435:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     default:
+ 634              		.loc 1 435 7 view .LVU272
+ 434:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
+ 635              		.loc 1 434 14 is_stmt 0 view .LVU273
+ 636 0196 194A     		ldr	r2, .L38+28
+ 435:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     default:
+ 637              		.loc 1 435 7 view .LVU274
+ 638 0198 BFE7     		b	.L15
+ 639              	.LVL54:
+ 640              	.L31:
+ 415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
+ 641              		.loc 1 415 5 view .LVU275
+ 642 019a 0023     		movs	r3, #0
+ 643 019c 4FF00064 		mov	r4, #134217728
+ 644 01a0 1E46     		mov	r6, r3
+ 645 01a2 1846     		mov	r0, r3
+ 646 01a4 1D46     		mov	r5, r3
+ARM GAS  /tmp/ccsTxC08.s 			page 24
+
+
+ 647 01a6 1946     		mov	r1, r3
+ 648              	.LVL55:
+ 415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
+ 649              		.loc 1 415 5 view .LVU276
+ 650 01a8 F5E7     		b	.L21
+ 651              	.LVL56:
+ 652              	.L24:
  329:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   {
- 617              		.loc 1 329 3 view .LVU266
- 618 0182 134B     		ldr	r3, .L36+20
- 619 0184 51E7     		b	.L5
- 620              	.LVL52:
- 621              	.L18:
- 434:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
- 622              		.loc 1 434 14 view .LVU267
- 623 0186 B6F1405F 		cmp	r6, #805306368
- 624 018a 134B     		ldr	r3, .L36+28
- 625 018c 18BF     		it	ne
- 626 018e 0023     		movne	r3, #0
- 627 0190 CCE7     		b	.L17
- 628              	.LVL53:
- 629              	.L13:
+ 653              		.loc 1 329 3 view .LVU277
+ 654 01aa 134A     		ldr	r2, .L38+24
+ 655 01ac 3DE7     		b	.L5
+ 656              	.LVL57:
+ 657              	.L18:
  415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
- 630              		.loc 1 415 5 is_stmt 1 view .LVU268
- 631 0192 B1F1005F 		cmp	r1, #536870912
- 632 0196 F2D0     		beq	.L27
+ 658              		.loc 1 415 5 view .LVU278
+ 659 01ae B4F1405F 		cmp	r4, #805306368
+ 660 01b2 EFD0     		beq	.L28
+ 661 01b4 0022     		movs	r2, #0
+ 662 01b6 B1E7     		b	.L22
+ 663              	.LVL58:
+ 664              	.L13:
  415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
- 633              		.loc 1 415 5 is_stmt 0 view .LVU269
- 634 0198 09D8     		bhi	.L21
- 635 019a 0029     		cmp	r1, #0
- 636 019c AFD0     		beq	.L28
- 637 019e 0022     		movs	r2, #0
- 638 01a0 4FF00066 		mov	r6, #134217728
- 639 01a4 1546     		mov	r5, r2
- 640 01a6 1046     		mov	r0, r2
- 641 01a8 1446     		mov	r4, r2
- 642 01aa 1146     		mov	r1, r2
- 643              	.LVL54:
+ 665              		.loc 1 415 5 is_stmt 1 view .LVU279
+ 666 01b8 B1F1005F 		cmp	r1, #536870912
+ 667 01bc E2D0     		beq	.L29
  415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
- 644              		.loc 1 415 5 view .LVU270
- 645 01ac 71E7     		b	.L20
- 646              	.LVL55:
- 647              	.L21:
- 434:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       break;
- 648              		.loc 1 434 14 view .LVU271
- 649 01ae B1F1405F 		cmp	r1, #805306368
- 650 01b2 094B     		ldr	r3, .L36+28
-ARM GAS  /tmp/cc71V6j3.s 			page 24
+ 668              		.loc 1 415 5 is_stmt 0 view .LVU280
+ 669 01be 09D8     		bhi	.L23
+ 670 01c0 0029     		cmp	r1, #0
+ 671 01c2 9ED0     		beq	.L30
+ 672 01c4 0023     		movs	r3, #0
+ 673 01c6 4FF00064 		mov	r4, #134217728
+ 674 01ca 1E46     		mov	r6, r3
+ 675 01cc 1846     		mov	r0, r3
+ 676 01ce 1D46     		mov	r5, r3
+ 677 01d0 1946     		mov	r1, r3
+ 678              	.LVL59:
+ 415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
+ 679              		.loc 1 415 5 view .LVU281
+ 680 01d2 5FE7     		b	.L20
+ 681              	.LVL60:
+ 682              	.L23:
+ 415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
+ 683              		.loc 1 415 5 view .LVU282
+ 684 01d4 B1F1405F 		cmp	r1, #805306368
+ 685 01d8 DFD0     		beq	.L31
+ 686 01da 0022     		movs	r2, #0
+ 687              	.LVL61:
+ 415:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
+ 688              		.loc 1 415 5 view .LVU283
+ 689 01dc C6E7     		b	.L16
+ 690              	.L39:
+ 691 01de 00BF     		.align	2
+ 692              	.L38:
+ 693 01e0 00800256 		.word	1443004416
+ 694 01e4 0090D003 		.word	64000000
+ 695 01e8 00000000 		.word	SystemCoreClock
+ARM GAS  /tmp/ccsTxC08.s 			page 25
 
 
- 651 01b4 18BF     		it	ne
- 652 01b6 0023     		movne	r3, #0
- 653 01b8 AEE7     		b	.L16
- 654              	.L37:
- 655 01ba 00BF     		.align	2
- 656              	.L36:
- 657 01bc 00800256 		.word	1443004416
- 658 01c0 0090D003 		.word	64000000
- 659 01c4 00000000 		.word	SystemCoreClock
- 660 01c8 00093D00 		.word	4000000
- 661 01cc 0024F400 		.word	16000000
- 662 01d0 006CDC02 		.word	48000000
- 663 01d4 00008033 		.word	864026624
- 664 01d8 0080BB00 		.word	12288000
- 665              		.cfi_endproc
- 666              	.LFE230:
- 668              		.section	.text.SECURE_SystemCoreClockUpdate,"ax",%progbits
- 669              		.align	1
- 670              		.global	SECURE_SystemCoreClockUpdate
- 671              		.global	__acle_se_SECURE_SystemCoreClockUpdate
- 672              		.syntax unified
- 673              		.thumb
- 674              		.thumb_func
- 676              		.syntax unified
- 677              		.thumb
- 678              		.thumb_func
- 680              	SECURE_SystemCoreClockUpdate:
- 681              	__acle_se_SECURE_SystemCoreClockUpdate:
- 682              	.LFB231:
+ 696 01ec 0024F400 		.word	16000000
+ 697 01f0 00093D00 		.word	4000000
+ 698 01f4 00008033 		.word	864026624
+ 699 01f8 006CDC02 		.word	48000000
+ 700 01fc 0080BB00 		.word	12288000
+ 701              		.cfi_endproc
+ 702              	.LFE230:
+ 704              		.section	.text.SECURE_SystemCoreClockUpdate,"ax",%progbits
+ 705              		.align	1
+ 706              		.global	SECURE_SystemCoreClockUpdate
+ 707              		.global	__acle_se_SECURE_SystemCoreClockUpdate
+ 708              		.syntax unified
+ 709              		.thumb
+ 710              		.thumb_func
+ 712              		.syntax unified
+ 713              		.thumb
+ 714              		.thumb_func
+ 716              	SECURE_SystemCoreClockUpdate:
+ 717              	__acle_se_SECURE_SystemCoreClockUpdate:
+ 718              	.LFB231:
  461:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** 
  462:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** /**
  463:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   * @brief  Secure Non-Secure-Callable function to return the current
@@ -1421,77 +1472,77 @@ ARM GAS  /tmp/cc71V6j3.s 			page 1
  469:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   */
  470:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** CMSE_NS_ENTRY uint32_t SECURE_SystemCoreClockUpdate(void)
  471:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** {
- 683              		.loc 1 471 1 is_stmt 1 view -0
- 684              		.cfi_startproc
- 685              		@ Non-secure entry function: called from non-secure code.
- 686              		@ args = 0, pretend = 0, frame = 0
- 687              		@ frame_needed = 0, uses_anonymous_args = 0
- 688 0000 6DED81CF 		vstr	FPCXTNS, [sp, #-4]!
- 689              		.cfi_def_cfa_offset 4
+ 719              		.loc 1 471 1 is_stmt 1 view -0
+ 720              		.cfi_startproc
+ 721              		@ Non-secure entry function: called from non-secure code.
+ 722              		@ args = 0, pretend = 0, frame = 0
+ 723              		@ frame_needed = 0, uses_anonymous_args = 0
+ 724 0000 6DED81CF 		vstr	FPCXTNS, [sp, #-4]!
+ 725              		.cfi_def_cfa_offset 4
  472:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   SystemCoreClockUpdate();
- 690              		.loc 1 472 3 view .LVU273
+ 726              		.loc 1 472 3 view .LVU285
  471:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   SystemCoreClockUpdate();
- 691              		.loc 1 471 1 is_stmt 0 view .LVU274
- 692 0004 00B5     		push	{lr}
- 693              		.cfi_def_cfa_offset 8
- 694              		.cfi_offset 14, -8
- 695              		.loc 1 472 3 view .LVU275
- 696 0006 FFF7FEFF 		bl	SystemCoreClockUpdate
- 697              	.LVL56:
-ARM GAS  /tmp/cc71V6j3.s 			page 25
-
-
+ 727              		.loc 1 471 1 is_stmt 0 view .LVU286
+ 728 0004 00B5     		push	{lr}
+ 729              		.cfi_def_cfa_offset 8
+ 730              		.cfi_offset 14, -8
+ 731              		.loc 1 472 3 view .LVU287
+ 732 0006 FFF7FEFF 		bl	SystemCoreClockUpdate
+ 733              	.LVL62:
  473:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** 
  474:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   return SystemCoreClock;
- 698              		.loc 1 474 3 is_stmt 1 view .LVU276
+ 734              		.loc 1 474 3 is_stmt 1 view .LVU288
  475:STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** }
- 699              		.loc 1 475 1 is_stmt 0 view .LVU277
- 700 000a 054B     		ldr	r3, .L39
- 701 000c 5DF804EB 		ldr	lr, [sp], #4
- 702              		.cfi_restore 14
- 703              		.cfi_def_cfa_offset 4
- 704 0010 1868     		ldr	r0, [r3]
- 705 0012 9FEC100A 		vscclrm	{s0-s15, VPR}
- 706 0016 9FE80E90 		clrm	{r1, r2, r3, ip, APSR}
- 707 001a FDEC81CF 		vldr	FPCXTNS, [sp], #4
- 708              		.cfi_def_cfa_offset 0
- 709 001e 7447     		bxns	lr
- 710              	.L40:
- 711              		.align	2
- 712              	.L39:
- 713 0020 00000000 		.word	SystemCoreClock
- 714              		.cfi_endproc
- 715              	.LFE231:
- 717              		.global	SystemCoreClock
- 718              		.section	.data.SystemCoreClock,"aw"
- 719              		.align	2
- 722              	SystemCoreClock:
- 723 0000 0090D003 		.word	64000000
- 724              		.text
- 725              	.Letext0:
- 726              		.file 2 "/opt/st/stm32cubeide_1.18.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-
- 727              		.file 3 "/opt/st/stm32cubeide_1.18.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-
- 728              		.file 4 "STM32Cube_FW_N6/Drivers/CMSIS/Include/core_cm55.h"
- 729              		.file 5 "STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Include/stm32n657xx.h"
- 730              		.file 6 "/opt/st/stm32cubeide_1.18.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-
- 731              		.file 7 "STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Include/system_stm32n6xx.h"
-ARM GAS  /tmp/cc71V6j3.s 			page 26
+ 735              		.loc 1 475 1 is_stmt 0 view .LVU289
+ 736 000a 054B     		ldr	r3, .L41
+ 737 000c 5DF804EB 		ldr	lr, [sp], #4
+ 738              		.cfi_restore 14
+ 739              		.cfi_def_cfa_offset 4
+ARM GAS  /tmp/ccsTxC08.s 			page 26
+
+
+ 740 0010 1868     		ldr	r0, [r3]
+ 741 0012 9FEC100A 		vscclrm	{s0-s15, VPR}
+ 742 0016 9FE80E90 		clrm	{r1, r2, r3, ip, APSR}
+ 743 001a FDEC81CF 		vldr	FPCXTNS, [sp], #4
+ 744              		.cfi_def_cfa_offset 0
+ 745 001e 7447     		bxns	lr
+ 746              	.L42:
+ 747              		.align	2
+ 748              	.L41:
+ 749 0020 00000000 		.word	SystemCoreClock
+ 750              		.cfi_endproc
+ 751              	.LFE231:
+ 753              		.global	SystemCoreClock
+ 754              		.section	.data.SystemCoreClock,"aw"
+ 755              		.align	2
+ 758              	SystemCoreClock:
+ 759 0000 0090D003 		.word	64000000
+ 760              		.text
+ 761              	.Letext0:
+ 762              		.file 2 "/home/tanjiajun2002/renesas/rzv/e2studio_v2025-01_fsp_v3.1.0/toolchains/gcc_arm/arm-gnu-t
+ 763              		.file 3 "/home/tanjiajun2002/renesas/rzv/e2studio_v2025-01_fsp_v3.1.0/toolchains/gcc_arm/arm-gnu-t
+ 764              		.file 4 "STM32Cube_FW_N6/Drivers/CMSIS/Include/core_cm55.h"
+ 765              		.file 5 "STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Include/stm32n657xx.h"
+ 766              		.file 6 "/home/tanjiajun2002/renesas/rzv/e2studio_v2025-01_fsp_v3.1.0/toolchains/gcc_arm/arm-gnu-t
+ 767              		.file 7 "STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Include/system_stm32n6xx.h"
+ARM GAS  /tmp/ccsTxC08.s 			page 27
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 system_stm32n6xx_fsbl.c
-     /tmp/cc71V6j3.s:26     .text.SystemInit:00000000 $t
-     /tmp/cc71V6j3.s:32     .text.SystemInit:00000000 SystemInit
-     /tmp/cc71V6j3.s:243    .text.SystemInit:00000114 $d
-     /tmp/cc71V6j3.s:253    .text.SystemCoreClockUpdate:00000000 $t
-     /tmp/cc71V6j3.s:259    .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
-     /tmp/cc71V6j3.s:657    .text.SystemCoreClockUpdate:000001bc $d
-     /tmp/cc71V6j3.s:722    .data.SystemCoreClock:00000000 SystemCoreClock
-     /tmp/cc71V6j3.s:669    .text.SECURE_SystemCoreClockUpdate:00000000 $t
-     /tmp/cc71V6j3.s:680    .text.SECURE_SystemCoreClockUpdate:00000000 SECURE_SystemCoreClockUpdate
-     /tmp/cc71V6j3.s:681    .text.SECURE_SystemCoreClockUpdate:00000000 __acle_se_SECURE_SystemCoreClockUpdate
-     /tmp/cc71V6j3.s:713    .text.SECURE_SystemCoreClockUpdate:00000020 $d
-     /tmp/cc71V6j3.s:719    .data.SystemCoreClock:00000000 $d
+     /tmp/ccsTxC08.s:26     .text.SystemInit:00000000 $t
+     /tmp/ccsTxC08.s:32     .text.SystemInit:00000000 SystemInit
+     /tmp/ccsTxC08.s:243    .text.SystemInit:00000114 $d
+     /tmp/ccsTxC08.s:253    .text.SystemCoreClockUpdate:00000000 $t
+     /tmp/ccsTxC08.s:259    .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
+     /tmp/ccsTxC08.s:693    .text.SystemCoreClockUpdate:000001e0 $d
+     /tmp/ccsTxC08.s:758    .data.SystemCoreClock:00000000 SystemCoreClock
+     /tmp/ccsTxC08.s:705    .text.SECURE_SystemCoreClockUpdate:00000000 $t
+     /tmp/ccsTxC08.s:716    .text.SECURE_SystemCoreClockUpdate:00000000 SECURE_SystemCoreClockUpdate
+     /tmp/ccsTxC08.s:717    .text.SECURE_SystemCoreClockUpdate:00000000 __acle_se_SECURE_SystemCoreClockUpdate
+     /tmp/ccsTxC08.s:749    .text.SECURE_SystemCoreClockUpdate:00000020 $d
+     /tmp/ccsTxC08.s:755    .data.SystemCoreClock:00000000 $d
                            .group:00000000 wm4.0.c552ae9005b0f2cca11872fae5d4b7f2
                            .group:00000000 wm4.stm32n6xx.h.34.80585dd08aa426c932f6311fdb7386da
                            .group:00000000 wm4.stm32n657xx.h.26.acd272cb67318cc1a4791ce2f0720ca6
@@ -1511,7 +1562,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.cachel1_armv7.h.32.abd77761a989e008b0c60891114a33c7
                            .group:00000000 wm4.stm32n657xx.h.575.1c2a5e6bedffc6f9083dcc857bc6d09d
                            .group:00000000 wm4.stm32n6xx.h.114.5cf793d8af485e14f110e3e24bde1aa5
-                           .group:00000000 wm4.newlib.h.7.a37ffbe9e5aff74303f4e60b1cc1c01b
+                           .group:00000000 wm4.newlib.h.7.591ac1bd65c1f5b34864757667a05252
                            .group:00000000 wm4.ieeefp.h.77.bd5feb87d9990dd328793ced294f6a87
                            .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
                            .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8

@@ -61,7 +61,7 @@
 				"name":  "octoFlash",
 				"fformat": "FORMAT_RAW",
 				"prop":	  { "rights": "ACC_READ",  "throughput": "MID", "latency": "HIGH", "byteWidth": 1, "freqRatio": 6.00, "cacheable": "CACHEABLE_ON", "read_power": 110, "write_power": 400.0, "constants_preferred": "true" },
-				"offset": { "value": "0x70580000", "magnitude":  "BYTES" },
+				"offset": { "value": "0x70780000", "magnitude":  "BYTES" },
 				"size":   { "value": "4",          "magnitude": "MBYTES" }
 			}
 		]

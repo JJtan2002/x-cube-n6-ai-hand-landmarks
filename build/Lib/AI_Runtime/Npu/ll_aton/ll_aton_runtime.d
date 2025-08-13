@@ -71,7 +71,9 @@ build/Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.o: \
  Lib/AI_Runtime/Npu/Devices/STM32N6XX/ATON.h \
  Lib/AI_Runtime/Npu/ll_aton/ll_aton_rcompat.h \
  Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.h \
- Lib/AI_Runtime/Npu/ll_aton/ll_aton_NN_interface.h
+ Lib/AI_Runtime/Npu/ll_aton/ll_aton_rt_user_api.h \
+ Lib/AI_Runtime/Npu/ll_aton/ll_aton_NN_interface.h \
+ Lib/AI_Runtime/Npu/ll_aton/ll_aton_caches_interface.h
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_util.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_attributes.h:
@@ -146,4 +148,6 @@ Lib/AI_Runtime/Npu/Devices/STM32N6XX/npu_cache.h:
 Lib/AI_Runtime/Npu/Devices/STM32N6XX/ATON.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_rcompat.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_runtime.h:
+Lib/AI_Runtime/Npu/ll_aton/ll_aton_rt_user_api.h:
 Lib/AI_Runtime/Npu/ll_aton/ll_aton_NN_interface.h:
+Lib/AI_Runtime/Npu/ll_aton/ll_aton_caches_interface.h:
