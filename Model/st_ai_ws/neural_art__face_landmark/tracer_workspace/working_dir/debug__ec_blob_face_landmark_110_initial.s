@@ -1,0 +1,160 @@
+;; Start Blob '_ec_blob_face_landmark_110'
+;; Start Epoch 110
+label 0x6e
+writefield 0 4 [13] 0x1
+write 18 0 0x740
+write 18 9 0xb010c
+write 18 4 0x10a34606
+write 18 5 0x10018
+write 18 2 0x12180101
+write 18 10 0x0
+write 18 3 0x1100
+write 18 6 0xffff0000
+write 18 7 0xffff0000
+write 18 13 0x0
+writefield 0 4 [18] 0x1
+write 23 0 0x8000000
+write 23 0 0x9000060
+write 23 13 0x20422042
+write 23 2 0x68000
+write 23 7 0x4e40
+write 23 8 0x0
+write 23 12 0x0
+writefield 0 4 [19] 0x1
+write 24 0 0x8000000
+write 24 0 0x5000160
+write 24 13 0x20422042
+write 24 2 0xa3000
+write 24 7 0xbd004c3b
+write 24 8 0x4c3b
+write 24 12 0x0
+writefield 0 4 [7] 0x1
+write 12 0 0x880000
+write 12 2 0x34200580
+write 12 3 0x10001
+write 12 4 0x2400018
+write 12 6 0x30
+write 12 8 0x0
+write 12 7 0xc
+write 12 12 0x6
+write 12 12 0x7
+write 12 14 0x342007ff
+write 12 13 0x3a8
+write 12 9 0x24
+write 12 5 0x240
+write 12 18 0x0
+write 12 10 0x100000
+write 12 17 0x0
+writefield 0 4 [5] 0x1
+write 10 0 0x8c184
+write 10 2 0x70780000
+write 10 3 0x62b80
+write 10 6 0x0
+write 10 8 0x0
+write 10 7 0x0
+write 10 12 0x6
+write 10 12 0x7
+write 10 14 0x707e2bbf
+write 10 13 0x1
+write 10 9 0x24
+write 10 5 0x0
+write 10 18 0x8
+write 10 10 0x100000
+write 10 17 0x0
+writefield 0 4 [1] 0x1
+write 6 0 0x880100
+write 6 2 0x70816d80
+write 6 3 0x12
+write 6 6 0x24
+write 6 8 0x0
+write 6 7 0x0
+write 6 12 0x6
+write 6 12 0x7
+write 6 14 0x708178b7
+write 6 13 0x4e
+write 6 9 0x24
+write 6 5 0x0
+write 6 18 0x8
+write 6 10 0x100000
+write 6 17 0x0
+writefield 0 4 [2] 0x1
+write 7 0 0x80108
+write 7 2 0x34200000
+write 7 3 0x12
+write 7 6 0x12
+write 7 8 0x0
+write 7 7 0x0
+write 7 12 0x6
+write 7 12 0x7
+write 7 14 0x342005bf
+write 7 13 0x4e
+write 7 9 0x24
+write 7 5 0x0
+write 7 18 0x0
+write 7 10 0x100000
+write 7 17 0x0
+write 4 0 0x2
+poll 4 0 [1] 0x0 100
+write 4 0 0x40000000
+poll 4 0 [30] 0x0 100
+write 4 0 0x1
+write 4 21 0xf
+write 4 22 0xb
+write 4 23 0x1b
+write 4 30 0x11b0b1a
+write 4 32 0x25
+write 4 33 0x3
+write 4 4 0x27
+writefield 7 0 [0] 0x1
+write 18 0 0x741
+writefield 23 0 [0] 0x1
+writefield 24 0 [0] 0x1
+writefield 6 0 [0] 0x1
+writefield 10 0 [0] 0x1
+writefield 12 0 [0] 0x1
+poll 7 0 [31] 0x0 100
+write 4 21 0x0
+write 4 22 0x0
+write 4 23 0x0
+write 4 30 0x0
+write 4 32 0x0
+write 4 33 0x0
+write 4 4 0x0
+write 7 0 0x2
+poll 7 0 [1] 0x0 100
+write 7 0 0x40000000
+poll 7 0 [30] 0x0 100
+writefield 0 4 [2] 0x0
+write 18 0 0x2
+poll 18 0 [1] 0x0 100
+write 18 0 0x40000000
+poll 18 0 [30] 0x0 100
+writefield 0 4 [13] 0x0
+write 23 0 0x8000002
+poll 23 0 [1] 0x0 100
+write 23 0 0x48000000
+poll 23 0 [30] 0x0 100
+writefield 0 4 [18] 0x0
+write 24 0 0x8000002
+poll 24 0 [1] 0x0 100
+write 24 0 0x48000000
+poll 24 0 [30] 0x0 100
+writefield 0 4 [19] 0x0
+write 6 0 0x2
+poll 6 0 [1] 0x0 100
+write 6 0 0x40000000
+poll 6 0 [30] 0x0 100
+writefield 0 4 [1] 0x0
+write 10 0 0x2
+poll 10 0 [1] 0x0 100
+write 10 0 0x40000000
+poll 10 0 [30] 0x0 100
+writefield 0 4 [5] 0x0
+write 12 0 0x2
+poll 12 0 [1] 0x0 100
+write 12 0 0x40000000
+poll 12 0 [30] 0x0 100
+writefield 0 4 [7] 0x0
+;; End Epoch 110
+irq 0x0
+;; End Blob '_ec_blob_face_landmark_110'

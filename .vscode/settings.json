@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "postprocess_conf.h": "c",
+        "od_yolov8_pp_if.h": "c",
+        "app_postprocess.h": "c",
+        "app_config.h": "c",
+        "arm_math.h": "c",
+        "compare": "c",
+        "cstdint": "c"
+    }
+}
