@@ -29,6 +29,9 @@ To generate the `network.c`, `network_ecblobs.h`, and the file containing networ
 2. Add `<stm32cubeide_folderInstall>/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-<plugin_version>/tools/bin` to your path to have `arm-none-eabi-objcopy` known by your bash.
 
 ```bash
+export PATH=$PATH:/home/tanjiajun2002/ST/STEdgeAI/2.1/Utilities/linux
+export PATH=$PATH:/home/tanjiajun2002/st/stm32cubeide_1.17.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.1.0.202410170702/tools/bin
+source ~/.bashrc
 cd Model
 stedgeai generate --no-inputs-allocation --no-outputs-allocation --model yolov8n_256_quant_pc_uf_pose_coco-st.tflite --target stm32n6 --st-neural-art default@user_neuralart.json
 cp st_ai_output/network_ecblobs.h .
