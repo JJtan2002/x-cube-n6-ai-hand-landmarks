@@ -61,10 +61,6 @@ AI_ALIGNED(32)
 static ai_u8 weights_8[0];
 AI_ALIGNED(32)
 static ai_u8 weights_9[3018097];
-AI_ALIGNED(32)
-static ai_u8 weights_10[0];
-AI_ALIGNED(32)
-static ai_u8 weights_11[0];
 
 /* 
  * Example of system initialization function

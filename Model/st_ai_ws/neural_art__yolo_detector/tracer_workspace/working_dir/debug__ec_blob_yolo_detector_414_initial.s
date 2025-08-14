@@ -22,7 +22,7 @@ write 13 10 0x100000
 write 13 17 0x0
 writefield 0 4 [3] 0x1
 write 8 0 0x80008
-write 8 2 _user_io_output_0(0x0)
+write 8 2 0x342e3970
 write 8 3 0x70001
 write 8 4 0x8340001
 write 8 6 0x1
@@ -30,7 +30,7 @@ write 8 8 0x396c
 write 8 7 0x834
 write 8 12 0x6
 write 8 12 0x7
-write 8 14 _user_io_output_0(0x3977)
+write 8 14 0x342e731f
 write 8 13 0x834
 write 8 9 0x24
 write 8 5 0x834

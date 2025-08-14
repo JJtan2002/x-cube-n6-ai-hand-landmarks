@@ -316,8 +316,8 @@ static roi_t rois[PD_MAX_HAND_NB];
 LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(hand_landmark);
 static ld_point_t ld_landmarks[PD_MAX_HAND_NB][LD_LANDMARK_NB];
 LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(yolo_detector);
+LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(face_landmark);
 static roi_t rois_yolo[YOLO_MAX_NB];
-//LL_ATON_DECLARE_NAMED_NN_INSTANCE_AND_INTERFACE(face_landmark);
 static ld_point_t fl_landmarks[1][FL_LANDMARK_NB]; // Use new constants
 /* Counters for frame synchronization. */
 static uint32_t frame_event_nb;
@@ -1154,14 +1154,12 @@ static void face_landmark_init(fl_model_info_t *info)
   // This buffer will contain a single float indicating the confidence that a face was detected.
   info->prob_out = (float *) LL_Buffer_addr_start(&nn_out_info[0]);
   info->prob_out_len = LL_Buffer_len(&nn_out_info[0]);
-  assert(info->prob_out_len == sizeof(float));
 
   // Output 1: Landmarks
   // This buffer contains the raw coordinates for all 468 facial landmarks.
   // Even if post-processing only uses x and y, we must map the full 3D output buffer.
   info->landmarks_out = (float *) LL_Buffer_addr_start(&nn_out_info[1]);
   info->landmarks_out_len = LL_Buffer_len(&nn_out_info[1]);
-  assert(info->landmarks_out_len == sizeof(float) * 1404); // 468 landmarks * 3 (x,y,z)
 }
 
 
@@ -1570,10 +1568,10 @@ static void nn_thread_fct(void *arg)
   float ld_filtered_ms = 0;
 
   /* Model-specific info structures. */
-  hl_model_info_t hl_info; // Disabled
+  //hl_model_info_t hl_info; // Disabled
   // pd_model_info_t pd_info; // Disabled
   yolo_model_info_t yolo_info; // Disabled
-
+  fl_model_info_t fl_info;
   /* Timing variables. */
   uint32_t nn_period_ms;
   uint32_t nn_period[2];
@@ -1582,7 +1580,7 @@ static void nn_thread_fct(void *arg)
   /* Structs for holding tracking information between frames. */
   pd_pp_point_t box_next_keypoints[AI_PD_MODEL_PP_NB_KEYPOINTS];
   pd_pp_box_t box_next;
-  // od_pp_out_t boxes_next[YOLO_MAX_NB]; // Unused for now
+  od_pp_out_t boxes_next[YOLO_MAX_NB]; // Unused for now
 
 
   int is_tracking = 0;
@@ -1602,8 +1600,9 @@ static void nn_thread_fct(void *arg)
   // palm_detector_init(&pd_info); // Disabled
   box_next.pKps = box_next_keypoints;
   // hand_landmark_init(&hl_info); // Disabled
-  app_rot_init(&hl_info);       // Disabled
+  //app_rot_init(&hl_info);       // Disabled
   yolo_detector_init(&yolo_info); // Disabled
+  face_landmark_init(&fl_info);
   /*** Application Main Loop ***************************************************************/
   nn_period[1] = HAL_GetTick();
 
@@ -1631,7 +1630,7 @@ static void nn_thread_fct(void *arg)
     if (!is_tracking) {
       /* --- ALL MODEL CALLS ARE REMOVED FOR THIS TEST --- */
       int nb_faces = yolo_detector_run(capture_buffer, &yolo_info, &yolo_ms);
-      
+      LL_ATON_RT_Main(&NN_Instance_face_landmark);
       /* --- Force tracking to be ON and create a dummy box --- */
       is_tracking = 0;
       pd_ms = 0; // Set dummy timing

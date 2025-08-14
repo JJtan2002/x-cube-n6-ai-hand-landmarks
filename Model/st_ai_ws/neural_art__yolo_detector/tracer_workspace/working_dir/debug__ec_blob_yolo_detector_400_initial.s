@@ -89,6 +89,14 @@ write 23 2 0x78000
 write 23 7 0x737760e
 write 23 8 0xfffb
 write 23 12 0x0
+writefield 0 4 [19] 0x1
+write 24 0 0x8000000
+write 24 0 0x15000060
+write 24 13 0x10411041
+write 24 2 0x70000
+write 24 7 0xb1fe4564
+write 24 8 0x2
+write 24 12 0x0
 writefield 0 4 [3] 0x1
 write 8 0 0x80104
 write 8 2 0x34300d00
@@ -128,14 +136,17 @@ poll 4 0 [30] 0x0 100
 write 4 0 0x1
 write 4 28 0x7
 write 4 30 0x21
-write 4 8 0x25
+write 4 32 0x25
+write 4 8 0x27
 writefield 11 0 [0] 0x1
 writefield 21 0 [0] 0x1
 writefield 23 0 [0] 0x1
+writefield 24 0 [0] 0x1
 writefield 8 0 [0] 0x1
 poll 11 0 [31] 0x0 100
 write 4 28 0x0
 write 4 30 0x0
+write 4 32 0x0
 write 4 8 0x0
 write 11 0 0x2
 poll 11 0 [1] 0x0 100
@@ -152,6 +163,11 @@ poll 23 0 [1] 0x0 100
 write 23 0 0x48000000
 poll 23 0 [30] 0x0 100
 writefield 0 4 [18] 0x0
+write 24 0 0x8000002
+poll 24 0 [1] 0x0 100
+write 24 0 0x48000000
+poll 24 0 [30] 0x0 100
+writefield 0 4 [19] 0x0
 write 8 0 0x2
 poll 8 0 [1] 0x0 100
 write 8 0 0x40000000

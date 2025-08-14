@@ -6,22 +6,30 @@ label 0x1
 label 0x2
 writefield 0 4 [18] 0x1
 write 23 0 0x8000000
-write 23 0 0x15000000
-write 23 13 0x10411041
+write 23 0 0x15000060
+write 23 13 0x10412042
 write 23 2 0x70000
 write 23 7 0x4000
-write 23 8 0x20
+write 23 8 0xffe0
 write 23 12 0x0
+writefield 0 4 [19] 0x1
+write 24 0 0x8000000
+write 24 0 0x15000000
+write 24 13 0x10411041
+write 24 2 0x70000
+write 24 7 0x4000
+write 24 8 0x20
+write 24 12 0x0
 writefield 0 4 [3] 0x1
 write 8 0 0x80104
-write 8 2 _user_io_input_0(0x0)
+write 8 2 0x342e0000
 write 8 3 0x4b000
 write 8 6 0x4b000
 write 8 8 0x0
 write 8 7 0x0
 write 8 12 0x6
 write 8 12 0x7
-write 8 14 _user_io_input_0(0x4b007)
+write 8 14 0x3432b03f
 write 8 13 0x1
 write 8 9 0x24
 write 8 5 0x0
@@ -50,12 +58,15 @@ write 4 0 0x40000000
 poll 4 0 [30] 0x0 100
 write 4 0 0x1
 write 4 30 0x7
-write 4 11 0x25
+write 4 32 0x25
+write 4 11 0x27
 writefield 14 0 [0] 0x1
 writefield 23 0 [0] 0x1
+writefield 24 0 [0] 0x1
 writefield 8 0 [0] 0x1
 poll 14 0 [31] 0x0 100
 write 4 30 0x0
+write 4 32 0x0
 write 4 11 0x0
 write 14 0 0x2
 poll 14 0 [1] 0x0 100
@@ -67,6 +78,11 @@ poll 23 0 [1] 0x0 100
 write 23 0 0x48000000
 poll 23 0 [30] 0x0 100
 writefield 0 4 [18] 0x0
+write 24 0 0x8000002
+poll 24 0 [1] 0x0 100
+write 24 0 0x48000000
+poll 24 0 [30] 0x0 100
+writefield 0 4 [19] 0x0
 write 8 0 0x2
 poll 8 0 [1] 0x0 100
 write 8 0 0x40000000
@@ -85,70 +101,70 @@ write 15 3 0x2211
 write 15 6 0x3bf0000
 write 15 7 0x13f0000
 write 15 13 0x0
-writefield 0 4 [19] 0x1
-write 24 0 0x8000000
-write 24 0 0x9000060
-write 24 13 0x20422042
-write 24 2 0x98000
-write 24 7 0x7ce9
-write 24 8 0x0
-write 24 12 0x0
 writefield 0 4 [20] 0x1
 write 25 0 0x8000000
-write 25 0 0x156000fc
+write 25 0 0x9000060
 write 25 13 0x20422042
-write 25 2 0xa0000
-write 25 7 0x7a9f
+write 25 2 0x98000
+write 25 7 0x7ce9
 write 25 8 0x0
 write 25 12 0x0
-write 25 3 0x0
-write 25 4 0x7
-write 25 5 0x31fff
-write 25 6 0x63fff
-write 25 10 0x1
-write 25 9 0x7c403f9
-;; Block ECASM optimizations to move reg writes pass this point
-write 25 11 0x1
-write 25 256 0x497a9f
-write 25 257 0x306
-write 25 258 0x4b7a9f
-write 25 259 0xab9a
-write 25 260 0x417a9f
-write 25 261 0xf123
-write 25 262 0x5e7a9f
-write 25 263 0x34f3
-write 25 264 0xd67a9f
-write 25 265 0xe42f
-write 25 266 0x357a9f
-write 25 267 0x3816
-write 25 268 0xa27a9f
-write 25 269 0x42fd
-write 25 270 0x6c7a9f
-write 25 271 0x49c4
-write 25 272 0x567a9f
-write 25 273 0xc1d6
-write 25 274 0x4c7a9f
-write 25 275 0xe974
-write 25 276 0x6a7a9f
-write 25 277 0x6b1e
-write 25 278 0x6a7a9f
-write 25 279 0x586c
-write 25 280 0xfff97a9f
-write 25 281 0x8501
-write 25 282 0x537a9f
-write 25 283 0x9ddb
-write 25 284 0xffce7a9f
-write 25 285 0x662f
-write 25 286 0x507a9f
-write 25 287 0xded8
 writefield 0 4 [21] 0x1
 write 26 0 0x8000000
-write 26 0 0x9000060
-write 26 13 0x10411041
-write 26 2 0x0
-write 26 7 0xff80
+write 26 0 0x156000fc
+write 26 13 0x20422042
+write 26 2 0xa0000
+write 26 7 0x7a9f
 write 26 8 0x0
 write 26 12 0x0
+write 26 3 0x0
+write 26 4 0x7
+write 26 5 0x31fff
+write 26 6 0x63fff
+write 26 10 0x1
+write 26 9 0x7c403f9
+;; Block ECASM optimizations to move reg writes pass this point
+write 26 11 0x1
+write 26 256 0x497a9f
+write 26 257 0x306
+write 26 258 0x4b7a9f
+write 26 259 0xab9a
+write 26 260 0x417a9f
+write 26 261 0xf123
+write 26 262 0x5e7a9f
+write 26 263 0x34f3
+write 26 264 0xd67a9f
+write 26 265 0xe42f
+write 26 266 0x357a9f
+write 26 267 0x3816
+write 26 268 0xa27a9f
+write 26 269 0x42fd
+write 26 270 0x6c7a9f
+write 26 271 0x49c4
+write 26 272 0x567a9f
+write 26 273 0xc1d6
+write 26 274 0x4c7a9f
+write 26 275 0xe974
+write 26 276 0x6a7a9f
+write 26 277 0x6b1e
+write 26 278 0x6a7a9f
+write 26 279 0x586c
+write 26 280 0xfff97a9f
+write 26 281 0x8501
+write 26 282 0x537a9f
+write 26 283 0x9ddb
+write 26 284 0xffce7a9f
+write 26 285 0x662f
+write 26 286 0x507a9f
+write 26 287 0xded8
+writefield 0 4 [18] 0x1
+write 23 0 0x8000000
+write 23 0 0x9000060
+write 23 13 0x10411041
+write 23 2 0x0
+write 23 7 0xff80
+write 23 8 0x0
+write 23 12 0x0
 writefield 0 4 [9] 0x1
 write 14 0 0x80100
 write 14 2 0x34270000
@@ -220,15 +236,15 @@ poll 4 0 [30] 0x0 100
 write 4 0 0x1
 write 4 12 0x13
 write 4 13 0x3
-write 4 32 0x15
-write 4 34 0x27
-write 4 9 0x29
+write 4 34 0x15
 write 4 36 0x29
-write 4 2 0x2b
+write 4 9 0x2b
+write 4 30 0x2b
+write 4 2 0x25
 writefield 5 0 [0] 0x1
 writefield 12 0 [0] 0x1
 write 15 0 0x100035
-writefield 24 0 [0] 0x1
+writefield 23 0 [0] 0x1
 writefield 25 0 [0] 0x1
 writefield 26 0 [0] 0x1
 writefield 6 0 [0] 0x1
@@ -237,10 +253,10 @@ poll 5 0 [31] 0x0 100
 poll 12 0 [31] 0x0 100
 write 4 12 0x0
 write 4 13 0x0
-write 4 32 0x0
 write 4 34 0x0
-write 4 9 0x0
 write 4 36 0x0
+write 4 9 0x0
+write 4 30 0x0
 write 4 2 0x0
 write 5 0 0x2
 poll 5 0 [1] 0x0 100
@@ -257,11 +273,11 @@ poll 15 0 [1] 0x0 100
 write 15 0 0x40000000
 poll 15 0 [30] 0x0 100
 writefield 0 4 [10] 0x0
-write 24 0 0x8000002
-poll 24 0 [1] 0x0 100
-write 24 0 0x48000000
-poll 24 0 [30] 0x0 100
-writefield 0 4 [19] 0x0
+write 23 0 0x8000002
+poll 23 0 [1] 0x0 100
+write 23 0 0x48000000
+poll 23 0 [30] 0x0 100
+writefield 0 4 [18] 0x0
 write 25 0 0x8000002
 poll 25 0 [1] 0x0 100
 write 25 0 0x48000000
@@ -285,14 +301,14 @@ writefield 0 4 [9] 0x0
 ;; End Epoch 3
 ;; Start Epoch 4
 label 0x4
-writefield 0 4 [18] 0x1
-write 23 0 0x8000000
-write 23 0 0x9000160
-write 23 13 0x10412042
-write 23 2 0x40006
-write 23 7 0x4000
-write 23 8 0x8100
-write 23 12 0x0
+writefield 0 4 [19] 0x1
+write 24 0 0x8000000
+write 24 0 0x9000160
+write 24 13 0x10412042
+write 24 2 0x40006
+write 24 7 0x4000
+write 24 8 0x8100
+write 24 12 0x0
 writefield 0 4 [16] 0x1
 write 21 0 0x174104c
 write 21 3 0x210620f
@@ -458,22 +474,22 @@ poll 4 0 [1] 0x0 100
 write 4 0 0x40000000
 poll 4 0 [30] 0x0 100
 write 4 0 0x1
-write 4 30 0x9
-write 4 31 0xb
-write 4 3 0x25
+write 4 32 0x9
+write 4 33 0xb
+write 4 3 0x27
 write 4 28 0x13
 write 4 8 0x21
 writefield 6 0 [0] 0x1
 writefield 11 0 [0] 0x1
 writefield 21 0 [0] 0x1
-writefield 23 0 [0] 0x1
+writefield 24 0 [0] 0x1
 writefield 9 0 [0] 0x1
 writefield 10 0 [0] 0x1
 writefield 14 0 [0] 0x1
 poll 6 0 [31] 0x0 100
 poll 11 0 [31] 0x0 100
-write 4 30 0x0
-write 4 31 0x0
+write 4 32 0x0
+write 4 33 0x0
 write 4 3 0x0
 write 4 28 0x0
 write 4 8 0x0
@@ -492,11 +508,11 @@ poll 21 0 [1] 0x0 100
 write 21 0 0x40881080
 poll 21 0 [30] 0x0 100
 writefield 0 4 [16] 0x0
-write 23 0 0x8000002
-poll 23 0 [1] 0x0 100
-write 23 0 0x48000000
-poll 23 0 [30] 0x0 100
-writefield 0 4 [18] 0x0
+write 24 0 0x8000002
+poll 24 0 [1] 0x0 100
+write 24 0 0x48000000
+poll 24 0 [30] 0x0 100
+writefield 0 4 [19] 0x0
 write 9 0 0x2
 poll 9 0 [1] 0x0 100
 write 9 0 0x40000000
@@ -515,14 +531,14 @@ writefield 0 4 [9] 0x0
 ;; End Epoch 4
 ;; Start Epoch 5
 label 0x5
-writefield 0 4 [19] 0x1
-write 24 0 0x8000000
-write 24 0 0x15000060
-write 24 13 0x10412042
-write 24 2 0xb8000
-write 24 7 0x752e7ef4
-write 24 8 0xfffe
-write 24 12 0x0
+writefield 0 4 [18] 0x1
+write 23 0 0x8000000
+write 23 0 0x15000060
+write 23 13 0x10412042
+write 23 2 0xb8000
+write 23 7 0x752e7ef4
+write 23 8 0xfffe
+write 23 12 0x0
 writefield 0 4 [20] 0x1
 write 25 0 0x8000000
 write 25 0 0x9000060
@@ -539,14 +555,14 @@ write 26 2 0x0
 write 26 7 0xff80
 write 26 8 0x0
 write 26 12 0x0
-writefield 0 4 [18] 0x1
-write 23 0 0x8000000
-write 23 0 0x9000160
-write 23 13 0x10412042
-write 23 2 0x40006
-write 23 7 0x4000
-write 23 8 0x8100
-write 23 12 0x0
+writefield 0 4 [19] 0x1
+write 24 0 0x8000000
+write 24 0 0x9000160
+write 24 13 0x10412042
+write 24 2 0x40006
+write 24 7 0x4000
+write 24 8 0x8100
+write 24 12 0x0
 writefield 0 4 [8] 0x1
 write 13 0 0x880100
 write 13 2 0x90000000
@@ -648,14 +664,14 @@ poll 4 0 [1] 0x0 100
 write 4 0 0x40000000
 poll 4 0 [30] 0x0 100
 write 4 0 0x1
-write 4 32 0x11
-write 4 5 0x27
-write 4 34 0x27
+write 4 30 0x11
+write 4 5 0x25
+write 4 34 0x25
 write 4 4 0x29
 write 4 36 0x13
-write 4 30 0x2b
-write 4 31 0x1
-write 4 8 0x25
+write 4 32 0x2b
+write 4 33 0x1
+write 4 8 0x27
 writefield 7 0 [0] 0x1
 writefield 8 0 [0] 0x1
 writefield 11 0 [0] 0x1
@@ -669,13 +685,13 @@ writefield 14 0 [0] 0x1
 poll 7 0 [31] 0x0 100
 poll 8 0 [31] 0x0 100
 poll 11 0 [31] 0x0 100
-write 4 32 0x0
+write 4 30 0x0
 write 4 5 0x0
 write 4 34 0x0
 write 4 4 0x0
 write 4 36 0x0
-write 4 30 0x0
-write 4 31 0x0
+write 4 32 0x0
+write 4 33 0x0
 write 4 8 0x0
 write 7 0 0x2
 poll 7 0 [1] 0x0 100

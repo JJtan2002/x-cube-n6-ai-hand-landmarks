@@ -1,6 +1,6 @@
 ST Edge AI Core v2.2.0-20266 2adc00962
-Created date          : 2025-08-13 16:41:58
-Parameters            : generate --no-inputs-allocation --no-outputs-allocation --name yolo_detector --model yolov8_face_call_smk_full_integer_quant.tflite --target stm32n6 --st-neural-art yolo_detector@user_neuralart.json
+Created date          : 2025-08-14 16:47:56
+Parameters            : generate --name yolo_detector --model yolov8_face_call_smk_full_integer_quant.tflite --target stm32n6 --st-neural-art yolo_detector@user_neuralart.json --input-data-type uint8 --inputs-ch-position chlast --output-data-type int8
 
 Model name - yolov8_face_call_smk_full_integer_quant
 ------ -------------------------------------- ------------------------ ----------------- ------------ ------------------------- 
@@ -1315,10 +1315,10 @@ model: macc=1,065,329,552 weights=3,035,042 activations=-- io=--
 Compilation details
 ------------------------------------------------------------------------------------
 Compiler version: 1.1.1-14
-Compiler arguments:  -i /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/yolov8_face_call_smk_full_integer_quant_OE_3_3_0.onnx --json-quant-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/yolov8_face_call_smk_full_integer_quant_OE_3_3_0_Q.json -g yolo_detector.c --load-mdesc /home/tanjiajun2002/ST/STEdgeAI/2.2/Utilities/configs/stm32n6.mdesc --load-mpool /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/my_mpools/yolo_detector.mpool --save-mpool-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__yolo_detector/yolo_detector.mpool --out-dir-prefix /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__yolo_detector/ --enable-epoch-controller -O3 --all-buffers-info --mvei --cache-maintenance --Oalt-sched --native-float --enable-virtual-mem-pools --Omax-ca-pipe 4 --Ocache-opt --Os --output-info-file c_info.json --network-name yolo_detector
+Compiler arguments:  -i /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/yolov8_face_call_smk_full_integer_quant_OE_3_3_0.onnx --json-quant-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/yolov8_face_call_smk_full_integer_quant_OE_3_3_0_Q.json -g yolo_detector.c --load-mdesc /home/tanjiajun2002/ST/STEdgeAI/2.2/Utilities/configs/stm32n6.mdesc --load-mpool /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/my_mpools/yolo_detector.mpool --save-mpool-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__yolo_detector/yolo_detector.mpool --out-dir-prefix /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__yolo_detector/ -O3 --all-buffers-info --mvei --cache-maintenance --Oalt-sched --native-float --enable-virtual-mem-pools --Omax-ca-pipe 4 --Ocache-opt --Os --enable-epoch-controller --output-info-file c_info.json --network-name yolo_detector
 ====================================================================================
 
-Memory usage information 
+Memory usage information  (input/output buffers are included in activations)
 ------------------------------------------------------------------------------------
 	flexMEM    [0x34000000 - 0x34000000]:          0  B /          0  B  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
 	cpuRAM1    [0x34080000 - 0x34080000]:          0  B /          0  B  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
@@ -1331,11 +1331,6 @@ Memory usage information
 	hyperRAM   [0x90000000 - 0x91000000]:      1.562 MB /     16.000 MB  (  9.77 % used) -- weights:          0  B (  0.00 % used)  activations:      1.562 MB (  9.77 % used)
 ---
 Total:                                             7.121 MB                                  -- weights:      2.878 MB                  activations:      4.243 MB                   
-====================================================================================
-
-Memory to be allocated by the user: inputs (300.000 kB), outputs (14.375 kB)
-	Input [0]:    300.000 kB
-	Output[0]:     14.375 kB
 ====================================================================================
 
 

@@ -1,14 +1,14 @@
 ;; Start Blob '_ec_blob_yolo_detector_404'
 ;; Start Epoch 404
 label 0x194
-writefield 0 4 [19] 0x1
-write 24 0 0x8000000
-write 24 0 0x15000000
-write 24 13 0x10411041
-write 24 2 0x70000
-write 24 7 0x4000
-write 24 8 0x20
-write 24 12 0x0
+writefield 0 4 [20] 0x1
+write 25 0 0x8000000
+write 25 0 0x15000000
+write 25 13 0x10411041
+write 25 2 0x70000
+write 25 7 0x4000
+write 25 8 0x20
+write 25 12 0x0
 writefield 0 4 [10] 0x1
 write 15 0 0x100034
 write 15 4 0x10634303
@@ -19,22 +19,22 @@ write 15 3 0x1100
 write 15 6 0x833f0000
 write 15 7 0x30000
 write 15 13 0x0
-writefield 0 4 [20] 0x1
-write 25 0 0x8000000
-write 25 0 0x9000060
-write 25 13 0x20422042
-write 25 2 0x68000
-write 25 7 0x78f2
-write 25 8 0x0
-write 25 12 0x0
 writefield 0 4 [21] 0x1
 write 26 0 0x8000000
-write 26 0 0x15000060
+write 26 0 0x9000060
 write 26 13 0x20422042
-write 26 2 0xa0000
-write 26 7 0x5138
-write 26 8 0xf800
+write 26 2 0x68000
+write 26 7 0x78f2
+write 26 8 0x0
 write 26 12 0x0
+writefield 0 4 [18] 0x1
+write 23 0 0x8000000
+write 23 0 0x15000060
+write 23 13 0x20422042
+write 23 2 0xa0000
+write 23 7 0x5138
+write 23 8 0xf800
+write 23 12 0x0
 writefield 0 4 [6] 0x1
 write 11 0 0x80104
 write 11 2 0x34300d00
@@ -88,25 +88,25 @@ poll 4 0 [1] 0x0 100
 write 4 0 0x40000000
 poll 4 0 [30] 0x0 100
 write 4 0 0x1
-write 4 32 0xd
-write 4 12 0xff260127
+write 4 34 0xd
+write 4 12 0xff280129
 write 4 13 0x9
-write 4 34 0x15
-write 4 36 0x29
-write 4 5 0x2b
+write 4 36 0x15
+write 4 30 0x2b
+write 4 5 0x25
 writefield 8 0 [0] 0x1
 write 15 0 0x100035
-writefield 24 0 [0] 0x1
+writefield 23 0 [0] 0x1
 writefield 25 0 [0] 0x1
 writefield 26 0 [0] 0x1
 writefield 9 0 [0] 0x1
 writefield 11 0 [0] 0x1
 poll 8 0 [31] 0x0 100
-write 4 32 0x0
+write 4 34 0x0
 write 4 12 0x0
 write 4 13 0x0
-write 4 34 0x0
 write 4 36 0x0
+write 4 30 0x0
 write 4 5 0x0
 write 8 0 0x2
 poll 8 0 [1] 0x0 100
@@ -118,11 +118,11 @@ poll 15 0 [1] 0x0 100
 write 15 0 0x40000000
 poll 15 0 [30] 0x0 100
 writefield 0 4 [10] 0x0
-write 24 0 0x8000002
-poll 24 0 [1] 0x0 100
-write 24 0 0x48000000
-poll 24 0 [30] 0x0 100
-writefield 0 4 [19] 0x0
+write 23 0 0x8000002
+poll 23 0 [1] 0x0 100
+write 23 0 0x48000000
+poll 23 0 [30] 0x0 100
+writefield 0 4 [18] 0x0
 write 25 0 0x8000002
 poll 25 0 [1] 0x0 100
 write 25 0 0x48000000
@@ -146,14 +146,14 @@ writefield 0 4 [6] 0x0
 ;; End Epoch 404
 ;; Start Epoch 405
 label 0x195
-writefield 0 4 [18] 0x1
-write 23 0 0x8000000
-write 23 0 0x9000f60
-write 23 13 0x10411041
-write 23 2 0x0
-write 23 7 0x10001
-write 23 8 0x1
-write 23 12 0x0
+writefield 0 4 [19] 0x1
+write 24 0 0x8000000
+write 24 0 0x9000f60
+write 24 13 0x10411041
+write 24 2 0x0
+write 24 7 0x10001
+write 24 8 0x1
+write 24 12 0x0
 writefield 0 4 [6] 0x1
 write 11 0 0x80104
 write 11 2 0x342e41a0
@@ -207,27 +207,27 @@ poll 4 0 [1] 0x0 100
 write 4 0 0x40000000
 poll 4 0 [30] 0x0 100
 write 4 0 0x1
-write 4 30 0xd
-write 4 31 0xf
-write 4 5 0x25
+write 4 32 0xd
+write 4 33 0xf
+write 4 5 0x27
 writefield 8 0 [0] 0x1
-writefield 23 0 [0] 0x1
+writefield 24 0 [0] 0x1
 writefield 11 0 [0] 0x1
 writefield 12 0 [0] 0x1
 poll 8 0 [31] 0x0 100
-write 4 30 0x0
-write 4 31 0x0
+write 4 32 0x0
+write 4 33 0x0
 write 4 5 0x0
 write 8 0 0x2
 poll 8 0 [1] 0x0 100
 write 8 0 0x40000000
 poll 8 0 [30] 0x0 100
 writefield 0 4 [3] 0x0
-write 23 0 0x8000002
-poll 23 0 [1] 0x0 100
-write 23 0 0x48000000
-poll 23 0 [30] 0x0 100
-writefield 0 4 [18] 0x0
+write 24 0 0x8000002
+poll 24 0 [1] 0x0 100
+write 24 0 0x48000000
+poll 24 0 [30] 0x0 100
+writefield 0 4 [19] 0x0
 write 11 0 0x2
 poll 11 0 [1] 0x0 100
 write 11 0 0x40000000
@@ -241,14 +241,14 @@ writefield 0 4 [7] 0x0
 ;; End Epoch 405
 ;; Start Epoch 406
 label 0x196
-writefield 0 4 [19] 0x1
-write 24 0 0x8000000
-write 24 0 0x9000160
-write 24 13 0x10412042
-write 24 2 0x38007
-write 24 7 0x4000
-write 24 8 0x4000
-write 24 12 0x0
+writefield 0 4 [18] 0x1
+write 23 0 0x8000000
+write 23 0 0x9000160
+write 23 13 0x10412042
+write 23 2 0x38007
+write 23 7 0x4000
+write 23 8 0x4000
+write 23 12 0x0
 writefield 0 4 [20] 0x1
 write 25 0 0x8000000
 write 25 0 0x5000160
@@ -326,20 +326,20 @@ poll 4 0 [1] 0x0 100
 write 4 0 0x40000000
 poll 4 0 [30] 0x0 100
 write 4 0 0x1
-write 4 32 0xf
-write 4 33 0x3
-write 4 34 0x27
+write 4 30 0xf
+write 4 31 0x3
+write 4 34 0x25
 write 4 35 0x9
 write 4 5 0x29
 writefield 8 0 [0] 0x1
-writefield 24 0 [0] 0x1
+writefield 23 0 [0] 0x1
 writefield 25 0 [0] 0x1
 writefield 6 0 [0] 0x1
 writefield 9 0 [0] 0x1
 writefield 12 0 [0] 0x1
 poll 8 0 [31] 0x0 100
-write 4 32 0x0
-write 4 33 0x0
+write 4 30 0x0
+write 4 31 0x0
 write 4 34 0x0
 write 4 35 0x0
 write 4 5 0x0
@@ -348,11 +348,11 @@ poll 8 0 [1] 0x0 100
 write 8 0 0x40000000
 poll 8 0 [30] 0x0 100
 writefield 0 4 [3] 0x0
-write 24 0 0x8000002
-poll 24 0 [1] 0x0 100
-write 24 0 0x48000000
-poll 24 0 [30] 0x0 100
-writefield 0 4 [19] 0x0
+write 23 0 0x8000002
+poll 23 0 [1] 0x0 100
+write 23 0 0x48000000
+poll 23 0 [30] 0x0 100
+writefield 0 4 [18] 0x0
 write 25 0 0x8000002
 poll 25 0 [1] 0x0 100
 write 25 0 0x48000000

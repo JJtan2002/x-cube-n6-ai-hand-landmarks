@@ -1,6 +1,6 @@
 ST Edge AI Core v2.2.0-20266 2adc00962
-Created date          : 2025-08-13 16:42:21
-Parameters            : generate --no-inputs-allocation --no-outputs-allocation --name face_landmark --model face_landmark_ptq.tflite --target stm32n6 --st-neural-art face_landmark@user_neuralart.json
+Created date          : 2025-08-14 16:48:14
+Parameters            : generate --name face_landmark --model face_landmark_ptq.tflite --target stm32n6 --st-neural-art face_landmark@user_neuralart.json --input-data-type uint8 --inputs-ch-position chlast --output-data-type int8
 
 Model name - face_landmark_ptq
 ------ ------------------------------- ----------------------- ----------------- ----------- -------------- 
@@ -237,22 +237,16 @@ Compiler version: 1.1.1-14
 Compiler arguments:  -i /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/face_landmark_ptq_OE_3_3_0.onnx --json-quant-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_output/face_landmark_ptq_OE_3_3_0_Q.json -g face_landmark.c --load-mdesc /home/tanjiajun2002/ST/STEdgeAI/2.2/Utilities/configs/stm32n6.mdesc --load-mpool /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/my_mpools/face_landmark.mpool --save-mpool-file /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__face_landmark/face_landmark.mpool --out-dir-prefix /home/tanjiajun2002/Work/local/st/x-cube-n6-ai-hand-landmarks/Model/st_ai_ws/neural_art__face_landmark/ --enable-epoch-controller -O3 --all-buffers-info --mvei --cache-maintenance --Oalt-sched --native-float --enable-virtual-mem-pools --Omax-ca-pipe 4 --Ocache-opt --Os --output-info-file c_info.json --network-name face_landmark
 ====================================================================================
 
-Memory usage information 
+Memory usage information  (input/output buffers are included in activations)
 ------------------------------------------------------------------------------------
 	npuRAM3    [0x34200000 - 0x34270000]:    448.000 kB /    448.000 kB  (100.00 % used) -- weights:          0  B (  0.00 % used)  activations:    448.000 kB (100.00 % used)
 	npuRAM4    [0x34270000 - 0x342E0000]:    272.000 kB /    448.000 kB  ( 60.71 % used) -- weights:          0  B (  0.00 % used)  activations:    272.000 kB ( 60.71 % used)
 	npuRAM5    [0x342E0000 - 0x34350000]:          0  B /    448.000 kB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
 	npuRAM6    [0x34350000 - 0x343C0000]:          0  B /    448.000 kB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
-	octoFlash  [0x70780000 - 0x70B80000]:    628.063 kB /      4.000 MB  ( 15.33 % used) -- weights:    628.063 kB ( 15.33 % used)  activations:          0  B (  0.00 % used)
+	octoFlash  [0x71380000 - 0x71780000]:    627.980 kB /      4.000 MB  ( 15.33 % used) -- weights:    627.980 kB ( 15.33 % used)  activations:          0  B (  0.00 % used)
 	hyperRAM   [0x90000000 - 0x91000000]:          0  B /     16.000 MB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
 ---
-Total:                                             1.316 MB                                  -- weights:    628.063 kB                  activations:    720.000 kB                   
-====================================================================================
-
-Memory to be allocated by the user: inputs (432.000 kB), outputs (5.531 kB)
-	Input [0]:    432.000 kB
-	Output[0]:         32  B
-	Output[1]:      5.500 kB
+Total:                                             1.316 MB                                  -- weights:    627.980 kB                  activations:    720.000 kB                   
 ====================================================================================
 
 
@@ -260,16 +254,16 @@ Used memory ranges
 ------------------------------------------------------------------------------------
 	npuRAM3    [0x34200000 - 0x34270000]: 0x34200000-0x34270000
 	npuRAM4    [0x34270000 - 0x342E0000]: 0x34270000-0x342B4000
-	octoFlash  [0x70780000 - 0x70B80000]: 0x70780000-0x7081D050
+	octoFlash  [0x71380000 - 0x71780000]: 0x71380000-0x7141CFF0
 ====================================================================================
 
 Epochs details
 ------------------------------------------------------------------------------------
-Total number of epochs: 112 of which 9 implemented in software
+Total number of epochs: 109 of which 6 implemented in software
 ---
 epoch ID   HW/SW/EC Operation (SW only)
 epoch 1       EC    
-epoch 2      -SW-   (   QuantizeLinear   )
+epoch 2       EC    
 epoch 3       EC    
 epoch 4       EC    
 epoch 5       EC    
@@ -296,9 +290,9 @@ epoch 25      EC
 epoch 26      EC    
 epoch 27      EC    
 epoch 28      EC    
-epoch 29      EC    
+epoch 29     -SW-   (     Transpose      )
 epoch 30      EC    
-epoch 31     -SW-   (     Transpose      )
+epoch 31      EC    
 epoch 32      EC    
 epoch 33      EC    
 epoch 34      EC    
@@ -312,9 +306,9 @@ epoch 41      EC
 epoch 42      EC    
 epoch 43      EC    
 epoch 44      EC    
-epoch 45      EC    
+epoch 45     -SW-   (     Transpose      )
 epoch 46      EC    
-epoch 47     -SW-   (     Transpose      )
+epoch 47      EC    
 epoch 48      EC    
 epoch 49      EC    
 epoch 50      EC    
@@ -361,7 +355,7 @@ epoch 90      EC
 epoch 91      EC    
 epoch 92     -SW-   (    SpaceToDepth    )
 epoch 93      EC    
-epoch 94     -SW-   (  DequantizeLinear  )
+epoch 94      EC    
 epoch 95      EC    
 epoch 96      EC    
 epoch 97      EC    
@@ -375,9 +369,6 @@ epoch 104     EC
 epoch 105     EC    
 epoch 106     EC    
 epoch 107     EC    
-epoch 108     EC    
-epoch 109    -SW-   (    SpaceToDepth    )
-epoch 110     EC    
-epoch 111    -SW-   (  DequantizeLinear  )
-epoch 112     EC    
+epoch 108    -SW-   (    SpaceToDepth    )
+epoch 109     EC    
 ====================================================================================
